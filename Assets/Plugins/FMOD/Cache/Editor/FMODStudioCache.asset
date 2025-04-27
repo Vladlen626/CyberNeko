@@ -1,92 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7812491918840198492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: FmodProject/SiberianJamSounds/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638811121170987338
-  FileSizes:
-  - Name: Desktop
-    Value: 868
-  Exists: 1
---- !u!114 &-7397837139596537487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: FmodProject/SiberianJamSounds/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638811121170977348
-  FileSizes:
-  - Name: Desktop
-    Value: 1074
-  Exists: 1
---- !u!114 &-2542646878566534653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Sounds.bank
-  m_EditorClassIdentifier: 
-  Path: FmodProject/SiberianJamSounds/Build/Desktop/Sounds.bank
-  Name: Sounds
-  StudioPath: bank:/Sounds
-  lastModified: 638811121171269035
-  FileSizes:
-  - Name: Desktop
-    Value: 506
-  Exists: 1
---- !u!114 &-2449829032006685782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Background
-  m_EditorClassIdentifier: 
-  Path: event:/Background
-  Guid:
-    Data1: 110362642
-    Data2: 1237125207
-    Data3: 2120406459
-    Data4: 1114103444
-  Banks:
-  - {fileID: 387613621554829101}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 10036
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,40 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -7812491918840198492}
-  - {fileID: -7397837139596537487}
-  - {fileID: 387613621554829101}
-  - {fileID: -2542646878566534653}
-  EditorEvents:
-  - {fileID: -2449829032006685782}
+  EditorBanks: []
+  EditorEvents: []
   EditorParameters: []
-  MasterBanks:
-  - {fileID: -7397837139596537487}
-  StringsBanks:
-  - {fileID: -7812491918840198492}
+  MasterBanks: []
+  StringsBanks: []
   cacheVersion: 131847
-  cacheTime: 638811121171269035
-  SerializableEventsDict:
-  - key: event:/Background
-    index: 0
---- !u!114 &387613621554829101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Music.bank
-  m_EditorClassIdentifier: 
-  Path: FmodProject/SiberianJamSounds/Build/Desktop/Music.bank
-  Name: Music
-  StudioPath: bank:/Music
-  lastModified: 638811121171245888
-  FileSizes:
-  - Name: Desktop
-    Value: 119680
-  Exists: 1
+  cacheTime: 0
+  SerializableEventsDict: []
