@@ -477,15 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1be55ff321ce04a951e48764123c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: boop
-    eventReference:
-      Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+  sounds: []
 --- !u!114 &1037114122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,10 +499,10 @@ MonoBehaviour:
     Path: 
   GameplayTheme:
     Guid:
-      Data1: 110362642
-      Data2: 1237125207
-      Data3: 2120406459
-      Data4: 1114103444
+      Data1: 33585898
+      Data2: 1314478725
+      Data3: -831220828
+      Data4: -581115691
     Path: event:/Background
 --- !u!1001 &6003102483559272611
 PrefabInstance:
