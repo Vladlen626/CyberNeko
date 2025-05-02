@@ -37,9 +37,9 @@ public class Food : MonoBehaviour, IDevourable
         {
             Debug.Log("Player Collect Item");
             // do dotween logic - player eat this shit
-        }
 
-        // after some time
-        OnDevoured?.Invoke();
+            // after some time
+            OnDevoured?.Invoke();
+        }
     }
 }

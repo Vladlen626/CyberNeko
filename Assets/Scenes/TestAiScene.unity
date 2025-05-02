@@ -260,7 +260,6 @@ MonoBehaviour:
   - _prefab: {fileID: 5710707511697216554, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
     _count: 2
   _overallSpawnRadius: 5
-  _randomRotate: 1
 --- !u!4 &209456892
 Transform:
   m_ObjectHideFlags: 0
@@ -419,7 +418,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -486,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e397ac851c85a4cb09e7cf4fb5eb59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPositions: []
 --- !u!4 &287106576
 Transform:
   m_ObjectHideFlags: 0
@@ -828,6 +828,50 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &644963729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644963730}
+  - component: {fileID: 644963731}
+  m_Layer: 0
+  m_Name: PointsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &644963730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644963729}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.5832014, y: 4.721376, z: 13.1144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 733658754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644963731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644963729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d005e9585c342840b7a0e62ba9dad0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703662590
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,8 +932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583c75d6dd4e84a4e8d6c4419f530314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyController: {fileID: 287106575}
-  _foodManager: {fileID: 1097036126}
+  enemyController: {fileID: 287106575}
+  playerManager: {fileID: 0}
+  foodManager: {fileID: 1097036126}
+  pointsManager: {fileID: 644963731}
 --- !u!4 &733658754
 Transform:
   m_ObjectHideFlags: 0
@@ -903,6 +949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 644963730}
   - {fileID: 1097036127}
   - {fileID: 287106576}
   m_Father: {fileID: 0}

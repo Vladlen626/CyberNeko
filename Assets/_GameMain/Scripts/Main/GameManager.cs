@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private FoodManager foodSpawner;
+    [SerializeField] private FoodManager foodManager;
     [SerializeField] private PointsManager pointsManager;
 
     private static GameManager _instance;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     //single point of entry
     async UniTask InitializeAll()
     {
-        await foodSpawner.Initialize();
+        await foodManager.Initialize();
         await pointsManager.Initialize();
         await enemyController.Initialize();
         await playerManager.Initialize();
