@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private FoodManager foodManager;
     [SerializeField] private PointsManager pointsManager;
+    [SerializeField] private DoorConnectionManager doorConnectionManager;
 
     private static GameManager _instance;
     private bool _gameActive;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     {
         await foodManager.Initialize();
         await pointsManager.Initialize();
+        await doorConnectionManager.Initialize();
         await enemyController.Initialize();
         await playerManager.Initialize();
     }
