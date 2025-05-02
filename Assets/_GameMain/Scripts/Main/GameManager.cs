@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private EnemyController _enemyController;
-    [SerializeField] private FoodManager _foodManager;
+    [FormerlySerializedAs("_enemyController")][SerializeField] private EnemyController enemyController;
+    [FormerlySerializedAs("_playerSpawner")][SerializeField] private PlayerManager playerManager;
 
     private static GameManager _instance;
     private bool _gameActive;
@@ -39,16 +40,16 @@ public class GameManager : MonoBehaviour
     //single point of entry
     async UniTask InitializeAll()
     {
-        await _foodManager.Initialize();
-        await _enemyController.Initialize();
+        await enemyController.Initialize();
+        await playerManager.Initialize();
     }
 
     //main thread 
     async UniTask GameUpdate()
     {
         await UniTask.Yield(PlayerLoopTiming.Update);
-        await _enemyController.SpawnEnemies();
-        await _foodManager.SpawnFood();
+        await enemyController.SpawnEnemies();
+
     }
 
     void QuitGame()
@@ -56,5 +57,3 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 }
-
-
