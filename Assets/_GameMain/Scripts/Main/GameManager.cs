@@ -4,7 +4,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private EnemyController _enemyController;
-    
+    [SerializeField] private FoodManager _foodManager;
+
     private static GameManager _instance;
     private bool _gameActive;
 
@@ -25,20 +26,21 @@ public class GameManager : MonoBehaviour
     async UniTaskVoid StartGame()
     {
         await InitializeAll();
-        
+
         _gameActive = true;
         while (_gameActive)
         {
             await GameUpdate();
         }
-        
+
         QuitGame();
     }
 
     //single point of entry
     async UniTask InitializeAll()
     {
-       await _enemyController.Initialize();
+        await _foodManager.Initialize();
+        await _enemyController.Initialize();
     }
 
     //main thread 
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         await UniTask.Yield(PlayerLoopTiming.Update);
         await _enemyController.SpawnEnemies();
+        await _foodManager.SpawnFood();
     }
 
     void QuitGame()
