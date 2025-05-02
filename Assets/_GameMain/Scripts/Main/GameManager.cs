@@ -4,8 +4,10 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    [FormerlySerializedAs("_enemyController")][SerializeField] private EnemyController enemyController;
-    [FormerlySerializedAs("_playerSpawner")][SerializeField] private PlayerManager playerManager;
+    [SerializeField] private EnemyController enemyController;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private FoodManager foodSpawner;
+    [SerializeField] private PointsManager pointsManager;
 
     private static GameManager _instance;
     private bool _gameActive;
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
     //single point of entry
     async UniTask InitializeAll()
     {
+        await foodSpawner.Initialize();
+        await pointsManager.Initialize();
         await enemyController.Initialize();
         await playerManager.Initialize();
     }
