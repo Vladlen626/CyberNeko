@@ -235,7 +235,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _FarColor: {r: 0, g: 1, b: 0.11904764, a: 0}
     - _HueVariation: {r: 1, g: 1, b: 1, a: 1}
-    - _NearColor: {r: 0.10255264, g: 0.6226415, b: 0, a: 0}
+    - _NearColor: {r: 0.10255257, g: 0.62264144, b: 0, a: 0}
     - _Near_and_Far_Range: {r: 10.5, g: 30.5, b: 0, a: 0}
     - _ShadowColor: {r: 1, g: 1, b: 1, a: 1}
     - _SnowColor: {r: 1, g: 1, b: 1, a: 0}

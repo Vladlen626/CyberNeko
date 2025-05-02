@@ -6,9 +6,8 @@ using UnityEngine.Assertions;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private Transform[] enemyPositions;
     private GameObject enemyPrefab;
-    private Transform[] enemyPositions;
-
     private Dictionary<GameObject, PatrolAndChaseAI> enemyScriptDict = new Dictionary<GameObject, PatrolAndChaseAI>();
     private Dictionary<GameObject, Transform> enemyPosDict = new Dictionary<GameObject, Transform>();
 
