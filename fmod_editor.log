@@ -52,3 +52,4 @@
 [LOG] SoundI::release                          : HereWeGoAgain (000001AAAA205AA8)
 [LOG] SoundI::release                          :     HereWeGoAgain (000001AAB23044F8)
 [LOG] SoundI::release                          :     HereWeGoAgain (000001AAAA371428)
+[ERR] ~Global                                  : assertion: 'gSystemInitCount == 0' failed
