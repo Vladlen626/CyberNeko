@@ -9,6 +9,17 @@ public class Food : MonoBehaviour, IDevourable
     public event Action OnDevoured;
     private bool _isActive = false;
 
+    private PointsManager _pointsManager;
+
+    void Start()
+    {
+        _pointsManager = FindFirstObjectByType<PointsManager>();
+        if (_pointsManager == null)
+        {
+            Debug.LogError("No PointsManager on the scene");
+        }
+    }
+
     public int GetPoints()
     {
         return _points;
@@ -35,11 +46,16 @@ public class Food : MonoBehaviour, IDevourable
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Collect Item");
+            Debug.Log("Player Collected Item");
             // do dotween logic - player eat this shit
-
+            AddPoints();
             // after some time
             OnDevoured?.Invoke();
         }
+    }
+
+    private void AddPoints()
+    {
+        _pointsManager?.AddPoints(_points);
     }
 }
