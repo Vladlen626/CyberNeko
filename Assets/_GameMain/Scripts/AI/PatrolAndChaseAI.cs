@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,6 @@ public class PatrolAndChaseAI : MonoBehaviour
     [SerializeField] private LayerMask detectionMask;
 
     [Header("Patrol")]
-    [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private float timeWaitOnPatrolPoint = 4f;
     [SerializeField] private float timeBeforeReturnToPatrol = 3f;
     
@@ -31,14 +31,12 @@ public class PatrolAndChaseAI : MonoBehaviour
     private float chaseTimer = 0f;
 
     private Transform targetTransform;
+    private Transform[] patrolPoints;
 
-    void Awake()
+    public void Initialize(Transform[] inPatrolPoints)
     {
         agent = GetComponent<NavMeshAgent>();
-    }
-
-    void Start()
-    {
+        patrolPoints = inPatrolPoints;
         if (patrolPoints.Length > 0)
         {
             agent.destination = patrolPoints[curPatrolPointIndex].position;

@@ -599,10 +599,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: "C:/Users/Lena/OneDrive/\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B/FMOD
-    Studio/examples/Examples.fspro"
-  sourceBankPath: "C:/Users/Lena/OneDrive/\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B/FMOD
-    Studio/examples/Build"
+  sourceProjectPath: ../SiberianSounds/SiberianSounds.fspro
+  sourceBankPath: ../SiberianSounds/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
