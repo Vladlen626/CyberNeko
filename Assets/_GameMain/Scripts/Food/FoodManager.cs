@@ -12,12 +12,13 @@ public class FoodManager : MonoBehaviour
             FindObjectsInactive.Include,
             FindObjectsSortMode.None
         );
+        
         foreach (var spawner in spawners)
         {
             RegisterSpawner(spawner);
         }
 
-        //await UniTask.Yield();
+        await UniTask.Yield();
     }
 
     public async UniTask SpawnFood()

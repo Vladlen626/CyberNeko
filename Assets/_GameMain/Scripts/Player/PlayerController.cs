@@ -12,34 +12,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationSpeed = 25f; 
     [SerializeField] private float acceleration = 30f;  
     [SerializeField] private float inputResponse = 10f;
-
-    [Header("Camera Reference")]
+    
+    [Header("Animation Settings")]
+    [SerializeField] private string speedParamName = "Speed";
+    [SerializeField] private float animationSmoothTime = 0.1f;
+    [SerializeField] private Animator animator;
+    
+    [Header("Cinemachine")]
     [SerializeField] private CinemachineCamera playerFollowCamera;
 
     private NavMeshAgent _agent;
     private Transform _cameraTransform;
     private Vector3 _movementDirection;
     private float _currentSpeed;
-    private bool _isRunning;
-    private CancellationTokenSource _movementCTS;
+    private float _currentAnimSpeed;
+    private float _animSpeedVelocity;
+    private bool Initialized;
 
     public void Initialize()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _movementCTS = new CancellationTokenSource();
         SetupAgent();
         CacheCamera();
-    }
-
-    private void Start()
-    {
-        HandleSpeedTransition().Forget();
-    }
-
-    private void OnDestroy()
-    {
-        _movementCTS?.Cancel();
-        _movementCTS?.Dispose();
+        Initialized = true;
     }
 
     private void CacheCamera()
@@ -65,9 +60,34 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!Initialized) return;
         HandleMovementInput();
-        UpdateMovement();
         UpdateRotation();
+        UpdateAnimations();
+    }
+    
+    private void FixedUpdate()
+    {
+        if (!Initialized) return;
+        UpdateMovement();
+    }
+    
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        // Рассчитываем фактическую скорость движения
+        float targetSpeed = _agent.velocity.magnitude / runSpeed;
+        
+        // Плавное изменение параметра скорости
+        _currentAnimSpeed = Mathf.SmoothDamp(
+            _currentAnimSpeed,
+            targetSpeed,
+            ref _animSpeedVelocity,
+            animationSmoothTime
+        );
+
+        animator.SetFloat(speedParamName, _currentAnimSpeed);
     }
 
     private void HandleMovementInput()
@@ -119,25 +139,6 @@ public class PlayerController : MonoBehaviour
             );
         }
     }
-
-    private async UniTaskVoid HandleSpeedTransition()
-    {
-        while (!_movementCTS.IsCancellationRequested)
-        {
-            float targetSpeed = runSpeed;
-            _currentSpeed = Mathf.MoveTowards(
-                _currentSpeed, 
-                targetSpeed, 
-                acceleration * Time.deltaTime
-            );
-
-            await UniTask.Yield(PlayerLoopTiming.Update, _movementCTS.Token);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        UpdateMovement();
-    }
+    
 
 }

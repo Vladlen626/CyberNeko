@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -30,23 +31,33 @@ public class PatrolAndChaseAI : MonoBehaviour
     private float waitTimer  = 0f;
     private float chaseTimer = 0f;
 
-    private Transform targetTransform;
+    private Transform targetTransform = null;
     private Transform[] patrolPoints;
 
     public void Initialize(Transform[] inPatrolPoints)
     {
         agent = GetComponent<NavMeshAgent>();
         patrolPoints = inPatrolPoints;
+        targetTransform = null;
         if (patrolPoints.Length > 0)
         {
             agent.destination = patrolPoints[curPatrolPointIndex].position;
         }
+    }
+
+    public void StartPlayerDetection()
+    {
         StartCoroutine(PlayerDetectionRoutine());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     void Update()
     {
-        if (isChasing && targetTransform != null)
+        if (isChasing && targetTransform)
         {
             // Continue chasing even if player is not in line of sight
             agent.destination = targetTransform.position;

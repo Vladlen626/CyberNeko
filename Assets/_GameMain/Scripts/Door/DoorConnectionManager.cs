@@ -55,7 +55,7 @@ public class DoorConnectionManager : MonoBehaviour
             doorsByLvl.Init();
         }
 
-        //await UniTask.Yield();
+        await UniTask.Yield();
     }
 
     void OnDestroy()

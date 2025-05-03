@@ -18,6 +18,7 @@ public class PointsManager : MonoBehaviour
         _key.SetActive(false);
         SetCurPoints(0);
         _slider.maxValue = _targetPoints;
+        await UniTask.Yield();
     }
 
     public void AddPoints(int points)

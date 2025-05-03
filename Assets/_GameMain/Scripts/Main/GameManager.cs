@@ -30,10 +30,11 @@ public class GameManager : MonoBehaviour
     async UniTaskVoid StartGame()
     {
         await InitializeAll();
-
+        await GameStart();
         _gameActive = true;
         while (_gameActive)
         {
+       
             await GameUpdate();
         }
 
@@ -44,18 +45,29 @@ public class GameManager : MonoBehaviour
     async UniTask InitializeAll()
     {
         await foodManager.Initialize();
+        Debug.Log(foodManager + " initialize complete");
         await pointsManager.Initialize();
+        Debug.Log(pointsManager + " initialize complete");
         await doorConnectionManager.Initialize();
+        Debug.Log(doorConnectionManager + " initialize complete");
         await enemyController.Initialize();
+        Debug.Log(enemyController + " initialize complete");
         await playerManager.Initialize();
+        Debug.Log(playerManager + " initialize complete");
     }
-
+    
+    async UniTask GameStart()
+    {     
+        await enemyController.SpawnEnemies();
+        
+    }
+    
+    
     //main thread 
     async UniTask GameUpdate()
     {
         await UniTask.Yield(PlayerLoopTiming.Update);
-        await enemyController.SpawnEnemies();
-
+        
     }
 
     void QuitGame()
