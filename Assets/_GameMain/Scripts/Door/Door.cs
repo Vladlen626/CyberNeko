@@ -1,24 +1,57 @@
 using System;
+using DG.Tweening;
+using FMODUnity;
 using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] private Transform[] borders;
     public Action OnCanBeOpened;
 
     private PointsManager _pointsManager;
-
+    
+    public void Initialize(PointsManager pointsManager)
+    {
+        _pointsManager = pointsManager;
+    }
+    
     // Call from Door Connection Manager
     public void Open()
     {
-        Debug.Log("Door opened");
-        //dotween
+        foreach (var border in borders)
+        {
+            HideObject(border);
+        }
+
+        HideObject(transform);
     }
 
     // When game Reset
-    public void Close()
+    public void Reset()
     {
-        Debug.Log("Door closed");
-        //dotween
+        foreach (var border in borders)
+        {
+            ShowObject(border);
+        }
+
+        ShowObject(transform);
+    }
+
+    private void HideObject(Transform objectToHide)
+    {
+        //SOUNDS
+        //RuntimeManager.PlayOneShot(specialEvent, transform.position);
+        transform.DOJump(transform.position += Vector3.up * 3, 1,1, 0.75f)
+            .OnComplete(() =>
+            {
+                //RuntimeManager.PlayOneShot(poofObjectEvent);
+                transform.DOScale(0, 0.25f);
+            });
+    }
+
+    private void ShowObject(Transform objectToShow)
+    {
+        objectToShow.localScale = Vector3.one;
     }
 
     void OnTriggerEnter(Collider other)
@@ -33,9 +66,5 @@ public class Door : MonoBehaviour
             }
         }
     }
-
-    void Start()
-    {
-        _pointsManager = FindFirstObjectByType<PointsManager>();
-    }
+    
 }
