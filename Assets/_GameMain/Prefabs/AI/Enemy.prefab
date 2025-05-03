@@ -1912,6 +1912,7 @@ GameObject:
   - component: {fileID: 7363380768689811392}
   - component: {fileID: 662143402874356624}
   - component: {fileID: 7739365540925993526}
+  - component: {fileID: 7182396080438041754}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1965,8 +1966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a418ffaeed3ce524a9327bbd998104fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 20
-  fieldOfView: 120
+  detectionRange: 10
+  fieldOfView: 180
   checkInterval: 0.3
   exclamationMarker: {fileID: 1153793734591306669}
   chaseStopDistance: 20
@@ -1986,7 +1987,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1998,6 +1999,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7182396080438041754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43560390cb716574584f35be543795e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visors:
+  - {fileID: 2439720821821212865}
+  - {fileID: 3227495346351210134}
 --- !u!1 &9193191291833008214
 GameObject:
   m_ObjectHideFlags: 0

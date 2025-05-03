@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Assertions;
 using static UnityEngine.EventSystems.EventTrigger;
 
+[RequireComponent(typeof(VisorController), typeof(NavMeshAgent))]
 public class PatrolAndChaseAI : MonoBehaviour
 {
     [Header("Detection")]
@@ -39,11 +40,13 @@ public class PatrolAndChaseAI : MonoBehaviour
     private Transform[] patrolPoints;
 
     private StealthStatus lastChasedPlayerStealthStatus = null;
+    private VisorController visorController;
 
     public void Initialize(Transform[] inPatrolPoints)
     {
         exclamationMarker.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
+        visorController = GetComponent<VisorController>();
         patrolPoints = inPatrolPoints;
         targetTransform = null;
         if (patrolPoints.Length > 0)
@@ -107,11 +110,24 @@ public class PatrolAndChaseAI : MonoBehaviour
             }
         }
     }
+    
+    private void StartChasing(GameObject playerObj)
+    {
+        exclamationMarker.SetActive(true);
+        visorController.ChooseVisor(1);
+        StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
+        Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
+        lastChasedPlayerStealthStatus = stealthStatus;
+        stealthStatus.AddToPursuer(gameObject);
+        isChasing = true;
+        isWaiting = false;
+        chaseTimer = 0f;
+    }
 
     private void StopChasing()
     {
         exclamationMarker.SetActive(false);
-
+        visorController.ChooseVisor(0);
         lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
 
         isChasing = false;
@@ -160,18 +176,6 @@ public class PatrolAndChaseAI : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private void StartChasing(GameObject playerObj)
-    {
-        exclamationMarker.SetActive(true);
-        StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
-        Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
-        lastChasedPlayerStealthStatus = stealthStatus;
-        stealthStatus.AddToPursuer(gameObject);
-        isChasing = true;
-        isWaiting = false;
-        chaseTimer = 0f;
     }
 
     private bool HasLineOfSight(Transform target)

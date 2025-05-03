@@ -1149,6 +1149,7 @@ GameObject:
   - component: {fileID: 5499007765368756321}
   - component: {fileID: 4036843249524383560}
   - component: {fileID: 9219841510195102854}
+  - component: {fileID: 4704039051498494489}
   m_Layer: 7
   m_Name: Npc
   m_TagString: NPC
@@ -1207,7 +1208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _foodsPrefabs:
   - {fileID: 5710707511697216554, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
-  _foodDropCount: 2
+  _foodDropCount: 1
   _countdown: 5
   maxOffsetX: 1
   maxOffsetY: 0
@@ -1291,6 +1292,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4704039051498494489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5181835524013670428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43560390cb716574584f35be543795e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visors: []
 --- !u!1 &5270530587180882110
 GameObject:
   m_ObjectHideFlags: 0

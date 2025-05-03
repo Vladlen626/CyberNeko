@@ -188,6 +188,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4704039051498494489, guid: 83a9816173032d64589e507492bc6045, type: 3}
+      propertyPath: visors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704039051498494489, guid: 83a9816173032d64589e507492bc6045, type: 3}
+      propertyPath: 'visors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7441605805647030651}
+    - target: {fileID: 4704039051498494489, guid: 83a9816173032d64589e507492bc6045, type: 3}
+      propertyPath: 'visors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8880584433483590523}
     - target: {fileID: 5181835524013670428, guid: 83a9816173032d64589e507492bc6045, type: 3}
       propertyPath: m_Name
       value: NpcTanuki

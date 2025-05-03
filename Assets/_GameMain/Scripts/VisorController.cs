@@ -1,16 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VisorController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<GameObject> visors;
 
-    // Update is called once per frame
-    void Update()
+    public void ChooseVisor(int visorNum)
     {
+        if (visors.Count == 0) return;
+        foreach (var visor in visors)
+        {
+            visor.SetActive(false);
+        }
         
+        visors[visorNum].SetActive(true);
     }
 }

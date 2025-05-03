@@ -21,17 +21,17 @@ public class PlayerController : MonoBehaviour
     [Header("Cinemachine")]
     [SerializeField] private CinemachineCamera playerFollowCamera;
 
-    private NavMeshAgent _agent;
-    private Transform _cameraTransform;
-    private Vector3 _movementDirection;
-    private float _currentSpeed;
-    private float _currentAnimSpeed;
-    private float _animSpeedVelocity;
+    private NavMeshAgent agent;
+    private Transform cameraTransform;
+    private Vector3 movementDirection;
+    private float currentSpeed;
+    private float currentAnimSpeed;
+    private float animSpeedVelocity;
     private bool Initialized;
 
     public void Initialize()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         SetupAgent();
         CacheCamera();
         Initialized = true;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerFollowCamera != null)
         {
-            _cameraTransform = playerFollowCamera.transform;
+            cameraTransform = playerFollowCamera.transform;
         }
         else
         {
@@ -51,11 +51,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetupAgent()
     {
-        _agent.updatePosition = true;
-        _agent.updateRotation = false;
-        _agent.acceleration = acceleration;
-        _agent.speed = runSpeed;
-        _agent.autoBraking = false;  // Отключаем автоторможение
+        agent.updatePosition = true;
+        agent.updateRotation = false;
+        agent.acceleration = acceleration;
+        agent.speed = runSpeed;
+        agent.autoBraking = false;  // Отключаем автоторможение
     }
 
     private void Update()
@@ -77,17 +77,17 @@ public class PlayerController : MonoBehaviour
         if (animator == null) return;
 
         // Рассчитываем фактическую скорость движения
-        float targetSpeed = _agent.velocity.magnitude / runSpeed;
+        float targetSpeed = agent.velocity.magnitude / runSpeed;
         
         // Плавное изменение параметра скорости
-        _currentAnimSpeed = Mathf.SmoothDamp(
-            _currentAnimSpeed,
+        currentAnimSpeed = Mathf.SmoothDamp(
+            currentAnimSpeed,
             targetSpeed,
-            ref _animSpeedVelocity,
+            ref animSpeedVelocity,
             animationSmoothTime
         );
 
-        animator.SetFloat(speedParamName, _currentAnimSpeed);
+        animator.SetFloat(speedParamName, currentAnimSpeed);
     }
 
     private void HandleMovementInput()
@@ -95,18 +95,18 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal"); // Используем Raw для мгновенного отклика
         float vertical = Input.GetAxisRaw("Vertical");
 
-        if (_cameraTransform != null)
+        if (cameraTransform != null)
         {
-            Vector3 forward = _cameraTransform.forward;
-            Vector3 right = _cameraTransform.right;
+            Vector3 forward = cameraTransform.forward;
+            Vector3 right = cameraTransform.right;
             forward.y = 0f;
             right.y = 0f;
             forward.Normalize();
             right.Normalize();
 
             // Плавная интерполяция направления ввода
-            _movementDirection = Vector3.Lerp(
-                _movementDirection,
+            movementDirection = Vector3.Lerp(
+                movementDirection,
                 (forward * vertical + right * horizontal).normalized,
                 inputResponse * Time.deltaTime
             );
@@ -115,23 +115,23 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMovement()
     {
-        if (_movementDirection.magnitude > 0.1f)
+        if (movementDirection.magnitude > 0.1f)
         {
             // Непосредственное управление скоростью
-            _agent.velocity = _movementDirection * runSpeed;
+            agent.velocity = movementDirection * runSpeed;
         }
         else
         {
-            _agent.velocity = Vector3.zero;
+            agent.velocity = Vector3.zero;
         }
     }
 
     private void UpdateRotation()
     {
-        if (_movementDirection.sqrMagnitude > 0.01f)
+        if (movementDirection.sqrMagnitude > 0.01f)
         {
             // Более резкий поворот с использованием Lerp вместо Slerp
-            Quaternion targetRotation = Quaternion.LookRotation(_movementDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
             transform.rotation = Quaternion.Lerp(
                 transform.rotation,
                 targetRotation,

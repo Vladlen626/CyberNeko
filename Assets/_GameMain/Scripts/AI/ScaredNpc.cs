@@ -2,6 +2,7 @@
 using UnityEngine.AI;
 using System.Collections;
 
+[RequireComponent(typeof(VisorController), typeof(NavMeshAgent))]
 public class ScaredNPC : MonoBehaviour
 {
     [Header("Wander Settings")]
@@ -27,19 +28,22 @@ public class ScaredNPC : MonoBehaviour
     private Transform player;
     private bool playerInRange = false;
     private Coroutine behaviorCoroutine;
-
+    
     private FoodDroper foodDroper;
+    private VisorController visorController;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         originalSpeed = agent.speed;
-
+        
         foodDroper = GetComponent<FoodDroper>();
         if (foodDroper == null)
         {
             Debug.LogError("ScaredNPC must have FoodDroper script!");
         }
+
+        visorController = GetComponent<VisorController>();
     }
 
     void OnEnable()
@@ -88,6 +92,7 @@ public class ScaredNPC : MonoBehaviour
 
     IEnumerator WanderBehavior()
     {
+        visorController.ChooseVisor(0);
         float wanderTime = Random.Range(minWanderTime, maxWanderTime);
         float elapsedTime = 0f;
 
@@ -114,6 +119,7 @@ public class ScaredNPC : MonoBehaviour
 
     IEnumerator FleeBehavior()
     {
+        visorController.ChooseVisor(1);
         agent.speed = originalSpeed * fleeSpeedMultiplier;
         float calmDownTimer = calmDownTime;
 
