@@ -28,10 +28,18 @@ public class ScaredNPC : MonoBehaviour
     private bool playerInRange = false;
     private Coroutine behaviorCoroutine;
 
+    private FoodDroper foodDroper;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         originalSpeed = agent.speed;
+
+        foodDroper = GetComponent<FoodDroper>();
+        if (foodDroper == null)
+        {
+            Debug.LogError("ScaredNPC must have FoodDroper script!");
+        }
     }
 
     void OnEnable()
@@ -51,6 +59,7 @@ public class ScaredNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            foodDroper.TryDropFood();
         }
     }
 

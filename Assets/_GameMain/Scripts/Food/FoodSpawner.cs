@@ -83,7 +83,6 @@ public class FoodSpawner : MonoBehaviour
 
     private void HandleOnDevoured(GameObject food, IDevourable devourable)
     {
-        devourable.Hide();
         food.transform.position = GetSpawnPos();
     }
 

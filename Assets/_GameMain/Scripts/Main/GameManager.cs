@@ -1,9 +1,12 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
+    public Action OnGameStarted;
+
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private FoodManager foodManager;
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
     async UniTask GameStart()
     {     
         await enemyController.SpawnEnemies();
-        
+        OnGameStarted?.Invoke();
     }
     
     
