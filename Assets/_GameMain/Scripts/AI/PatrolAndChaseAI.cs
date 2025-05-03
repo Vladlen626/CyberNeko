@@ -13,6 +13,8 @@ public class PatrolAndChaseAI : MonoBehaviour
     [SerializeField] private float fieldOfView = 120f;
     [SerializeField] private float checkInterval = 0.3f;
 
+    [SerializeField] private GameObject exclamationMarker;
+
     // AI will lose sight of the target if the distance between them is this value
     [SerializeField] private float chaseStopDistance = 20f;
 
@@ -40,6 +42,7 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     public void Initialize(Transform[] inPatrolPoints)
     {
+        exclamationMarker.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         patrolPoints = inPatrolPoints;
         targetTransform = null;
@@ -107,6 +110,8 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     private void StopChasing()
     {
+        exclamationMarker.SetActive(false);
+
         lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
 
         isChasing = false;
@@ -159,6 +164,7 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     private void StartChasing(GameObject playerObj)
     {
+        exclamationMarker.SetActive(true);
         StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
         Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
         lastChasedPlayerStealthStatus = stealthStatus;
