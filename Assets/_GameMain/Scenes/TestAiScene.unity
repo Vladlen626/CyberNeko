@@ -284,12 +284,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 278199960}
+  - component: {fileID: 278199956}
+  - component: {fileID: 278199963}
   - component: {fileID: 278199959}
   - component: {fileID: 278199958}
-  - component: {fileID: 278199956}
   - component: {fileID: 278199955}
   - component: {fileID: 278199961}
-  - component: {fileID: 278199963}
   m_Layer: 7
   m_Name: Npc
   m_TagString: NPC
