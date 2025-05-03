@@ -3,6 +3,8 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PatrolAndChaseAI : MonoBehaviour
 {
@@ -33,6 +35,8 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     private Transform targetTransform = null;
     private Transform[] patrolPoints;
+
+    private StealthStatus lastChasedPlayerStealthStatus = null;
 
     public void Initialize(Transform[] inPatrolPoints)
     {
@@ -103,6 +107,8 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     private void StopChasing()
     {
+        lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
+
         isChasing = false;
         targetTransform = null;
         chaseTimer = 0f;
@@ -145,14 +151,18 @@ public class PatrolAndChaseAI : MonoBehaviour
             if (HasLineOfSight(hit.transform))
             {
                 targetTransform = hit.transform;
-                StartChasing();
+                StartChasing(hit.gameObject);
                 break;
             }
         }
     }
 
-    private void StartChasing()
+    private void StartChasing(GameObject playerObj)
     {
+        StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
+        Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
+        lastChasedPlayerStealthStatus = stealthStatus;
+        stealthStatus.AddToPursuer(gameObject);
         isChasing = true;
         isWaiting = false;
         chaseTimer = 0f;
