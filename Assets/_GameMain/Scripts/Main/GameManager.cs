@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(foodManager + " initialize complete");
         await pointsManager.Initialize();
         Debug.Log(pointsManager + " initialize complete");
-        await doorConnectionManager.Initialize();
+        await doorConnectionManager.Initialize(pointsManager);
         Debug.Log(doorConnectionManager + " initialize complete");
         await enemyController.Initialize();
         Debug.Log(enemyController + " initialize complete");
