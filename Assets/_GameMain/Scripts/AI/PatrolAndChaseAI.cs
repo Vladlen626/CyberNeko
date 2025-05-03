@@ -3,6 +3,8 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PatrolAndChaseAI : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class PatrolAndChaseAI : MonoBehaviour
     [SerializeField] private float detectionRange = 10f;
     [SerializeField] private float fieldOfView = 120f;
     [SerializeField] private float checkInterval = 0.3f;
+
+    [SerializeField] private GameObject exclamationMarker;
 
     // AI will lose sight of the target if the distance between them is this value
     [SerializeField] private float chaseStopDistance = 20f;
@@ -34,8 +38,11 @@ public class PatrolAndChaseAI : MonoBehaviour
     private Transform targetTransform = null;
     private Transform[] patrolPoints;
 
+    private StealthStatus lastChasedPlayerStealthStatus = null;
+
     public void Initialize(Transform[] inPatrolPoints)
     {
+        exclamationMarker.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         patrolPoints = inPatrolPoints;
         targetTransform = null;
@@ -103,6 +110,10 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     private void StopChasing()
     {
+        exclamationMarker.SetActive(false);
+
+        lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
+
         isChasing = false;
         targetTransform = null;
         chaseTimer = 0f;
@@ -145,14 +156,19 @@ public class PatrolAndChaseAI : MonoBehaviour
             if (HasLineOfSight(hit.transform))
             {
                 targetTransform = hit.transform;
-                StartChasing();
+                StartChasing(hit.gameObject);
                 break;
             }
         }
     }
 
-    private void StartChasing()
+    private void StartChasing(GameObject playerObj)
     {
+        exclamationMarker.SetActive(true);
+        StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
+        Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
+        lastChasedPlayerStealthStatus = stealthStatus;
+        stealthStatus.AddToPursuer(gameObject);
         isChasing = true;
         isWaiting = false;
         chaseTimer = 0f;
