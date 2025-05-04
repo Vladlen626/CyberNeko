@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouthTransform: {fileID: 5986940937352685311}
-  eatDuration: 2
+  eatDuration: 1
 --- !u!114 &2333102845596993768
 MonoBehaviour:
   m_ObjectHideFlags: 0

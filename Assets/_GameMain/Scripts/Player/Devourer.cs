@@ -18,9 +18,8 @@ public class Devourer : MonoBehaviour
         var foodTransform = food.transform;
         eatSequence = DOTween.Sequence();
         foodTransform.parent = mouthTransform;
-
+        AudioManager.inst.PlaySound(SoundNames.Smacking);
         eatSequence.Append(foodTransform.DOLocalJump(Vector3.zero, 1f, 1, 0.15f));
-        
         eatSequence.Append(foodTransform.DOShakeScale(
             duration: eatDuration,
             strength: 0.8f,

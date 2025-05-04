@@ -25,11 +25,11 @@ public class UIManager : MonoBehaviour
     
     public void ShowBlackScreen()
     {
-        BlackScreen.DOScale(1f, 0.1f);
+        BlackScreen.localScale = Vector3.one;
     }
 
     public void HideBlackScreen()
     {
-        BlackScreen.DOScale(0f, 0.15f);
+        BlackScreen.DOScale(0f, 0.12f);
     }
 }
