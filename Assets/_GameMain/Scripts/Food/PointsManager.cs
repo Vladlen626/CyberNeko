@@ -12,7 +12,7 @@ public class PointsManager : MonoBehaviour
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _key;
     [FormerlySerializedAs("_text")] [SerializeField] private TextMeshProUGUI _scoreTmp;
-    [SerializeField] private int _targetPoints = 10;
+    [SerializeField] private int _targetPoints = 500;
 
     [Header("Additional settings")] [SerializeField]
     private int pointsMultiplier = 10;
@@ -76,7 +76,7 @@ public class PointsManager : MonoBehaviour
     private void SetGoalPoints(int points)
     {
         goalPoints = points;
-        if (goalPoints == _targetPoints)
+        if (goalPoints > _targetPoints)
         {
             GoalReach();
         }

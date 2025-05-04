@@ -46,9 +46,13 @@ public class ScaredNPC : MonoBehaviour
         visorController = GetComponent<VisorController>();
     }
 
+    public void Initialize(Transform playerTransform)
+    {
+        
+    }
+    
     void OnEnable()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         behaviorCoroutine = StartCoroutine(BehaviorStateMachine());
     }
 
@@ -62,6 +66,7 @@ public class ScaredNPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            player = other.transform;
             playerInRange = true;
             _foodDropper.TryDropFood();
         }

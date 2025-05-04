@@ -125,7 +125,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: cff61b87d419acb4e9987b8e797641f0, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 1b15e76457082f142b467ee33d30379d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &2577145128360538037
 MonoBehaviour:
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
+  m_UseGeometry: 1
+  m_DefaultArea: 3
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
@@ -157,5 +157,5 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: ae625d4faadca9f43b04fc728180880e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8d6743fc151952f49a3416b13057e29c, type: 2}
   m_BuildHeightMesh: 0

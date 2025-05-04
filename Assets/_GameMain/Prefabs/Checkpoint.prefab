@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 755657916999394759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,7 +61,8 @@ Transform:
   m_LocalPosition: {x: -1.04, y: 1.33, z: -0.307}
   m_LocalScale: {x: 0.21237308, y: 1.1758771, z: 0.21237308}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8325444517958678437}
   m_Father: {fileID: 3923306305685262019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7816075879739847898
@@ -148,7 +149,6 @@ Transform:
   m_Children:
   - {fileID: 9200709820652080922}
   - {fileID: 8571602471508797962}
-  - {fileID: 8325444517958678437}
   m_Father: {fileID: 2488020954287555924}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4663186483807042453
@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 2488020954287555924}
   - component: {fileID: 4519887140490361525}
   - component: {fileID: 4530901860631904332}
+  - component: {fileID: 3047842967404492902}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -199,8 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTransform: {fileID: 919154608134529970}
-  pillar: {fileID: 0}
-  isActive: 1
+  pillar: {fileID: 1831954932551568383}
+  isActive: 0
 --- !u!114 &4530901860631904332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,6 +778,27 @@ MonoBehaviour:
     - {x: 0.7063923, y: 0.04494747, z: 0.706392}
     - {x: 0.34110048, y: 0.6646991, z: 0.6646996}
     - {x: 0.17692533, y: 0.69595146, z: 0.6959518}
+--- !u!135 &3047842967404492902
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4663186483807042453}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8423046838912423328
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,11 +912,11 @@ Transform:
   m_GameObject: {fileID: 8486033774651012781}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5196177, y: 0.43300474, z: -0.4715207, w: 0.56583804}
-  m_LocalPosition: {x: -1.029, y: 2.837, z: -0.329}
-  m_LocalScale: {x: 0.8411623, y: 0.02615755, z: 0.57935274}
+  m_LocalPosition: {x: 0.05179525, y: 1.2815964, z: -0.1035912}
+  m_LocalScale: {x: 0.7349361, y: 0.12303671, z: 2.379411}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3923306305685262019}
+  m_Father: {fileID: 8571602471508797962}
   m_LocalEulerAnglesHint: {x: -10.352, y: 85.043, z: -89.107}
 --- !u!33 &333905577469863037
 MeshFilter:

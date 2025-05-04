@@ -52,7 +52,6 @@ public class HideBox : MonoBehaviour
             {
                 _hiddenPlayer = null;
                 DropPlayer();
-                
             }
         }
     }
@@ -60,7 +59,7 @@ public class HideBox : MonoBehaviour
     private void HidePlayerInside(Transform player)
     {
         AudioManager.inst.PlaySound(SoundNames.InBox);
-        player.DOMove(PlayerHidePos, 0.15f);
+        player.DOMove(PlayerHidePos + Vector3.up * 0.5f, 0.15f);
         transform.DOJump(PlayerHidePos, 1.5f, 1, 0.18f);
     }
 

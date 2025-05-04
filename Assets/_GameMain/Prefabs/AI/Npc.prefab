@@ -722,6 +722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2806337656749504276}
   - component: {fileID: 6114266251305718721}
+  - component: {fileID: 8953478359998070086}
   m_Layer: 0
   m_Name: Tanuki
   m_TagString: Untagged
@@ -768,6 +769,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8953478359998070086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294890648488603054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea35ce28535e1043844c9d56f086f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: NpcStep
 --- !u!1 &3350014959018479349
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,7 +1242,6 @@ MonoBehaviour:
   speedParamName: Speed
   smoothTime: 0.1
   maxAnimationSpeed: 1
-  minMovementSpeed: 0.1
   _agent: {fileID: 4036843249524383560}
   _animator: {fileID: 6114266251305718721}
 --- !u!114 &5499007765368756321
