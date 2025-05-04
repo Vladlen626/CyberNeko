@@ -30,11 +30,6 @@ public class DoorsConnection
         }
     }
 
-    public List<Door> Doors
-    {
-        get => _doors;
-    }
-
     private void OpenAllConnectedDoors()
     {
         foreach (var door in _doors)

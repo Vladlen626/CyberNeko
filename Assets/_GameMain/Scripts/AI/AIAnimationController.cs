@@ -10,7 +10,6 @@ public class AIAnimatorController : MonoBehaviour
     
     [Header("Speed Settings")]
     [SerializeField] private float maxAnimationSpeed = 1f;
-    [SerializeField] private float minMovementSpeed = 0.1f;
 
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Animator _animator;

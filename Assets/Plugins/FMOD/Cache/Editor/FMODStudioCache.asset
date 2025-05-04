@@ -89,7 +89,7 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638819367917375402
+  lastModified: 638819379113886461
   FileSizes:
   - Name: Desktop
     Value: 153056
@@ -184,7 +184,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4999473539663165233}
   cacheVersion: 131847
-  cacheTime: 638819367917375402
+  cacheTime: 638819379113886461
   SerializableEventsDict:
   - key: event:/Background
     index: 0

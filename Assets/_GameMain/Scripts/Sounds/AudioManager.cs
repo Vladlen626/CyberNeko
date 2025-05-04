@@ -29,10 +29,11 @@ public class AudioManager : MonoBehaviour
       {
          inst = this;
       }
+
+      Initialize();
    }
    
-
-   private void InitSoundDictionary()
+   private void Initialize()
    {
       soundDictionary = new Dictionary<string, EventReference>();
       foreach (var sound in sounds)

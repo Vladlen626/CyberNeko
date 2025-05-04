@@ -39,12 +39,10 @@ public class Door : MonoBehaviour
 
     private void HideObject(Transform objectToHide)
     {
-        //SOUNDS
-        //RuntimeManager.PlayOneShot(specialEvent, transform.position);
+        AudioManager.inst.PlaySound(SoundNames.DoorOpen);
         objectToHide.DOJump(objectToHide.position += Vector3.up * 3, 1,1, 0.75f)
             .OnComplete(() =>
             {
-                //RuntimeManager.PlayOneShot(poofObjectEvent);
                 objectToHide.DOScale(0, 0.25f);
             });
     }

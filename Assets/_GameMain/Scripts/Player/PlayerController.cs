@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public void Grabbed()
     {
+        AudioManager.inst.PlaySound(SoundNames.ScaredMeow_1);
         grabbed = true;
         OnGrabbed.Invoke();
     }

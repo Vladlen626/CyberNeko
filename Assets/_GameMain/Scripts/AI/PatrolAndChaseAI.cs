@@ -114,8 +114,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     
     private void StartChasing(GameObject playerObj)
     {
-        exclamationMarker.SetActive(true);
-        visorController.ChooseVisor(1);
+        Alert();
         StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
         Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
         lastChasedPlayerStealthStatus = stealthStatus;
@@ -123,6 +122,13 @@ public class PatrolAndChaseAI : MonoBehaviour
         isChasing = true;
         isWaiting = false;
         chaseTimer = 0f;
+    }
+
+    private void Alert()
+    {
+        AudioManager.inst.PlaySound(SoundNames.Alert);
+        exclamationMarker.SetActive(true);
+        visorController.ChooseVisor(1);
     }
 
     private void StopChasing()
@@ -142,6 +148,7 @@ public class PatrolAndChaseAI : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator PlayerDetectionRoutine()
     {
         while (true)

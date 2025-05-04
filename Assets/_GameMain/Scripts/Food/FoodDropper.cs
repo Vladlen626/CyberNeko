@@ -17,8 +17,6 @@ public class FoodDropper : MonoBehaviour
 
     private GameManager _gameManager;
 
-    private float _timeBeforeDestroy = 2f;
-
     public void CleanUp()
     {
         foreach (var food in _spawnedFoods)
