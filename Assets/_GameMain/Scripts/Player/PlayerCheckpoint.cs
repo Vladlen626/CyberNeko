@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class PlayerCheckpoint : MonoBehaviour
 {
+    public Action<PlayerCheckpoint> OnActivate;
+    
     [SerializeField] private Transform spawnTransform;
     [SerializeField] private GameObject pillar;
 
@@ -14,7 +17,7 @@ public class PlayerCheckpoint : MonoBehaviour
         pillar.SetActive(isActive);
     }
 
-    private void ActivateCheckpoint()
+    public void ActivateCheckpoint()
     {
         isActive = true;
         pillar.SetActive(isActive);
@@ -23,5 +26,13 @@ public class PlayerCheckpoint : MonoBehaviour
     public Vector3 GetSpawnPosition()
     {
         return spawnTransform.position;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            OnActivate.Invoke(this);
+        }
     }
 }

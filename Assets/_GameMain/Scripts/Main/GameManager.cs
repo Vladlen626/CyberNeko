@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private FoodManager foodManager;
     [SerializeField] private PointsManager pointsManager;
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private DoorConnectionManager doorConnectionManager;
 
     private static GameManager _instance;
@@ -45,6 +46,8 @@ public class GameManager : MonoBehaviour
     //single point of entry
     async UniTask InitializeAll()
     {
+        await uiManager.Initialize();
+        Debug.Log(uiManager + " initialize complete");
         await pointsManager.Initialize();
         Debug.Log(pointsManager + " initialize complete");
         await foodManager.Initialize(pointsManager);
@@ -62,6 +65,9 @@ public class GameManager : MonoBehaviour
     {     
         await enemyController.SpawnEnemies();
         playerManager.SpawnPlayer();
+        await UniTask.WaitForSeconds(1f, true);
+        uiManager.HideBlackScreen();
+        await UniTask.WaitForSeconds(0.15f, true);
         foodManager.RespawnFood();
     }
     

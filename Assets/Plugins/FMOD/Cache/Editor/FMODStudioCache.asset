@@ -66,7 +66,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 55799
+  Length: 113454
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4999473539663165233}
   cacheVersion: 131847
-  cacheTime: 638813635663856357
+  cacheTime: 638819327831068722
   SerializableEventsDict:
   - key: event:/Background
     index: 0
@@ -111,10 +111,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638813635663830744
+  lastModified: 638819327831068722
   FileSizes:
   - Name: Desktop
-    Value: 765344
+    Value: 1742848
   Exists: 1
 --- !u!114 &4999473539663165233
 MonoBehaviour:

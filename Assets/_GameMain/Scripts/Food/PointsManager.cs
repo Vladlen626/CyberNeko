@@ -1,4 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -7,7 +9,7 @@ public class PointsManager : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _key;
-    //[SerializeField] private Text _text;
+    [SerializeField] private TextMeshProUGUI _text;
 
     [SerializeField] private int _targetPoints = 10;
 
@@ -46,8 +48,15 @@ public class PointsManager : MonoBehaviour
 
     private void SetCurPoints(int points)
     {
+        UpdateUiScoreText(_text, _curPoints, points);
         _curPoints = points;
-        _slider.value = _curPoints;
-        //_text.text = _curPoints;
+        _slider.DOValue(_curPoints, 0.15f);
+    }
+    
+    private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)
+    {
+        DOTween.To(() => oldScore, x => oldScore = x, newScore, 0.25f)
+            .OnUpdate(() =>  scoreTmp.text = oldScore.ToString())
+            .SetEase(Ease.Linear);
     }
 }
