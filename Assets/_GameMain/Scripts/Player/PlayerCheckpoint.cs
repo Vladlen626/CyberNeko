@@ -19,6 +19,10 @@ public class PlayerCheckpoint : MonoBehaviour
 
     public void ActivateCheckpoint()
     {
+        if (!isActive)
+        {
+            AudioManager.inst.PlaySound(SoundNames.ScaredMeow_2);
+        }
         isActive = true;
         pillar.SetActive(isActive);
     }

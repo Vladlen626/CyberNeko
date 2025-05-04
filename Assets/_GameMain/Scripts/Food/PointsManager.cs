@@ -92,7 +92,10 @@ public class PointsManager : MonoBehaviour
 
     private void GoalReach()
     {
-        AudioManager.inst.PlaySound(SoundNames.GoalComplete);
+        if (!IsKeyActive())
+        {
+            AudioManager.inst.PlaySound(SoundNames.GoalComplete);
+        }
         _key.SetActive(true);
     }
 }
