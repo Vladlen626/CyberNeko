@@ -49,6 +49,7 @@ public class PatrolAndChaseAI : MonoBehaviour
         visorController = GetComponent<VisorController>();
         patrolPoints = inPatrolPoints;
         targetTransform = null;
+        isChasing = false;
         if (patrolPoints.Length > 0)
         {
             agent.destination = patrolPoints[curPatrolPointIndex].position;

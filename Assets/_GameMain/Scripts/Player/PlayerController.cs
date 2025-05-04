@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Unity.Cinemachine;
@@ -7,6 +8,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerController : MonoBehaviour
 {
+    public Action OnGrabbed;
+    
     [Header("Movement Settings")]
     [SerializeField] private float runSpeed = 8f;        
     [SerializeField] private float rotationSpeed = 25f; 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private float currentAnimSpeed;
     private float animSpeedVelocity;
     private bool Initialized;
+    private bool grabbed;
 
     public void Initialize()
     {
@@ -33,9 +37,20 @@ public class PlayerController : MonoBehaviour
         Initialized = true;
     }
 
+    public void Respawn()
+    {
+        grabbed = false;
+    }
+
     public void SetupCamera(Transform inCameraTransform)
     {
         cameraTransform = inCameraTransform;
+    }
+
+    public void Grabbed()
+    {
+        grabbed = true;
+        OnGrabbed.Invoke();
     }
 
     // _____________ Private _____________
@@ -82,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovementInput()
     {
+        if (grabbed) return;
         float horizontal = Input.GetAxisRaw("Horizontal"); // Используем Raw для мгновенного отклика
         float vertical = Input.GetAxisRaw("Vertical");
 

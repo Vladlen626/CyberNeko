@@ -5,7 +5,6 @@ using UnityEngine;
 // Local for every player
 public class StealthStatus : MonoBehaviour
 {
-
     private List<GameObject> _pursuers = new List<GameObject>();
 
     public bool IsStealthActive()

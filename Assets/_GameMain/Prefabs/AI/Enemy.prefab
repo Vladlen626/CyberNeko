@@ -1912,6 +1912,8 @@ GameObject:
   - component: {fileID: 662143402874356624}
   - component: {fileID: 7739365540925993526}
   - component: {fileID: 7182396080438041754}
+  - component: {fileID: 7582571341795821933}
+  - component: {fileID: 8472085277708058469}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2014,6 +2016,39 @@ MonoBehaviour:
   visors:
   - {fileID: 2439720821821212865}
   - {fileID: 3227495346351210134}
+--- !u!114 &7582571341795821933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf74ec5f5dcf5043989d17910bdf010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &8472085277708058469
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &9193191291833008214
 GameObject:
   m_ObjectHideFlags: 0

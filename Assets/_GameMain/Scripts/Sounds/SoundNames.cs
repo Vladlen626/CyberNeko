@@ -5,6 +5,16 @@
 
 public static class SoundNames
 {
-    public const string Boop = "boop";
+    public const string Button = "Button";
+    public const string Alert = "Alert";
+    public const string DoorOpen = "DoorOpen";
+    public const string EnemyStep = "EnemyStep";
+    public const string PlayerStep = "PlayerStep";
+    public const string PrincessMeow = "PrincessMeow";
+    public const string Smacking = "Smacking";
+    public const string ScaredMeow_1 = "ScaredMeow_1";
+    public const string ScaredMeow_2 = "ScaredMeow_2";
+    public const string InBox = "InBox";
+    public const string OutBox = "OutBox";
 
 }

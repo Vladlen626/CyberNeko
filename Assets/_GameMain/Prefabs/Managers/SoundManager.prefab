@@ -45,7 +45,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1be55ff321ce04a951e48764123c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Button
+    eventReference:
+      Guid:
+        Data1: 1993403389
+        Data2: 1166339485
+        Data3: -1663211601
+        Data4: 1378604763
+      Path: event:/Button
+  - name: Alert
+    eventReference:
+      Guid:
+        Data1: -200089815
+        Data2: 1134236445
+        Data3: -1869434459
+        Data4: -435282377
+      Path: event:/Alert
+  - name: DoorOpen
+    eventReference:
+      Guid:
+        Data1: -334823881
+        Data2: 1285793246
+        Data3: -564519756
+        Data4: 656523353
+      Path: event:/DoorOpen
+  - name: EnemyStep
+    eventReference:
+      Guid:
+        Data1: -151088378
+        Data2: 1144617383
+        Data3: 1496559546
+        Data4: -695882846
+      Path: event:/EnemyStep
+  - name: PlayerStep
+    eventReference:
+      Guid:
+        Data1: -1423889018
+        Data2: 1108560030
+        Data3: 1003116210
+        Data4: 1021650494
+      Path: event:/PlayerStep
+  - name: PrincessMeow
+    eventReference:
+      Guid:
+        Data1: -318133418
+        Data2: 1127900767
+        Data3: 1292845193
+        Data4: -809096904
+      Path: event:/PrincessMeow
+  - name: Smacking
+    eventReference:
+      Guid:
+        Data1: -1557497380
+        Data2: 1334194026
+        Data3: 940499647
+        Data4: 246531019
+      Path: event:/Smacking
+  - name: ScaredMeow_1
+    eventReference:
+      Guid:
+        Data1: 1889114930
+        Data2: 1173659054
+        Data3: 100399762
+        Data4: -409078385
+      Path: event:/ScaredMeow 1
+  - name: ScaredMeow_2
+    eventReference:
+      Guid:
+        Data1: 1563201678
+        Data2: 1145783708
+        Data3: 1359757210
+        Data4: -1610036843
+      Path: event:/ScaredMeow 2
+  - name: InBox
+    eventReference:
+      Guid:
+        Data1: 1768556264
+        Data2: 1292374559
+        Data3: 200683664
+        Data4: 504523105
+      Path: event:/InBox
+  - name: OutBox
+    eventReference:
+      Guid:
+        Data1: -358338684
+        Data2: 1247984348
+        Data3: 87507092
+        Data4: -1319273894
+      Path: event:/OutBox
 --- !u!114 &2722204158453759642
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9054403156225348343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/InBox
+  m_EditorClassIdentifier: 
+  Path: event:/InBox
+  Guid:
+    Data1: 1768556264
+    Data2: 1292374559
+    Data3: 200683664
+    Data4: 504523105
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4923461870360748707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ScaredMeow 2
+  m_EditorClassIdentifier: 
+  Path: event:/ScaredMeow 2
+  Guid:
+    Data1: 1563201678
+    Data2: 1145783708
+    Data3: 1359757210
+    Data4: -1610036843
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3972687658970247347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +69,7 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638813635663626895
+  lastModified: 638819367916985669
   FileSizes:
   - Name: Desktop
     Value: 1298
@@ -35,10 +89,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638813635663856357
+  lastModified: 638819367917375402
   FileSizes:
   - Name: Desktop
-    Value: 506
+    Value: 153056
   Exists: 1
 --- !u!114 &-2974425621559183344
 MonoBehaviour:
@@ -67,6 +121,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 113454
+--- !u!114 &-882504333726287214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/DoorOpen
+  m_EditorClassIdentifier: 
+  Path: event:/DoorOpen
+  Guid:
+    Data1: -334823881
+    Data2: 1285793246
+    Data3: -564519756
+    Data4: 656523353
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,16 +167,103 @@ MonoBehaviour:
   - {fileID: -3323273531003551900}
   EditorEvents:
   - {fileID: -2974425621559183344}
+  - {fileID: 1498807869069741858}
+  - {fileID: 759562978597541706}
+  - {fileID: 5950726463684920836}
+  - {fileID: -882504333726287214}
+  - {fileID: 4390459972644218994}
+  - {fileID: 8147023875430124017}
+  - {fileID: 1111995208686147847}
+  - {fileID: -4923461870360748707}
+  - {fileID: 6930088395302221461}
+  - {fileID: -9054403156225348343}
+  - {fileID: 2106988927397394847}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3972687658970247347}
   StringsBanks:
   - {fileID: 4999473539663165233}
   cacheVersion: 131847
-  cacheTime: 638819327831068722
+  cacheTime: 638819367917375402
   SerializableEventsDict:
   - key: event:/Background
     index: 0
+  - key: event:/EnemyStep
+    index: 1
+  - key: event:/Alert
+    index: 2
+  - key: event:/ScaredMeow 1
+    index: 3
+  - key: event:/DoorOpen
+    index: 4
+  - key: event:/PrincessMeow
+    index: 5
+  - key: event:/OutBox
+    index: 6
+  - key: event:/PlayerStep
+    index: 7
+  - key: event:/ScaredMeow 2
+    index: 8
+  - key: event:/Smacking
+    index: 9
+  - key: event:/InBox
+    index: 10
+  - key: event:/Button
+    index: 11
+--- !u!114 &759562978597541706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Alert
+  m_EditorClassIdentifier: 
+  Path: event:/Alert
+  Guid:
+    Data1: -200089815
+    Data2: 1134236445
+    Data3: -1869434459
+    Data4: -435282377
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &1111995208686147847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/PlayerStep
+  m_EditorClassIdentifier: 
+  Path: event:/PlayerStep
+  Guid:
+    Data1: -1423889018
+    Data2: 1108560030
+    Data3: 1003116210
+    Data4: 1021650494
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &1425687596871027506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +284,87 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1742848
   Exists: 1
+--- !u!114 &1498807869069741858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EnemyStep
+  m_EditorClassIdentifier: 
+  Path: event:/EnemyStep
+  Guid:
+    Data1: -151088378
+    Data2: 1144617383
+    Data3: 1496559546
+    Data4: -695882846
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &2106988927397394847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Button
+  m_EditorClassIdentifier: 
+  Path: event:/Button
+  Guid:
+    Data1: 1993403389
+    Data2: 1166339485
+    Data3: -1663211601
+    Data4: 1378604763
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &4390459972644218994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/PrincessMeow
+  m_EditorClassIdentifier: 
+  Path: event:/PrincessMeow
+  Guid:
+    Data1: -318133418
+    Data2: 1127900767
+    Data3: 1292845193
+    Data4: -809096904
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &4999473539663165233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,8 +380,89 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638813635663637495
+  lastModified: 638819367917092399
   FileSizes:
   - Name: Desktop
-    Value: 898
+    Value: 1378
   Exists: 1
+--- !u!114 &5950726463684920836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ScaredMeow 1
+  m_EditorClassIdentifier: 
+  Path: event:/ScaredMeow 1
+  Guid:
+    Data1: 1889114930
+    Data2: 1173659054
+    Data3: 100399762
+    Data4: -409078385
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 300
+--- !u!114 &6930088395302221461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Smacking
+  m_EditorClassIdentifier: 
+  Path: event:/Smacking
+  Guid:
+    Data1: -1557497380
+    Data2: 1334194026
+    Data3: 940499647
+    Data4: 246531019
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1763
+--- !u!114 &8147023875430124017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/OutBox
+  m_EditorClassIdentifier: 
+  Path: event:/OutBox
+  Guid:
+    Data1: -358338684
+    Data2: 1247984348
+    Data3: 87507092
+    Data4: -1319273894
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0

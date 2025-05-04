@@ -37,9 +37,15 @@ public class PlayerManager : MonoBehaviour
         {
             if (playerCheckpoint.isActive)
             {
+                _playerController.Respawn();
                 _playerController.transform.position = playerCheckpoint.GetSpawnPosition();
             }
         }
+    }
+
+    public PlayerController GetPlayerController()
+    {
+        return _playerController;
     }
 
     // _____________ Private _____________
