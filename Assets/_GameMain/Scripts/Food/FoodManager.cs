@@ -2,43 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(FoodSpawner))]
 public class FoodManager : MonoBehaviour
 {
-    private readonly HashSet<FoodSpawner> _spawners = new();
-
-    public async UniTask Initialize()
+    private FoodSpawner _foodSpawner;
+    private FoodDropper[] _foodDroppers;
+    
+    public async UniTask Initialize(PointsManager pointsManager)
     {
-        FoodSpawner[] spawners = FindObjectsByType<FoodSpawner>(
-            FindObjectsInactive.Include,
-            FindObjectsSortMode.None
-        );
+        _foodSpawner = GetComponent<FoodSpawner>();
+        _foodSpawner.Initialize(pointsManager);
+
+        _foodDroppers = FindObjectsByType<FoodDropper>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        await UniTask.Yield();
+    }
+
+    public void RespawnFood()
+    {
+        foreach (var foodDropper in _foodDroppers)
+        {
+            foodDropper.CleanUp();
+        }
         
-        foreach (var spawner in spawners)
-        {
-            RegisterSpawner(spawner);
-        }
-
-        await UniTask.Yield();
+        _foodSpawner.ResetAllFood();
     }
-
-    public async UniTask SpawnFood()
-    {
-        foreach (FoodSpawner spawner in _spawners)
-        {
-            spawner.TrySpawn();
-        }
-
-        await UniTask.Yield();
-    }
-
-    private void RegisterSpawner(FoodSpawner spawner)
-    {
-        _spawners.Add(spawner);
-        spawner.Init();
-    }
-
-    private void UnregisterSpawner(FoodSpawner spawner)
-    {
-        _spawners.Remove(spawner);
-    }
+    
 }

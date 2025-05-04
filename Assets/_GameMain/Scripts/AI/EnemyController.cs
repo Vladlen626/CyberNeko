@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private bool isSpawnEnemies;
     [SerializeField] private Transform[] enemyPositions;
     [SerializeField] private GameObject enemyPrefab;
     private Dictionary<GameObject, PatrolAndChaseAI> enemyScriptDict = new Dictionary<GameObject, PatrolAndChaseAI>();
@@ -29,6 +30,7 @@ public class EnemyController : MonoBehaviour
 
     public async UniTask SpawnEnemies()
     {
+        if (!isSpawnEnemies) return;
         foreach (var (enemy, posTransform) in enemyPosDict)
         {
             SpawnEnemy(enemy, posTransform);

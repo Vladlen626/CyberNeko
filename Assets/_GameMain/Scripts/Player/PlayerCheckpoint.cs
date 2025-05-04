@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerCheckpoint : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private Transform spawnTransform;
     [SerializeField] private GameObject pillar;
 
-    private bool isActive;
+    public bool isActive;
 
     public void DeactivateCheckpoint()
     {
@@ -17,5 +18,10 @@ public class PlayerCheckpoint : MonoBehaviour
     {
         isActive = true;
         pillar.SetActive(isActive);
+    }
+
+    public Vector3 GetSpawnPosition()
+    {
+        return spawnTransform.position;
     }
 }

@@ -17,9 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string speedParamName = "Speed";
     [SerializeField] private float animationSmoothTime = 0.1f;
     [SerializeField] private Animator animator;
-    
-    [Header("Cinemachine")]
-    [SerializeField] private CinemachineCamera playerFollowCamera;
 
     private NavMeshAgent agent;
     private Transform cameraTransform;
@@ -33,22 +30,15 @@ public class PlayerController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         SetupAgent();
-        CacheCamera();
         Initialized = true;
     }
 
-    private void CacheCamera()
+    public void SetupCamera(Transform inCameraTransform)
     {
-        if (playerFollowCamera != null)
-        {
-            cameraTransform = playerFollowCamera.transform;
-        }
-        else
-        {
-            Debug.LogError("Cinemachine Virtual Camera not assigned!");
-        }
+        cameraTransform = inCameraTransform;
     }
 
+    // _____________ Private _____________
     private void SetupAgent()
     {
         agent.updatePosition = true;

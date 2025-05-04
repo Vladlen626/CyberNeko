@@ -5,8 +5,6 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    public Action OnGameStarted;
-
     [SerializeField] private EnemyController enemyController;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private FoodManager foodManager;
@@ -47,12 +45,13 @@ public class GameManager : MonoBehaviour
     //single point of entry
     async UniTask InitializeAll()
     {
-        await foodManager.Initialize();
-        Debug.Log(foodManager + " initialize complete");
         await pointsManager.Initialize();
         Debug.Log(pointsManager + " initialize complete");
+        await foodManager.Initialize(pointsManager);
+        Debug.Log(foodManager + " initialize complete");
         await doorConnectionManager.Initialize(pointsManager);
         Debug.Log(doorConnectionManager + " initialize complete");
+        
         await enemyController.Initialize();
         Debug.Log(enemyController + " initialize complete");
         await playerManager.Initialize();
@@ -62,7 +61,8 @@ public class GameManager : MonoBehaviour
     async UniTask GameStart()
     {     
         await enemyController.SpawnEnemies();
-        OnGameStarted?.Invoke();
+        playerManager.SpawnPlayer();
+        foodManager.RespawnFood();
     }
     
     
@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
     async UniTask GameUpdate()
     {
         await UniTask.Yield(PlayerLoopTiming.Update);
-        
     }
 
     void QuitGame()

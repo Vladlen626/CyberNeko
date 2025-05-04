@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7908063586867742336}
   - component: {fileID: 4593134372720367121}
   - component: {fileID: 8557469580525710239}
+  - component: {fileID: 5250190310173136730}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9493d2f24d8ea9a4bbbcaa47f2daebe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  borders: []
 --- !u!135 &8557469580525710239
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -121,3 +123,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.0900538
   m_Center: {x: -0.6, y: 0, z: -0.00000023560298}
+--- !u!114 &5250190310173136730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417496745008017726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

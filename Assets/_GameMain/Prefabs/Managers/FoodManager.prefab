@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6983446321488327106}
   - component: {fileID: 4131526254753673517}
+  - component: {fileID: 1374101781578871836}
   m_Layer: 0
   m_Name: FoodManager
   m_TagString: Untagged
@@ -44,3 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21eafda89c6d3ec4fa544b0a92a03f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1374101781578871836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678811586101532914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9107cce52d1b54699d4f399484e75b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodPrefabs:
+  - {fileID: 6485302685126882877, guid: f60d1e44c6cf5d844ae7eabf6dc9b978, type: 3}
+  - {fileID: 8964320718663566248, guid: 9aa70ca7ef06c91429d9b1e4ceb90336, type: 3}
+  - {fileID: 8185411587956066978, guid: 6a72200cf8bf9d74a9550027abee716f, type: 3}
+  - {fileID: 2272027950512634726, guid: 845d73db4f77fb84a880d9a82bfe9e30, type: 3}
+  - {fileID: 2893761682144439357, guid: d3c45fa96a17acd4b9f1f527f79e1f7b, type: 3}
+  - {fileID: 229007165531359782, guid: fbe50bbc6fef387449b623f4e30b20fd, type: 3}
+  - {fileID: 9094421414382224402, guid: e5d53d2f3a2e65b4bb051b1155901665, type: 3}
+  - {fileID: 2691481576776634905, guid: 4b48ab7c1da864a40b2682a3cdb5e116, type: 3}
+  - {fileID: 1353167798440850273, guid: 77c61920a911d1447b816fcd571bfd89, type: 3}

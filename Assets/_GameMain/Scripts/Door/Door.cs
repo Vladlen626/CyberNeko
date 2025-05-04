@@ -41,11 +41,11 @@ public class Door : MonoBehaviour
     {
         //SOUNDS
         //RuntimeManager.PlayOneShot(specialEvent, transform.position);
-        transform.DOJump(transform.position += Vector3.up * 3, 1,1, 0.75f)
+        objectToHide.DOJump(objectToHide.position += Vector3.up * 3, 1,1, 0.75f)
             .OnComplete(() =>
             {
                 //RuntimeManager.PlayOneShot(poofObjectEvent);
-                transform.DOScale(0, 0.25f);
+                objectToHide.DOScale(0, 0.25f);
             });
     }
 
