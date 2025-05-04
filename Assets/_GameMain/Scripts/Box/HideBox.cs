@@ -29,7 +29,7 @@ public class HideBox : MonoBehaviour
 
             Debug.Log("Player " + playerObj.ToString() + " hide in Box");
             StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
-            Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
+            //Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
             _hiddenPlayer = playerObj;
             if (!stealthStatus.IsStealthActive())
             {

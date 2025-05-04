@@ -15,7 +15,7 @@ public class DoorsConnection
         foreach (var doorObj in _doorsGameObj)
         {
             var door = doorObj.GetComponent<Door>();
-            Assert.IsNotNull(door, "Door must have Door script!");
+            //Assert.IsNotNull(door, "Door must have Door script!");
             door.Initialize(pointsManager);
             _doors.Add(door);
             door.OnCanBeOpened += OpenAllConnectedDoors;

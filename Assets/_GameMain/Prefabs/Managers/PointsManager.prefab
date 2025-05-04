@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 0}
   _key: {fileID: 0}
-  _text: {fileID: 0}
+  _scoreTmp: {fileID: 0}
   _targetPoints: 100
+  pointsMultiplier: 10

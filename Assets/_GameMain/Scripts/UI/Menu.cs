@@ -1,4 +1,6 @@
 using System;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +21,8 @@ public class Menu : MonoBehaviour
     [SerializeField] private Transform upPosition;
     [SerializeField] private Transform bottomPosition;
     [SerializeField] private Transform CenterPosition;
+
+    [Header("Text")] [SerializeField] private TextMeshProUGUI _pointsTextMeshProUGUI;
     
     private bool isPaused;
     
@@ -30,11 +34,18 @@ public class Menu : MonoBehaviour
         quitButton.onClick.AddListener(QuitGame);
     }
     
-    public void GameOver()
+    public void GameOver(int points)
     {
-        Time.timeScale = 1;
         gameOverMenuPanel.SetActive(true);
+        UpdateUiScoreText(_pointsTextMeshProUGUI, 0, points);
         OpenMenu();
+    }
+    
+    private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)
+    {
+        DOTween.To(() => oldScore, x => oldScore = x, newScore, 0.25f)
+            .OnUpdate(() =>  scoreTmp.text = oldScore.ToString())
+            .SetEase(Ease.Linear);
     }
     
     public void CloseMenu()

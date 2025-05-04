@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         playerManager.ShakePlayerCamera();
         await UniTask.WaitForSeconds(1f, true);
         AudioManager.inst.PlaySound(SoundNames.GameOver);
-        uiManager.GetMenu().GameOver();
+        uiManager.GetMenu().GameOver(pointsManager.GetCurrentPoints());
     }
 
     private async UniTask Respawn()

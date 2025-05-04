@@ -1073,6 +1073,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3943541561927005248}
   m_SourcePrefab: {fileID: 100100000, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
+--- !u!114 &88652317948570964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3177372641541684864, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
+  m_PrefabInstance: {fileID: 3252372186101715924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &217695926839038652 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3325862212865507688, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
@@ -1186,6 +1197,7 @@ MonoBehaviour:
   upPosition: {fileID: 0}
   bottomPosition: {fileID: 0}
   CenterPosition: {fileID: 0}
+  _pointsTextMeshProUGUI: {fileID: 88652317948570964}
 --- !u!114 &3943541561927005248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,6 +1464,10 @@ PrefabInstance:
       propertyPath: _slider
       value: 
       objectReference: {fileID: 8751219974718627709}
+    - target: {fileID: 5884379064241650151, guid: 924eb7863b5203a4386cd40c90c93916, type: 3}
+      propertyPath: _scoreTmp
+      value: 
+      objectReference: {fileID: 217695926839038652}
     - target: {fileID: 9077109515771597011, guid: 924eb7863b5203a4386cd40c90c93916, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.5832014

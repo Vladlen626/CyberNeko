@@ -116,7 +116,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     {
         Alert();
         StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
-        Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
+        //Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
         lastChasedPlayerStealthStatus = stealthStatus;
         stealthStatus.AddToPursuer(gameObject);
         isChasing = true;

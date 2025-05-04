@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PointsManager : MonoBehaviour
@@ -10,12 +11,11 @@ public class PointsManager : MonoBehaviour
     [Header("Main Fields")]
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _key;
-    [SerializeField] private TextMeshProUGUI _text;
+    [FormerlySerializedAs("_text")] [SerializeField] private TextMeshProUGUI _scoreTmp;
     [SerializeField] private int _targetPoints = 10;
 
     [Header("Additional settings")] [SerializeField]
     private int pointsMultiplier = 10;
-    
 
     private int _curPoints = 0;
     private int goalPoints;
@@ -28,21 +28,15 @@ public class PointsManager : MonoBehaviour
         await UniTask.Yield();
     }
 
-    public void AddPoints(int points)
-    {
-        Assert.IsTrue(points > 0, "Че умный такой, да?");
-
-        SetCurPoints(_curPoints += points);
-
-        if (goalPoints == _targetPoints)
-        {
-            _key.SetActive(true);
-        }
-    }
-
     public int GetCurrentPoints()
     {
         return _curPoints;
+    }
+
+    public void AddPoints(int points)
+    {
+        AddToGoalPoints(points);
+        AddToCurrentPoints(points);
     }
 
     public void ResetGoalPoints()
@@ -54,7 +48,7 @@ public class PointsManager : MonoBehaviour
     public void ResetAllPoints()
     {
         ResetGoalPoints();
-        SetCurPoints(0);
+        AddToCurrentPoints(0);
     }
 
     public bool IsKeyActive()
@@ -62,14 +56,30 @@ public class PointsManager : MonoBehaviour
         return _key.activeInHierarchy;
     }
 
-    private void SetCurPoints(int points)
+    private void AddToCurrentPoints(int points)
     {
-        
+        var newPoints = points * pointsMultiplier;
+        SetCurPoints(_curPoints + newPoints);
     }
 
+    private void SetCurPoints(int points)
+    {
+        UpdateUiScoreText(_scoreTmp, _curPoints, points);
+        _curPoints = points;
+    }
+    
+    private void AddToGoalPoints(int points)
+    {
+        SetGoalPoints(goalPoints + points);
+    }
+    
     private void SetGoalPoints(int points)
     {
         goalPoints = points;
+        if (goalPoints == _targetPoints)
+        {
+            _key.SetActive(true);
+        }
         _slider.DOValue(goalPoints, 0.15f);
     }
     

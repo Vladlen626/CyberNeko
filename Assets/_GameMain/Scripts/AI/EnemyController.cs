@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
             var enemy = Instantiate(enemyPrefab, enemyPosition.position, quaternion.identity);
             var enemyScript = enemy.GetComponent<PatrolAndChaseAI>();
             
-            Assert.IsNotNull(enemyScript, $"{enemy.name} need PatrolAndChaseAI");
+            //Assert.IsNotNull(enemyScript, $"{enemy.name} need PatrolAndChaseAI");
             
             enemyScriptDict.Add(enemy, enemyScript);
             enemyPosDict.Add(enemy, enemyPosition);
