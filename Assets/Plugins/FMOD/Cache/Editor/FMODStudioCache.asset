@@ -27,6 +27,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7645595529018317279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GoalComplete
+  m_EditorClassIdentifier: 
+  Path: event:/GoalComplete
+  Guid:
+    Data1: 1796672285
+    Data2: 1158425136
+    Data3: 358171291
+    Data4: -1039546057
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4923461870360748707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +96,7 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638819624306577226
+  lastModified: 638819726781523319
   FileSizes:
   - Name: Desktop
     Value: 1298
@@ -89,10 +116,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638819685875422288
+  lastModified: 638819751575716882
   FileSizes:
   - Name: Desktop
-    Value: 176704
+    Value: 219648
   Exists: 1
 --- !u!114 &-2974425621559183344
 MonoBehaviour:
@@ -120,7 +147,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 113454
+  Length: 32988
 --- !u!114 &-882504333726287214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,13 +206,17 @@ MonoBehaviour:
   - {fileID: -9054403156225348343}
   - {fileID: 2106988927397394847}
   - {fileID: 8220578842282526199}
+  - {fileID: 339663601984016222}
+  - {fileID: -7645595529018317279}
+  - {fileID: 7563587052624216907}
+  - {fileID: 6677703680302504785}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3972687658970247347}
   StringsBanks:
   - {fileID: 4999473539663165233}
   cacheVersion: 131847
-  cacheTime: 638819685875422288
+  cacheTime: 638819751575716882
   SerializableEventsDict:
   - key: event:/Background
     index: 0
@@ -213,6 +244,41 @@ MonoBehaviour:
     index: 11
   - key: event:/GameOver
     index: 12
+  - key: event:/AlertMusic
+    index: 13
+  - key: event:/GoalComplete
+    index: 14
+  - key: event:/NpcStep
+    index: 15
+  - key: event:/Win
+    index: 16
+--- !u!114 &339663601984016222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/AlertMusic
+  m_EditorClassIdentifier: 
+  Path: event:/AlertMusic
+  Guid:
+    Data1: -506377544
+    Data2: 1170617796
+    Data3: 462817461
+    Data4: 1651181482
+  Banks:
+  - {fileID: 1425687596871027506}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 113454
 --- !u!114 &759562978597541706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,10 +348,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638819624306841620
+  lastModified: 638819748035952305
   FileSizes:
   - Name: Desktop
-    Value: 1731072
+    Value: 2155968
   Exists: 1
 --- !u!114 &1498807869069741858
 MonoBehaviour:
@@ -383,10 +449,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638819624306582256
+  lastModified: 638819726781538381
   FileSizes:
   - Name: Desktop
-    Value: 1416
+    Value: 1590
   Exists: 1
 --- !u!114 &5950726463684920836
 MonoBehaviour:
@@ -415,6 +481,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 300
+--- !u!114 &6677703680302504785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Win
+  m_EditorClassIdentifier: 
+  Path: event:/Win
+  Guid:
+    Data1: 146197723
+    Data2: 1078696438
+    Data3: -200891970
+    Data4: 428958628
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &6930088395302221461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +535,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1763
+--- !u!114 &7563587052624216907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/NpcStep
+  m_EditorClassIdentifier: 
+  Path: event:/NpcStep
+  Guid:
+    Data1: -1730692988
+    Data2: 1164275556
+    Data3: -2110079815
+    Data4: 1299721583
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8147023875430124017
 MonoBehaviour:
   m_ObjectHideFlags: 0

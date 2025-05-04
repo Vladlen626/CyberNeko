@@ -142,6 +142,30 @@ MonoBehaviour:
         Data3: -816119634
         Data4: 1526546333
       Path: event:/GameOver
+  - name: Win
+    eventReference:
+      Guid:
+        Data1: 146197723
+        Data2: 1078696438
+        Data3: -200891970
+        Data4: 428958628
+      Path: event:/Win
+  - name: GoalComplete
+    eventReference:
+      Guid:
+        Data1: 1796672285
+        Data2: 1158425136
+        Data3: 358171291
+        Data4: -1039546057
+      Path: event:/GoalComplete
+  - name: NpcStep
+    eventReference:
+      Guid:
+        Data1: -1730692988
+        Data2: 1164275556
+        Data3: -2110079815
+        Data4: 1299721583
+      Path: event:/NpcStep
 --- !u!114 &2722204158453759642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081c3b27898c32243af7d7b14a634ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenuTheme:
+  AlertTheme:
     Guid:
       Data1: 0
       Data2: 0

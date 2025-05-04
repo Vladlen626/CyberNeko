@@ -17,5 +17,8 @@ public static class SoundNames
     public const string InBox = "InBox";
     public const string OutBox = "OutBox";
     public const string GameOver = "GameOver";
+    public const string Win = "Win";
+    public const string GoalComplete = "GoalComplete";
+    public const string NpcStep = "NpcStep";
 
 }

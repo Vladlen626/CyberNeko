@@ -78,7 +78,7 @@ public class PointsManager : MonoBehaviour
         goalPoints = points;
         if (goalPoints == _targetPoints)
         {
-            _key.SetActive(true);
+            GoalReach();
         }
         _slider.DOValue(goalPoints, 0.15f);
     }
@@ -88,5 +88,11 @@ public class PointsManager : MonoBehaviour
         DOTween.To(() => oldScore, x => oldScore = x, newScore, 0.25f)
             .OnUpdate(() =>  scoreTmp.text = oldScore.ToString())
             .SetEase(Ease.Linear);
+    }
+
+    private void GoalReach()
+    {
+        AudioManager.inst.PlaySound(SoundNames.GoalComplete);
+        _key.SetActive(true);
     }
 }

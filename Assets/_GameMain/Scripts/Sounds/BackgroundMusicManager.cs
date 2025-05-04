@@ -1,10 +1,11 @@
 using System;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
-    [SerializeField] private EventReference MainMenuTheme;
+    [SerializeField] private EventReference AlertTheme;
     [SerializeField] private EventReference GameplayTheme;
 
     private void Start()
@@ -14,7 +15,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
     private void PlayMainMenuTheme()
     {
-        AudioManager.inst.PlayMusic(MainMenuTheme);
+        AudioManager.inst.PlayMusic(AlertTheme);
     }
 
     private void PlayGameplayTheme()
