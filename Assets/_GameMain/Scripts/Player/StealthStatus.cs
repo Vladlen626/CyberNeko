@@ -26,4 +26,9 @@ public class StealthStatus : MonoBehaviour
     {
         _pursuers.Remove(pursuer);
     }
+
+    public void CleanUp()
+    {
+        _pursuers.Clear();
+    }
 }

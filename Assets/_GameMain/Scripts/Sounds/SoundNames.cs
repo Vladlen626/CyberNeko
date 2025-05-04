@@ -16,5 +16,6 @@ public static class SoundNames
     public const string ScaredMeow_2 = "ScaredMeow_2";
     public const string InBox = "InBox";
     public const string OutBox = "OutBox";
+    public const string GameOver = "GameOver";
 
 }

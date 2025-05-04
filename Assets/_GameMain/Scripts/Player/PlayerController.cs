@@ -1,11 +1,12 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent),(typeof(StealthStatus)))]
 public class PlayerController : MonoBehaviour
 {
     public Action OnGrabbed;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private NavMeshAgent agent;
+    private StealthStatus stealthStatus;
     private Transform cameraTransform;
     private Vector3 movementDirection;
     private float currentSpeed;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public void Initialize()
     {
         agent = GetComponent<NavMeshAgent>();
+        stealthStatus = GetComponent<StealthStatus>();
         SetupAgent();
         Initialized = true;
     }
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public void Respawn()
     {
         grabbed = false;
+        stealthStatus.CleanUp();
     }
 
     public void SetupCamera(Transform inCameraTransform)
@@ -98,9 +102,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        if (grabbed) return;
+        
         float horizontal = Input.GetAxisRaw("Horizontal"); // Используем Raw для мгновенного отклика
         float vertical = Input.GetAxisRaw("Vertical");
+        
+        if (grabbed) return;
 
         if (cameraTransform != null)
         {
@@ -122,6 +128,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMovement()
     {
+        if (grabbed) return;
+        
         if (movementDirection.magnitude > 0.1f)
         {
             // Непосредственное управление скоростью

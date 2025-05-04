@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5110023914710417175, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
+      propertyPath: _points
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5710707511697216554, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_Name
       value: RollRed

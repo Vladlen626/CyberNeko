@@ -7,18 +7,23 @@ using UnityEngine.UI;
 
 public class PointsManager : MonoBehaviour
 {
+    [Header("Main Fields")]
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _key;
     [SerializeField] private TextMeshProUGUI _text;
-
     [SerializeField] private int _targetPoints = 10;
 
+    [Header("Additional settings")] [SerializeField]
+    private int pointsMultiplier = 10;
+    
+
     private int _curPoints = 0;
+    private int goalPoints;
 
     public async UniTask Initialize()
     {
         _key.SetActive(false);
-        SetCurPoints(0);
+        ResetAllPoints();
         _slider.maxValue = _targetPoints;
         await UniTask.Yield();
     }
@@ -29,16 +34,27 @@ public class PointsManager : MonoBehaviour
 
         SetCurPoints(_curPoints += points);
 
-        if (_curPoints == _targetPoints)
+        if (goalPoints == _targetPoints)
         {
             _key.SetActive(true);
         }
     }
 
-    public void ResetPoints()
+    public int GetCurrentPoints()
     {
-        SetCurPoints(0);
+        return _curPoints;
+    }
+
+    public void ResetGoalPoints()
+    {
+        SetGoalPoints(0);
         _key.SetActive(false);
+    }
+
+    public void ResetAllPoints()
+    {
+        ResetGoalPoints();
+        SetCurPoints(0);
     }
 
     public bool IsKeyActive()
@@ -48,9 +64,13 @@ public class PointsManager : MonoBehaviour
 
     private void SetCurPoints(int points)
     {
-        UpdateUiScoreText(_text, _curPoints, points);
-        _curPoints = points;
-        _slider.DOValue(_curPoints, 0.15f);
+        
+    }
+
+    private void SetGoalPoints(int points)
+    {
+        goalPoints = points;
+        _slider.DOValue(goalPoints, 0.15f);
     }
     
     private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)

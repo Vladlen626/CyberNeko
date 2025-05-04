@@ -18,6 +18,11 @@ public class UIManager : MonoBehaviour
         await UniTask.Yield();
     }
 
+    public Menu GetMenu()
+    {
+        return _menu;
+    }
+    
     public void ShowBlackScreen()
     {
         BlackScreen.DOScale(1f, 0.1f);

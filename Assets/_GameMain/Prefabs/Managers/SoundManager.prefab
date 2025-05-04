@@ -134,6 +134,14 @@ MonoBehaviour:
         Data3: 87507092
         Data4: -1319273894
       Path: event:/OutBox
+  - name: GameOver
+    eventReference:
+      Guid:
+        Data1: 2015031642
+        Data2: 1195982412
+        Data3: -816119634
+        Data4: 1526546333
+      Path: event:/GameOver
 --- !u!114 &2722204158453759642
 MonoBehaviour:
   m_ObjectHideFlags: 0

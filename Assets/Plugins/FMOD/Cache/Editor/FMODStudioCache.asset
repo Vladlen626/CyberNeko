@@ -69,7 +69,7 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638819367916985669
+  lastModified: 638819624306577226
   FileSizes:
   - Name: Desktop
     Value: 1298
@@ -89,10 +89,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638819379113886461
+  lastModified: 638819624307772947
   FileSizes:
   - Name: Desktop
-    Value: 153056
+    Value: 176544
   Exists: 1
 --- !u!114 &-2974425621559183344
 MonoBehaviour:
@@ -178,13 +178,14 @@ MonoBehaviour:
   - {fileID: 6930088395302221461}
   - {fileID: -9054403156225348343}
   - {fileID: 2106988927397394847}
+  - {fileID: 8220578842282526199}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3972687658970247347}
   StringsBanks:
   - {fileID: 4999473539663165233}
   cacheVersion: 131847
-  cacheTime: 638819379113886461
+  cacheTime: 638819624307772947
   SerializableEventsDict:
   - key: event:/Background
     index: 0
@@ -210,6 +211,8 @@ MonoBehaviour:
     index: 10
   - key: event:/Button
     index: 11
+  - key: event:/GameOver
+    index: 12
 --- !u!114 &759562978597541706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,10 +282,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638819327831068722
+  lastModified: 638819624306841620
   FileSizes:
   - Name: Desktop
-    Value: 1742848
+    Value: 1731072
   Exists: 1
 --- !u!114 &1498807869069741858
 MonoBehaviour:
@@ -380,10 +383,10 @@ MonoBehaviour:
   Path: ../SiberianSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638819367917092399
+  lastModified: 638819624306582256
   FileSizes:
   - Name: Desktop
-    Value: 1378
+    Value: 1416
   Exists: 1
 --- !u!114 &5950726463684920836
 MonoBehaviour:
@@ -466,3 +469,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8220578842282526199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GameOver
+  m_EditorClassIdentifier: 
+  Path: event:/GameOver
+  Guid:
+    Data1: 2015031642
+    Data2: 1195982412
+    Data3: -816119634
+    Data4: 1526546333
+  Banks:
+  - {fileID: -3323273531003551900}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000

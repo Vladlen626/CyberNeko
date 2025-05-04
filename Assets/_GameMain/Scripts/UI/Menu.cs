@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    public Action OnRestart;
     [Header("UI References")]
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject gameOverMenuPanel;
@@ -24,8 +26,26 @@ public class Menu : MonoBehaviour
     {
         pauseButton.onClick.AddListener(PauseGame);
         resumeButton.onClick.AddListener(ResumeGame);
+        playAgainButton.onClick.AddListener(PlayAgain);
         quitButton.onClick.AddListener(QuitGame);
     }
+    
+    public void GameOver()
+    {
+        Time.timeScale = 1;
+        gameOverMenuPanel.SetActive(true);
+        OpenMenu();
+    }
+    
+    public void CloseMenu()
+    {
+        gameOverMenuPanel.SetActive(false);
+        pauseMenuPanel.SetActive(false);
+        mainPanel.SetActive(false);
+        background.SetActive(false);
+    }
+
+    // _____________ Private _____________
 
     private void Update()
     {
@@ -52,14 +72,6 @@ public class Menu : MonoBehaviour
         background.SetActive(true);
         mainPanel.SetActive(true);
     }
-
-    private void CloseMenu()
-    {
-        gameOverMenuPanel.SetActive(false);
-        pauseMenuPanel.SetActive(false);
-        mainPanel.SetActive(false);
-        background.SetActive(false);
-    }
     
     private void PauseGame()
     {
@@ -76,11 +88,12 @@ public class Menu : MonoBehaviour
         CloseMenu();
     }
 
-    private void GameOver()
+    private void PlayAgain()
     {
         Time.timeScale = 1;
-        gameOverMenuPanel.SetActive(true);
-        OpenMenu();
+        isPaused = false;
+        CloseMenu();
+        OnRestart.Invoke();
     }
 
     private void QuitGame()

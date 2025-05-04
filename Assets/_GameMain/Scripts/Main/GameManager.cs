@@ -42,11 +42,23 @@ public class GameManager : MonoBehaviour
 
         QuitGame();
     }
+    
+    private void HandlerOnGameOver()
+    {
+        GameOverAsync().Forget();
+    }
+    
+    private void HandlerOnRestart()
+    {
+        Respawn().Forget();
+    }
 
     //single point of entry
     private async UniTask InitializeAll()
     {
         await uiManager.Initialize();
+        uiManager.GetMenu().OnRestart += HandlerOnRestart;
+        
         await pointsManager.Initialize();
         await foodManager.Initialize(pointsManager);
         await doorConnectionManager.Initialize(pointsManager);
@@ -54,28 +66,35 @@ public class GameManager : MonoBehaviour
         await enemyController.Initialize();
         
         await playerManager.Initialize();
-        playerManager.GetPlayerController().OnGrabbed += GameOver;
+        playerManager.GetPlayerController().OnGrabbed += HandlerOnGameOver;
     }
     
     private async UniTask GameStart()
     {     
         foodManager.RespawnFood();
-        await enemyController.SpawnEnemies();
         playerManager.SpawnPlayer();
+        await enemyController.SpawnEnemies();
         await UniTask.WaitForSeconds(1f, true);
         uiManager.HideBlackScreen();
         await UniTask.WaitForSeconds(0.15f, true);
     }
-
-    private async UniTask GameEnd()
+    
+    private async UniTask GameOverAsync()
     {
-        await UniTask.WaitForSeconds(0.25f, true);
+        playerManager.ShakePlayerCamera();
+        await UniTask.WaitForSeconds(1f, true);
+        AudioManager.inst.PlaySound(SoundNames.GameOver);
+        uiManager.GetMenu().GameOver();
+    }
+
+    private async UniTask Respawn()
+    {
         uiManager.ShowBlackScreen();
-        pointsManager.ResetPoints();
-        await UniTask.WaitForSeconds(0.15f, true);
+        pointsManager.ResetAllPoints();
+        await UniTask.WaitForSeconds(0.5f, true);
+        playerManager.SetupCamera();
         await GameStart();
     }
-    
     
     //main thread 
     private async UniTask GameUpdate()
@@ -88,8 +107,5 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void GameOver()
-    {
-        GameEnd().Forget();
-    }
+
 }

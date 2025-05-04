@@ -60,7 +60,7 @@ public class Door : MonoBehaviour
             {
                 Debug.Log("Player try open door with key");
                 OnCanBeOpened?.Invoke();
-                _pointsManager.ResetPoints(); // To call it once
+                _pointsManager.ResetGoalPoints(); // To call it once
             }
         }
     }
