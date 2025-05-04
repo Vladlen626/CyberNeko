@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Transform BlackScreen;
-    
+    [SerializeField] private Transform WinScreen;
     [SerializeField] private Menu _menu;
     [SerializeField] private FmodSoundSettings _fmodSoundSettings;
     
@@ -21,6 +21,13 @@ public class UIManager : MonoBehaviour
     public Menu GetMenu()
     {
         return _menu;
+    }
+
+    public void Win()
+    {
+        WinScreen.gameObject.SetActive(true);
+        WinScreen.localScale = Vector3.zero;
+        WinScreen.DOScale(1f, 0.15f);
     }
     
     public void ShowBlackScreen()

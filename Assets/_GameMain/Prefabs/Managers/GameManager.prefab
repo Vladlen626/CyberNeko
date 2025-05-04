@@ -56,6 +56,7 @@ MonoBehaviour:
   pointsManager: {fileID: 248094777175920100}
   uiManager: {fileID: 2826234124546548623}
   doorConnectionManager: {fileID: 4424177648818226890}
+  _moonController: {fileID: 0}
 --- !u!1 &6203952186490343655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,6 +1096,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1234516606614431874 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4324402413649197910, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
+  m_PrefabInstance: {fileID: 3252372186101715924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2035029568128656506 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3539653219062757294, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
@@ -1156,6 +1162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlackScreen: {fileID: 8023425141964237294}
+  WinScreen: {fileID: 1234516606614431874}
   _menu: {fileID: 2672405898949793640}
   _fmodSoundSettings: {fileID: 2302234748201561701}
 --- !u!114 &2302234748201561701

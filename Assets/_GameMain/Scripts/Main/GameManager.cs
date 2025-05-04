@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     [SerializeField] private DoorConnectionManager doorConnectionManager;
 
+    [SerializeField] private MoonController _moonController;
+
     private static GameManager _instance;
     private bool _gameActive;
 
@@ -36,7 +38,6 @@ public class GameManager : MonoBehaviour
         _gameActive = true;
         while (_gameActive)
         {
-       
             await GameUpdate();
         }
 
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     {     
         foodManager.RespawnFood();
         playerManager.SpawnPlayer();
+        _moonController.EnableSad();
         await enemyController.SpawnEnemies();
         await UniTask.WaitForSeconds(1f, true);
         uiManager.HideBlackScreen();
@@ -100,6 +102,18 @@ public class GameManager : MonoBehaviour
     private async UniTask GameUpdate()
     {
         await UniTask.Yield(PlayerLoopTiming.Update);
+    }
+
+    public void WinLogic()
+    {
+        _moonController.EnableHappy();
+    }
+
+    private async UniTask Final()
+    {
+        _moonController.EnableHappy();
+        await UniTask.WaitForSeconds(2f, true);
+        uiManager.Win();
     }
 
     private void QuitGame()
