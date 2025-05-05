@@ -47,5 +47,5 @@ MonoBehaviour:
   _slider: {fileID: 0}
   _key: {fileID: 0}
   _scoreTmp: {fileID: 0}
-  _targetPoints: 100
+  _targetPoints: 300
   pointsMultiplier: 10

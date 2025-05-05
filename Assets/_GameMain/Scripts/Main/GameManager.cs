@@ -107,12 +107,14 @@ public class GameManager : MonoBehaviour
     public void WinLogic()
     {
         _moonController.EnableHappy();
+        Final().Forget();
     }
 
     private async UniTask Final()
     {
         _moonController.EnableHappy();
         await UniTask.WaitForSeconds(2f, true);
+        AudioManager.inst.PlaySound(SoundNames.Win);
         uiManager.Win();
     }
 
