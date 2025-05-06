@@ -3,35 +3,36 @@ using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private bool isSpawnEnemies;
-    [SerializeField] private Transform[] enemyPositions;
-    [SerializeField] private GameObject enemyPrefab;
-    private Dictionary<GameObject, PatrolAndChaseAI> enemyScriptDict = new Dictionary<GameObject, PatrolAndChaseAI>();
-    private Dictionary<GameObject, Transform> enemyPosDict = new Dictionary<GameObject, Transform>();
+    [SerializeField] private bool _isSpawnEnemies;
+    [SerializeField] private Transform[] _enemyPositions;
+    [SerializeField] private GameObject _enemyPrefab;
+    
+    private Dictionary<GameObject, PatrolAndChaseAI> _enemyScriptDict = new Dictionary<GameObject, PatrolAndChaseAI>();
+    private Dictionary<GameObject, Transform> _enemyPosDict = new Dictionary<GameObject, Transform>();
 
-    public async UniTask Initialize()
+    public void Initialize()
     {
-        foreach (var enemyPosition in enemyPositions)
+        foreach (var enemyPosition in _enemyPositions)
         {
-            var enemy = Instantiate(enemyPrefab, enemyPosition.position, quaternion.identity);
+            var enemy = Instantiate(_enemyPrefab, enemyPosition.position, quaternion.identity);
             var enemyScript = enemy.GetComponent<PatrolAndChaseAI>();
             
             //Assert.IsNotNull(enemyScript, $"{enemy.name} need PatrolAndChaseAI");
             
-            enemyScriptDict.Add(enemy, enemyScript);
-            enemyPosDict.Add(enemy, enemyPosition);
+            _enemyScriptDict.Add(enemy, enemyScript);
+            _enemyPosDict.Add(enemy, enemyPosition);
             enemy.SetActive(false);
-            await UniTask.Yield();
         }
     }
 
     public async UniTask SpawnEnemies()
     {
-        if (!isSpawnEnemies) return;
-        foreach (var (enemy, posTransform) in enemyPosDict)
+        if (!_isSpawnEnemies) return;
+        foreach (var (enemy, posTransform) in _enemyPosDict)
         {
             SpawnEnemy(enemy, posTransform);
         }
@@ -44,7 +45,7 @@ public class EnemyController : MonoBehaviour
         enemy.transform.position = spawnPos.position + Vector3.up;
         enemy.transform.rotation = spawnPos.rotation;
         enemy.SetActive(true);
-        var enemyScript = enemyScriptDict[enemy];
+        var enemyScript = _enemyScriptDict[enemy];
         enemyScript.Initialize(spawnPos.GetComponentsInChildren<Transform>());
         enemyScript.StartPlayerDetection();
     }

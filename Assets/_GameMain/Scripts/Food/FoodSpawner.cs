@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class FoodSpawner : MonoBehaviour
 {
-    //now not needed
-    //[SerializeField] private List<GameObject> FoodPrefabs;
-    
     private PointsManager _pointsManager;
     private Food[] _sceneFood;
 

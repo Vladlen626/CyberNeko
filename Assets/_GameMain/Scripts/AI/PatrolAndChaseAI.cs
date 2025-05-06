@@ -29,30 +29,30 @@ public class PatrolAndChaseAI : MonoBehaviour
     [SerializeField] private float reachThreshold = 1.0f;
 
     private NavMeshAgent agent;
-    private int curPatrolPointIndex = 0;
+    private int curPatrolPointIndex;
 
-    private bool isChasing   = false;
-    private bool isWaiting   = false;
-    private float waitTimer  = 0f;
-    private float chaseTimer = 0f;
+    private bool _isChasing;
+    private bool _isWaiting;
+    private float _waitTimer;
+    private float _chaseTimer;
 
-    private Transform targetTransform = null;
-    private Transform[] patrolPoints;
+    private Transform _targetTransform;
+    private Transform[] _patrolPoints;
 
-    private StealthStatus lastChasedPlayerStealthStatus = null;
-    private VisorController visorController;
+    private StealthStatus _lastChasedPlayerStealthStatus;
+    private VisorController _visorController;
 
     public void Initialize(Transform[] inPatrolPoints)
     {
         exclamationMarker.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
-        visorController = GetComponent<VisorController>();
-        patrolPoints = inPatrolPoints;
-        targetTransform = null;
-        isChasing = false;
-        if (patrolPoints.Length > 0)
+        _visorController = GetComponent<VisorController>();
+        _patrolPoints = inPatrolPoints;
+        _targetTransform = null;
+        _isChasing = false;
+        if (_patrolPoints.Length > 0)
         {
-            agent.destination = patrolPoints[curPatrolPointIndex].position;
+            agent.destination = _patrolPoints[curPatrolPointIndex].position;
         }
     }
 
@@ -68,46 +68,46 @@ public class PatrolAndChaseAI : MonoBehaviour
 
     void Update()
     {
-        if (isChasing && targetTransform)
+        if (_isChasing && _targetTransform)
         {
             // Continue chasing even if player is not in line of sight
-            agent.destination = targetTransform.position;
+            agent.destination = _targetTransform.position;
 
             // Check distance to stop chasing
-            float distanceToTarget = Vector3.Distance(transform.position, targetTransform.position);
+            float distanceToTarget = Vector3.Distance(transform.position, _targetTransform.position);
             if (distanceToTarget > chaseStopDistance)
             {
-                chaseTimer += Time.deltaTime;
-                if (chaseTimer >= timeBeforeReturnToPatrol)
+                _chaseTimer += Time.deltaTime;
+                if (_chaseTimer >= timeBeforeReturnToPatrol)
                 {
                     StopChasing();
                 }
             }
             else
             {
-                chaseTimer = 0f; // Reset timer if player is close enough
+                _chaseTimer = 0f; // Reset timer if player is close enough
             }
             return;
         }
 
-        if (patrolPoints == null)
+        if (_patrolPoints == null)
             return;
 
         // Patrolling: move to the next point if it had reached the current one
-        if (!isWaiting && patrolPoints.Length > 0 && !agent.pathPending && agent.remainingDistance <= reachThreshold)
+        if (!_isWaiting && _patrolPoints.Length > 0 && !agent.pathPending && agent.remainingDistance <= reachThreshold)
         {
-            isWaiting = true;
-            waitTimer = timeWaitOnPatrolPoint;
+            _isWaiting = true;
+            _waitTimer = timeWaitOnPatrolPoint;
         }
 
-        if (isWaiting)
+        if (_isWaiting)
         {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0f)
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
-                isWaiting = false;
-                curPatrolPointIndex = (curPatrolPointIndex + 1) % patrolPoints.Length;
-                agent.destination = patrolPoints[curPatrolPointIndex].position;
+                _isWaiting = false;
+                curPatrolPointIndex = (curPatrolPointIndex + 1) % _patrolPoints.Length;
+                agent.destination = _patrolPoints[curPatrolPointIndex].position;
             }
         }
     }
@@ -117,34 +117,34 @@ public class PatrolAndChaseAI : MonoBehaviour
         Alert();
         StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
         //Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
-        lastChasedPlayerStealthStatus = stealthStatus;
+        _lastChasedPlayerStealthStatus = stealthStatus;
         stealthStatus.AddToPursuer(gameObject);
-        isChasing = true;
-        isWaiting = false;
-        chaseTimer = 0f;
+        _isChasing = true;
+        _isWaiting = false;
+        _chaseTimer = 0f;
     }
 
     private void Alert()
     {
         AudioManager.inst.PlaySound(SoundNames.Alert);
         exclamationMarker.SetActive(true);
-        visorController.ChooseVisor(1);
+        _visorController.ChooseVisor(1);
     }
 
     private void StopChasing()
     {
         exclamationMarker.SetActive(false);
-        visorController.ChooseVisor(0);
-        lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
+        _visorController.ChooseVisor(0);
+        _lastChasedPlayerStealthStatus?.RemoveFromPursuer(gameObject);
 
-        isChasing = false;
-        targetTransform = null;
-        chaseTimer = 0f;
+        _isChasing = false;
+        _targetTransform = null;
+        _chaseTimer = 0f;
 
         // Return to patrol
-        if (patrolPoints.Length > 0)
+        if (_patrolPoints.Length > 0)
         {
-            agent.destination = patrolPoints[curPatrolPointIndex].position;
+            agent.destination = _patrolPoints[curPatrolPointIndex].position;
         }
     }
 
@@ -153,7 +153,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     {
         while (true)
         {
-            if (!isChasing) // Only check for player when not already chasing
+            if (!_isChasing) // Only check for player when not already chasing
             {
                 SearchForPlayerUsingOverlapSphere();
             }
@@ -179,7 +179,7 @@ public class PatrolAndChaseAI : MonoBehaviour
 
             if (HasLineOfSight(hit.transform))
             {
-                targetTransform = hit.transform;
+                _targetTransform = hit.transform;
                 StartChasing(hit.gameObject);
                 break;
             }

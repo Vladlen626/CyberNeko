@@ -9,11 +9,11 @@ public class Food : MonoBehaviour
     [SerializeField] private int _points = 1;
     public event Action<int> OnDevoured;
     private bool _isActive;
-    private Vector3 originalPosition;
+    private Vector3 _originalPosition;
 
     public void Initialize()
     {
-        originalPosition = transform.position;
+        _originalPosition = transform.position;
     }
 
     public int GetPoints()
@@ -24,7 +24,7 @@ public class Food : MonoBehaviour
     public void Spawn()
     {
         transform.localScale = Vector3.zero;
-        transform.position = originalPosition;
+        transform.position = _originalPosition;
         transform.DOScale(1, 0.15f)
             .OnComplete(() =>
             {

@@ -6,21 +6,21 @@ public class Devourer : MonoBehaviour
     [SerializeField] private Transform mouthTransform;
     [SerializeField] private float eatDuration;
 
-    private Sequence eatSequence;
+    private Sequence _eatSequence;
 
     public void Eat(Food food)
     {
-        if (eatSequence != null && eatSequence.IsActive())
+        if (_eatSequence != null && _eatSequence.IsActive())
         {
-            eatSequence.Complete();
+            _eatSequence.Complete();
         }
 
         var foodTransform = food.transform;
-        eatSequence = DOTween.Sequence();
+        _eatSequence = DOTween.Sequence();
         foodTransform.parent = mouthTransform;
         AudioManager.inst.PlaySound(SoundNames.Smacking);
-        eatSequence.Append(foodTransform.DOLocalJump(Vector3.zero, 1f, 1, 0.15f));
-        eatSequence.Append(foodTransform.DOShakeScale(
+        _eatSequence.Append(foodTransform.DOLocalJump(Vector3.zero, 1f, 1, 0.15f));
+        _eatSequence.Append(foodTransform.DOShakeScale(
             duration: eatDuration,
             strength: 0.8f,
             vibrato: 30,
@@ -28,8 +28,8 @@ public class Devourer : MonoBehaviour
             fadeOut: true
         ));
 
-        eatSequence.Append(foodTransform.DOScale(0, 0.05f));
-        eatSequence.OnComplete( () => Devour(food));
+        _eatSequence.Append(foodTransform.DOScale(0, 0.05f));
+        _eatSequence.OnComplete( () => Devour(food));
 
     }
 

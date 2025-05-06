@@ -11,21 +11,20 @@ public class PointsManager : MonoBehaviour
     [Header("Main Fields")]
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _key;
-    [FormerlySerializedAs("_text")] [SerializeField] private TextMeshProUGUI _scoreTmp;
+    [SerializeField] private TextMeshProUGUI _scoreTmp;
     [SerializeField] private int _targetPoints = 500;
 
     [Header("Additional settings")] [SerializeField]
     private int pointsMultiplier = 10;
 
     private int _curPoints = 0;
-    private int goalPoints;
+    private int _goalPoints;
 
-    public async UniTask Initialize()
+    public void Initialize()
     {
         _key.SetActive(false);
         ResetAllPoints();
         _slider.maxValue = _targetPoints;
-        await UniTask.Yield();
     }
 
     public int GetCurrentPoints()
@@ -56,6 +55,8 @@ public class PointsManager : MonoBehaviour
         return _key.activeInHierarchy;
     }
 
+    // _____________ Private _____________
+    
     private void AddToCurrentPoints(int points)
     {
         var newPoints = points * pointsMultiplier;
@@ -70,17 +71,17 @@ public class PointsManager : MonoBehaviour
     
     private void AddToGoalPoints(int points)
     {
-        SetGoalPoints(goalPoints + points);
+        SetGoalPoints(_goalPoints + points);
     }
     
     private void SetGoalPoints(int points)
     {
-        goalPoints = points;
-        if (goalPoints > _targetPoints)
+        _goalPoints = points;
+        if (_goalPoints > _targetPoints)
         {
             GoalReach();
         }
-        _slider.DOValue(goalPoints, 0.15f);
+        _slider.DOValue(_goalPoints, 0.15f);
     }
     
     private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)

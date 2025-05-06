@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private Transform[] borders;
     public Action OnCanBeOpened;
-
+    
+    [SerializeField] private Transform[] borders;
     private PointsManager _pointsManager;
     
     public void Initialize(PointsManager pointsManager)
@@ -15,7 +15,6 @@ public class Door : MonoBehaviour
         _pointsManager = pointsManager;
     }
     
-    // Call from Door Connection Manager
     public void Open()
     {
         foreach (var border in borders)
@@ -26,7 +25,6 @@ public class Door : MonoBehaviour
         HideObject(transform);
     }
 
-    // When game Reset
     public void Reset()
     {
         foreach (var border in borders)
@@ -36,6 +34,8 @@ public class Door : MonoBehaviour
 
         ShowObject(transform);
     }
+
+    // _____________ Private _____________
 
     private void HideObject(Transform objectToHide)
     {

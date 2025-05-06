@@ -11,14 +11,12 @@ public class PlayerManager : MonoBehaviour
 
     private PlayerCheckpoint[] _playerCheckpoints;
     private PlayerController _playerController;
-    
-    public async UniTask Initialize()
+
+    public void Initialize()
     {
         InitializePlayer();
-        SetupCamera();
         InitializeCheckpoints();
-        
-        await UniTask.Yield();
+        SetupCamera();
     }
 
     public void SetupCamera()
@@ -27,7 +25,7 @@ public class PlayerManager : MonoBehaviour
         {
             TrackingTarget = _playerController.transform
         };
-        
+
         _playerController.SetupCamera(playerCamera.transform);
     }
 
@@ -42,6 +40,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
     public PlayerController GetPlayerController()
     {
         return _playerController;
@@ -53,10 +52,7 @@ public class PlayerManager : MonoBehaviour
         playerCamera.Target.TrackingTarget = null;
         var originalPos = cameraRig.position;
         cameraRig.DOShakePosition(0.5f, 1f, 30, 180f)
-            .OnComplete(() =>
-            {
-                cameraRig.position = originalPos;
-            });
+            .OnComplete(() => { cameraRig.position = originalPos; });
     }
 
     // _____________ Private _____________
@@ -76,14 +72,14 @@ public class PlayerManager : MonoBehaviour
             playerCheckpoint.OnActivate += HandleOnCheckpointActivate;
         }
     }
-    
+
     private void HandleOnCheckpointActivate(PlayerCheckpoint activatedCheckpoint)
     {
         foreach (var playerCheckpoint in _playerCheckpoints)
         {
             playerCheckpoint.DeactivateCheckpoint();
         }
-        
+
         activatedCheckpoint.ActivateCheckpoint();
     }
 
@@ -94,5 +90,4 @@ public class PlayerManager : MonoBehaviour
             playerCheckpoint.OnActivate -= HandleOnCheckpointActivate;
         }
     }
-
 }

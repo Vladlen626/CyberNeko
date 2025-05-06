@@ -15,7 +15,6 @@ public class DoorsConnection
         foreach (var doorObj in _doorsGameObj)
         {
             var door = doorObj.GetComponent<Door>();
-            //Assert.IsNotNull(door, "Door must have Door script!");
             door.Initialize(pointsManager);
             _doors.Add(door);
             door.OnCanBeOpened += OpenAllConnectedDoors;
@@ -43,14 +42,12 @@ public class DoorConnectionManager : MonoBehaviour
 {
     [SerializeField] private List<DoorsConnection> _doorsByLvls = new List<DoorsConnection>();
 
-    public async UniTask Initialize(PointsManager pointsManager)
+    public void Initialize(PointsManager pointsManager)
     {
         foreach (var doorsByLvl in _doorsByLvls)
         {
             doorsByLvl.Init(pointsManager);
         }
-
-        await UniTask.Yield();
     }
 
     void OnDestroy()

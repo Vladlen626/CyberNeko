@@ -7,13 +7,13 @@ public class HideBox : MonoBehaviour
     [Tooltip("Will be shown if the player hides in the box but is being pursued")]
     [SerializeField] private GameObject _marker;
 
-    private Vector3 PlayerHidePos;
+    private Vector3 _playerHidePos;
     private GameObject _hiddenPlayer = null;
     private bool _isMarkerActive = false;
 
     void Start()
     {
-        PlayerHidePos = transform.position;
+        _playerHidePos = transform.position;
         HideMarker();
     }
 
@@ -59,14 +59,14 @@ public class HideBox : MonoBehaviour
     private void HidePlayerInside(Transform player)
     {
         AudioManager.inst.PlaySound(SoundNames.InBox);
-        player.DOMove(PlayerHidePos + Vector3.up * 0.5f, 0.15f);
-        transform.DOJump(PlayerHidePos, 1.5f, 1, 0.18f);
+        player.DOMove(_playerHidePos + Vector3.up * 0.5f, 0.15f);
+        transform.DOJump(_playerHidePos, 1.5f, 1, 0.18f);
     }
 
     private void DropPlayer()
     {
         AudioManager.inst.PlaySound(SoundNames.OutBox);
-        transform.DOJump(PlayerHidePos, 1f, 1, 0.1f);
+        transform.DOJump(_playerHidePos, 1f, 1, 0.1f);
         HideMarker();
     }
 

@@ -23,19 +23,19 @@ public class ScaredNPC : MonoBehaviour
     [SerializeField] private float fleeSpeedMultiplier = 1.5f;
     [SerializeField] private float calmDownTime = 2f;
 
-    private NavMeshAgent agent;
-    private float originalSpeed;
-    private Transform player;
-    private bool playerInRange = false;
-    private Coroutine behaviorCoroutine;
+    private NavMeshAgent _agent;
+    private float _originalSpeed;
+    private Transform _player;
+    private bool _playerInRange;
+    private Coroutine _behaviorCoroutine;
     
     private FoodDropper _foodDropper;
     private VisorController visorController;
 
     void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        originalSpeed = agent.speed;
+        _agent = GetComponent<NavMeshAgent>();
+        _originalSpeed = _agent.speed;
         
         _foodDropper = GetComponent<FoodDropper>();
         if (_foodDropper == null)
@@ -53,21 +53,21 @@ public class ScaredNPC : MonoBehaviour
     
     void OnEnable()
     {
-        behaviorCoroutine = StartCoroutine(BehaviorStateMachine());
+        _behaviorCoroutine = StartCoroutine(BehaviorStateMachine());
     }
 
     void OnDisable()
     {
-        if (behaviorCoroutine != null)
-            StopCoroutine(behaviorCoroutine);
+        if (_behaviorCoroutine != null)
+            StopCoroutine(_behaviorCoroutine);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            player = other.transform;
-            playerInRange = true;
+            _player = other.transform;
+            _playerInRange = true;
             _foodDropper.TryDropFood();
         }
     }
@@ -76,7 +76,7 @@ public class ScaredNPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            _playerInRange = false;
         }
     }
 
@@ -84,7 +84,7 @@ public class ScaredNPC : MonoBehaviour
     {
         while (true)
         {
-            if (playerInRange)
+            if (_playerInRange)
             {
                 yield return StartCoroutine(FleeBehavior());
             }
@@ -101,14 +101,14 @@ public class ScaredNPC : MonoBehaviour
         float wanderTime = Random.Range(minWanderTime, maxWanderTime);
         float elapsedTime = 0f;
 
-        while (elapsedTime < wanderTime && !playerInRange)
+        while (elapsedTime < wanderTime && !_playerInRange)
         {
-            if (agent.remainingDistance < 0.5f)
+            if (_agent.remainingDistance < 0.5f)
             {
                 Vector3 newPos = GetRandomNavMeshPosition(transform.position, wanderRadius, minWanderDistance);
-                if (agent.isOnNavMesh)
+                if (_agent.isOnNavMesh)
                 {
-                    agent.SetDestination(newPos);
+                    _agent.SetDestination(newPos);
                 }
             }
 
@@ -116,7 +116,7 @@ public class ScaredNPC : MonoBehaviour
             yield return null;
         }
 
-        if (!playerInRange)
+        if (!_playerInRange)
         {
             yield return new WaitForSeconds(Random.Range(idleTimeMin, idleTimeMax));
         }
@@ -125,22 +125,22 @@ public class ScaredNPC : MonoBehaviour
     IEnumerator FleeBehavior()
     {
         visorController.ChooseVisor(1);
-        agent.speed = originalSpeed * fleeSpeedMultiplier;
+        _agent.speed = _originalSpeed * fleeSpeedMultiplier;
         float calmDownTimer = calmDownTime;
 
-        while (playerInRange || calmDownTimer > 0)
+        while (_playerInRange || calmDownTimer > 0)
         {
-            if (playerInRange)
+            if (_playerInRange)
             {
                 calmDownTimer = calmDownTime;
-                Vector3 fleeDirection = (transform.position - player.position).normalized;
+                Vector3 fleeDirection = (transform.position - _player.position).normalized;
                 Vector3 fleePosition = transform.position + fleeDirection * fleeDistance;
 
                 if (NavMesh.SamplePosition(fleePosition, out NavMeshHit hit, fleeDistance, NavMesh.AllAreas))
                 {
-                    if (agent.isOnNavMesh)
+                    if (_agent.isOnNavMesh)
                     {
-                        agent.SetDestination(hit.position);
+                        _agent.SetDestination(hit.position);
                     }
                 }
             }
@@ -152,15 +152,15 @@ public class ScaredNPC : MonoBehaviour
             yield return null;
         }
 
-        agent.speed = originalSpeed;
+        _agent.speed = _originalSpeed;
 
         // Гарантированный возврат на NavMesh
-        if (!agent.isOnNavMesh)
+        if (!_agent.isOnNavMesh)
         {
             NavMeshHit closestHit;
             if (NavMesh.SamplePosition(transform.position, out closestHit, 5f, NavMesh.AllAreas))
             {
-                agent.Warp(closestHit.position);
+                _agent.Warp(closestHit.position);
             }
         }
     }
@@ -189,7 +189,7 @@ public class ScaredNPC : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, wanderRadius);
 
-        if (playerInRange)
+        if (_playerInRange)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(transform.position + Vector3.up * 2, 0.3f);
