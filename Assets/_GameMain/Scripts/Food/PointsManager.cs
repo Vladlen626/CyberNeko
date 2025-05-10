@@ -5,11 +5,8 @@ public class PointsManager : MonoBehaviour
 {
     [Header("Main Fields")]
     [SerializeField] private int _targetPoints = 500;
-
-    // Реактивные свойства для наблюдения
     public IReadOnlyReactiveProperty<int> CurrentPoints => _currentPoints;
     private readonly ReactiveProperty<int> _currentPoints = new ReactiveProperty<int>(0);
-    
     public IReadOnlyReactiveProperty<int> GoalPoints => _goalPoints;
     private readonly ReactiveProperty<int> _goalPoints = new ReactiveProperty<int>(0);
     public IReadOnlyReactiveProperty<bool> IsKeyActive => _isKeyActive;
