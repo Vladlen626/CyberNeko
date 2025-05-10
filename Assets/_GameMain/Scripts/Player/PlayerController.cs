@@ -5,6 +5,7 @@ using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 [RequireComponent(typeof(NavMeshAgent),(typeof(StealthStatus)))]
 public class PlayerController : MonoBehaviour
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private float animSpeedVelocity;
     private bool Initialized;
     private bool grabbed;
+    
+    public class Factory : PlaceholderFactory<PlayerController> { }
 
     public void Initialize()
     {

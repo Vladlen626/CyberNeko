@@ -3,6 +3,7 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class PointsVisual : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class PointsVisual : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreTmp;
 
     private int previousScore;
-    public void Initialize(PointsManager pointsManager)
+    
+    [Inject]
+    public void SetDependency(PointsManager pointsManager)
     {
         pointsManager.CurrentPoints
             .Subscribe(UpdateUiScoreText)

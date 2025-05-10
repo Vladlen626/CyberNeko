@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8eb4a57efad839428ddf7790f343fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _doorsByLvls: []
+  _doorsByLvls:
+  - _doorsGameObj:
+    - {fileID: 0}

@@ -15,7 +15,7 @@ public class FoodDropper : MonoBehaviour
     private float _lastDropTime = -Mathf.Infinity;
     private List<GameObject> _spawnedFoods = new List<GameObject>();
 
-    private GameManager _gameManager;
+    private Main _main;
 
     public void CleanUp()
     {

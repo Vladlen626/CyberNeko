@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class FoodSpawner : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class FoodSpawner : MonoBehaviour
             food.Spawn();
         }
     }
+
+    // _____________ Private _____________
     
-    public void Initialize(PointsManager pointsManager)
+    [Inject]
+    private void SetDependency(PointsManager pointsManager)
     {
         _pointsManager = pointsManager;
         _sceneFood = FindObjectsByType<Food>(FindObjectsInactive.Include, FindObjectsSortMode.None);

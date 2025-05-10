@@ -96,15 +96,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 13.41
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 6.77
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -112,15 +112,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 585446642854883756, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -141,6 +141,10 @@ PrefabInstance:
     - target: {fileID: 5710707511697216554, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
       propertyPath: m_Name
       value: RollGreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934492224904739054, guid: 74a505ae5678ae7468317573bdd871c5, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

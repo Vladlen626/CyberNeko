@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerCheckpoint : MonoBehaviour
 {
@@ -8,9 +7,16 @@ public class PlayerCheckpoint : MonoBehaviour
     
     [SerializeField] private Transform spawnTransform;
     [SerializeField] private GameObject pillar;
+    [SerializeField] private bool isActive;
 
-    public bool isActive;
-
+    public void Initialize()
+    {
+        if (!isActive)
+        {
+            DeactivateCheckpoint();
+        }
+    }
+    
     public void DeactivateCheckpoint()
     {
         isActive = false;
@@ -19,24 +25,28 @@ public class PlayerCheckpoint : MonoBehaviour
 
     public void ActivateCheckpoint()
     {
-        if (!isActive)
-        {
-            AudioManager.inst.PlaySound(SoundNames.ScaredMeow_2);
-        }
+        if (isActive) return;
+        AudioManager.inst.PlaySound(SoundNames.ScaredMeow_2);
         isActive = true;
         pillar.SetActive(isActive);
+        OnActivate.Invoke(this);
     }
 
     public Vector3 GetSpawnPosition()
     {
         return spawnTransform.position;
     }
+
+    public bool IsActive()
+    {
+        return isActive;
+    }
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            OnActivate.Invoke(this);
+            ActivateCheckpoint();
         }
     }
 }

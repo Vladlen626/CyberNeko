@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using Zenject;
 
 [System.Serializable]
 public class DoorsConnection
@@ -42,7 +43,8 @@ public class DoorConnectionManager : MonoBehaviour
 {
     [SerializeField] private List<DoorsConnection> _doorsByLvls = new List<DoorsConnection>();
 
-    public void Initialize(PointsManager pointsManager)
+    [Inject]
+    private void SetDependency(PointsManager pointsManager)
     {
         foreach (var doorsByLvl in _doorsByLvls)
         {

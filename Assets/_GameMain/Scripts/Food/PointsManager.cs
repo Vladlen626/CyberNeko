@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class PointsManager : MonoBehaviour
 {
-    [Header("Main Fields")]
-    [SerializeField] private int _targetPoints = 500;
+    private int _targetPoints = 100;
     public IReadOnlyReactiveProperty<int> CurrentPoints => _currentPoints;
     private readonly ReactiveProperty<int> _currentPoints = new ReactiveProperty<int>(0);
     public IReadOnlyReactiveProperty<int> GoalPoints => _goalPoints;
