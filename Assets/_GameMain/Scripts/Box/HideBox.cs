@@ -9,7 +9,6 @@ public class HideBox : MonoBehaviour
 
     private Vector3 _playerHidePos;
     private GameObject _hiddenPlayer = null;
-    private bool _isMarkerActive = false;
 
     void Start()
     {
@@ -73,13 +72,11 @@ public class HideBox : MonoBehaviour
     private void ShowMarker()
     {
         AudioManager.inst.PlaySound(SoundNames.Alert);
-        _isMarkerActive = true;
         _marker.SetActive(true);
     }
 
     private void HideMarker()
     {
         _marker.SetActive(false);
-        _isMarkerActive = false;
     }
 }

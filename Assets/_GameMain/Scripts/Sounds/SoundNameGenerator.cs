@@ -22,7 +22,9 @@ public static class SoundNames
     [MenuItem("Tools/Audio/Generate Sound Names", priority = 200)]
     public static void Generate()
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         var audioManager = Object.FindObjectOfType<AudioManager>();
+#pragma warning restore CS0618 // Type or member is obsolete
         if (audioManager == null)
         {
             Debug.LogError("AudioManager not found in scene!");

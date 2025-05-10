@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private FoodManager foodManager;
     [SerializeField] private PointsManager pointsManager;
+    [SerializeField] private PointsVisual pointsVisual;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private DoorConnectionManager doorConnectionManager;
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         uiManager.GetMenu().OnRestart += HandlerOnRestart;
         
         pointsManager.Initialize();
+        pointsVisual.Initialize(pointsManager);
         foodManager.Initialize(pointsManager);
         doorConnectionManager.Initialize(pointsManager);
 
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour
         playerManager.ShakePlayerCamera();
         await UniTask.WaitForSeconds(1f, true);
         AudioManager.inst.PlaySound(SoundNames.GameOver);
-        uiManager.GetMenu().GameOver(pointsManager.GetCurrentPoints());
+        uiManager.GetMenu().GameOver(pointsManager.CurrentPoints.Value);
     }
 
     private async UniTask Respawn()

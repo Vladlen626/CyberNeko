@@ -17,7 +17,7 @@ public class DoorsConnection
             var door = doorObj.GetComponent<Door>();
             door.Initialize(pointsManager);
             _doors.Add(door);
-            door.OnCanBeOpened += OpenAllConnectedDoors;
+            door.OnOpened += OpenAllConnectedDoors;
         }
     }
 
@@ -25,7 +25,7 @@ public class DoorsConnection
     {
         foreach (var door in _doors)
         {
-            door.OnCanBeOpened -= OpenAllConnectedDoors;
+            door.OnOpened -= OpenAllConnectedDoors;
         }
     }
 

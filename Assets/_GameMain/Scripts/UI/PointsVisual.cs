@@ -1,0 +1,48 @@
+using DG.Tweening;
+using TMPro;
+using UniRx;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PointsVisual : MonoBehaviour
+{
+    [SerializeField] private Slider _foodGoalSlider;
+    [SerializeField] private GameObject _key;
+    [SerializeField] private TextMeshProUGUI _scoreTmp;
+
+    private int previousScore;
+    public void Initialize(PointsManager pointsManager)
+    {
+        pointsManager.CurrentPoints
+            .Subscribe(UpdateUiScoreText)
+            .AddTo(this);
+
+        pointsManager.GoalPoints
+            .Subscribe(UpdateGoalSlider)
+            .AddTo(this);
+
+        pointsManager.IsKeyActive
+            .Subscribe(UpdateKeyActiveSprite)
+            .AddTo(this);
+        
+        _foodGoalSlider.maxValue = pointsManager.GetTargetPoints();
+    }
+
+    private void UpdateGoalSlider(int currentValue)
+    {
+        _foodGoalSlider.DOValue(currentValue, 0.15f);
+        previousScore = currentValue;
+    }
+
+    private void UpdateKeyActiveSprite(bool isActive)
+    {
+        _key.SetActive(isActive);
+    }
+
+    private void UpdateUiScoreText(int newScore)
+    {
+        DOTween.To(() => previousScore, x => previousScore = x, newScore, 0.25f)
+            .OnUpdate(() =>  _scoreTmp.text = previousScore.ToString())
+            .SetEase(Ease.Linear);
+    }
+}

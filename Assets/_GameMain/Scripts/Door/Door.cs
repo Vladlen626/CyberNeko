@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public Action OnCanBeOpened;
+    public Action OnOpened;
     
     [SerializeField] private Transform[] borders;
+
+    private Vector3 originalPos;
     private PointsManager _pointsManager;
     
     public void Initialize(PointsManager pointsManager)
     {
+        originalPos = transform.position;
         _pointsManager = pointsManager;
     }
     
@@ -50,17 +53,17 @@ public class Door : MonoBehaviour
     private void ShowObject(Transform objectToShow)
     {
         objectToShow.localScale = Vector3.one;
+        objectToShow.position = originalPos;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (_pointsManager.IsKeyActive())
+            if (_pointsManager.IsKeyActive.Value)
             {
-                Debug.Log("Player try open door with key");
-                OnCanBeOpened?.Invoke();
-                _pointsManager.ResetGoalPoints(); // To call it once
+                OnOpened?.Invoke();
+                _pointsManager.ResetGoal();
             }
         }
     }

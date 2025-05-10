@@ -1,102 +1,75 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using TMPro;
+﻿using UniRx;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class PointsManager : MonoBehaviour
 {
     [Header("Main Fields")]
-    [SerializeField] private Slider _slider;
-    [SerializeField] private GameObject _key;
-    [SerializeField] private TextMeshProUGUI _scoreTmp;
     [SerializeField] private int _targetPoints = 500;
 
-    [Header("Additional settings")] [SerializeField]
-    private int pointsMultiplier = 10;
-
-    private int _curPoints = 0;
-    private int _goalPoints;
+    // Реактивные свойства для наблюдения
+    public IReadOnlyReactiveProperty<int> CurrentPoints => _currentPoints;
+    private readonly ReactiveProperty<int> _currentPoints = new ReactiveProperty<int>(0);
+    
+    public IReadOnlyReactiveProperty<int> GoalPoints => _goalPoints;
+    private readonly ReactiveProperty<int> _goalPoints = new ReactiveProperty<int>(0);
+    public IReadOnlyReactiveProperty<bool> IsKeyActive => _isKeyActive;
+    private readonly ReactiveProperty<bool> _isKeyActive = new ReactiveProperty<bool>(false);
 
     public void Initialize()
     {
-        _key.SetActive(false);
+        DeactivateKey();
         ResetAllPoints();
-        _slider.maxValue = _targetPoints;
-    }
-
-    public int GetCurrentPoints()
-    {
-        return _curPoints;
     }
 
     public void AddPoints(int points)
     {
-        AddToGoalPoints(points);
-        AddToCurrentPoints(points);
-    }
-
-    public void ResetGoalPoints()
-    {
-        SetGoalPoints(0);
-        _key.SetActive(false);
+        SetCurPoints(_currentPoints.Value + points);
+        SetGoalPoints(_goalPoints.Value + points);
     }
 
     public void ResetAllPoints()
     {
-        ResetGoalPoints();
-        AddToCurrentPoints(0);
+        ResetGoal();
+        SetCurPoints(0);
     }
 
-    public bool IsKeyActive()
+    public int GetTargetPoints()
     {
-        return _key.activeInHierarchy;
+        return _targetPoints;
     }
-
-    // _____________ Private _____________
     
-    private void AddToCurrentPoints(int points)
+    public void ResetGoal()
     {
-        var newPoints = points * pointsMultiplier;
-        SetCurPoints(_curPoints + newPoints);
+        DeactivateKey();
+        SetGoalPoints(0);
     }
+    
+    // _____________ Private _____________
 
     private void SetCurPoints(int points)
     {
-        UpdateUiScoreText(_scoreTmp, _curPoints, points);
-        _curPoints = points;
+        _currentPoints.Value = points;
     }
-    
-    private void AddToGoalPoints(int points)
-    {
-        SetGoalPoints(_goalPoints + points);
-    }
-    
+
     private void SetGoalPoints(int points)
     {
-        _goalPoints = points;
-        if (_goalPoints > _targetPoints)
+        _goalPoints.Value = points;
+        if (_goalPoints.Value > _targetPoints)
         {
             GoalReach();
         }
-        _slider.DOValue(_goalPoints, 0.15f);
-    }
-    
-    private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)
-    {
-        DOTween.To(() => oldScore, x => oldScore = x, newScore, 0.25f)
-            .OnUpdate(() =>  scoreTmp.text = oldScore.ToString())
-            .SetEase(Ease.Linear);
     }
 
     private void GoalReach()
     {
-        if (!IsKeyActive())
+        if (!_isKeyActive.Value)
         {
             AudioManager.inst.PlaySound(SoundNames.GoalComplete);
         }
-        _key.SetActive(true);
+        ActivateKey();
     }
+
+    private void ActivateKey() => _isKeyActive.Value = true;
+    private void DeactivateKey() => _isKeyActive.Value = false;
+    
 }
