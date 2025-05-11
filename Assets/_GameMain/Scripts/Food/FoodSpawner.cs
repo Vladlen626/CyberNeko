@@ -21,7 +21,7 @@ public class FoodSpawner : MonoBehaviour
     // _____________ Private _____________
     
     [Inject]
-    private void SetDependency(PointsManager pointsManager)
+    private void Construct(PointsManager pointsManager)
     {
         _pointsManager = pointsManager;
         _sceneFood = FindObjectsByType<Food>(FindObjectsInactive.Include, FindObjectsSortMode.None);

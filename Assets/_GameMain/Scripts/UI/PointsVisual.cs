@@ -14,7 +14,7 @@ public class PointsVisual : MonoBehaviour
     private int previousScore;
     
     [Inject]
-    public void SetDependency(PointsManager pointsManager)
+    public void Construct(PointsManager pointsManager)
     {
         pointsManager.CurrentPoints
             .Subscribe(UpdateUiScoreText)

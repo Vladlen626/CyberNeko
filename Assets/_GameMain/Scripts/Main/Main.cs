@@ -32,11 +32,13 @@ public class Main : IInitializable, IDisposable
         _doorConnectionManager = doorConnectionManager;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void Initialize()
     {
         StartGame().Forget();
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void Dispose()
     {
         _disposables.Dispose();

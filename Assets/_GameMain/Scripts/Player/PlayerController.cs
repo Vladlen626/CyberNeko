@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         agent.updateRotation = false;
         agent.acceleration = acceleration;
         agent.speed = runSpeed;
-        agent.autoBraking = false;  // Отключаем автоторможение
+        agent.autoBraking = false;
     }
 
     private void Update()
@@ -135,7 +135,6 @@ public class PlayerController : MonoBehaviour
         
         if (movementDirection.magnitude > 0.1f)
         {
-            // Непосредственное управление скоростью
             agent.velocity = movementDirection * runSpeed;
         }
         else

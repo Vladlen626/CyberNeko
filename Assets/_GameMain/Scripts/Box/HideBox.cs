@@ -1,82 +1,112 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Assertions;
+
 
 public class HideBox : MonoBehaviour
 {
-    [Tooltip("Will be shown if the player hides in the box but is being pursued")]
-    [SerializeField] private GameObject _marker;
+    [Header("Settings")]
+    [SerializeField] private float holdTimeToEscape = 1f;
+    [SerializeField] private float moveDistance = 3f;
+    [SerializeField] private float moveDuration = 0.4f;
+    [SerializeField] private Transform boxModel;
 
-    private Vector3 _playerHidePos;
-    private GameObject _hiddenPlayer = null;
+    private Vector3 _hideCenter;
+    private Hider _currentHider;
+    private bool _isHoldingInput;
 
-    void Start()
-    {
-        _playerHidePos = transform.position;
-        HideMarker();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            GameObject playerObj = other.gameObject;
-            if (_hiddenPlayer != null)
-            {
-                Debug.Log("The player " + playerObj + " tries to hide in the box, but it is already occupied"); // For  multiplayer
-                return;
-            }
-
-            HidePlayerInside(playerObj.transform);
-
-            Debug.Log("Player " + playerObj + " hide in Box");
-            StealthStatus stealthStatus = playerObj.GetComponent<StealthStatus>();
-            //Assert.IsNotNull(stealthStatus, $"{playerObj.name} need StealthStatus");
-            _hiddenPlayer = playerObj;
-            if (!stealthStatus.IsStealthActive())
-            {
-                ShowMarker();
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player left Box");
-            GameObject playerObj = other.gameObject;
-
-            if (_hiddenPlayer == playerObj)
-            {
-                _hiddenPlayer = null;
-                DropPlayer();
-            }
-        }
-    }
+    private CancellationTokenSource _cts;
     
-    private void HidePlayerInside(Transform player)
+    private void Start() => _hideCenter = transform.position;
+
+    private async void OnTriggerEnter(Collider other)
     {
-        AudioManager.inst.PlaySound(SoundNames.InBox);
-        player.DOMove(_playerHidePos + Vector3.up * 0.5f, 0.15f);
-        transform.DOJump(_playerHidePos, 1.5f, 1, 0.18f);
+        if (!other.CompareTag("Player")) return;
+        if (_currentHider != null) return;
+        if (!other.TryGetComponent(out Hider hider)) return;
+
+        StartHidingProcess(hider);
     }
 
-    private void DropPlayer()
+    private void StartHidingProcess(Hider hider)
+    {
+        _cts?.Cancel();
+        _cts = new CancellationTokenSource();
+        
+        AudioManager.inst.PlaySound(SoundNames.InBox);
+        _currentHider = hider;
+        hider.SetHiding(true);
+
+        DOTween.Sequence()
+            .Append(boxModel.DOJump(_hideCenter, 1.5f, 1, 0.15f))
+            .Join(hider.transform.DOMove(_hideCenter, 0.15f))
+            .OnComplete(() => HandleEscapeLogic(_cts.Token).Forget());
+    }
+
+    private async UniTask HandleEscapeLogic(CancellationToken ct)
+    {
+        float holdTimer = 0;
+        Vector2 lastDirection = Vector2.zero;
+        const float directionThreshold = 0.1f;
+
+        while (!ct.IsCancellationRequested)
+        {
+            var input = new Vector2(
+                Input.GetAxisRaw("Horizontal"),
+                Input.GetAxisRaw("Vertical")
+            ).normalized;
+
+            bool isHolding = input.sqrMagnitude > 0.1f;
+            bool directionChanged = Vector2.Distance(input, lastDirection) > directionThreshold;
+
+            if (isHolding)
+            {
+                if (directionChanged)
+                {
+                    holdTimer = 0;
+                    lastDirection = input;
+                }
+
+                holdTimer += Time.deltaTime;
+
+                if (holdTimer >= holdTimeToEscape)
+                {
+                    ReleasePlayer(input);
+                    return;
+                }
+            }
+            else
+            {
+                holdTimer = 0;
+                lastDirection = Vector2.zero;
+            }
+
+            await UniTask.Yield(PlayerLoopTiming.Update, ct);
+        }
+    }
+
+    private void ReleasePlayer(Vector2 input)
     {
         AudioManager.inst.PlaySound(SoundNames.OutBox);
-        transform.DOJump(_playerHidePos, 1f, 1, 0.1f);
-        HideMarker();
+        var hider = _currentHider;
+        _currentHider = null;
+
+        var direction = new Vector3(input.x, 0, input.y);
+        var targetPos = _hideCenter + direction * moveDistance;
+        
+        hider.SetHiding(false);
+        
+        boxModel.DOJump(_hideCenter, 3f, 1, 0.15f);
+        hider.transform.DOJump(targetPos, 0.5f, 1, moveDuration);
+
+        _cts?.Cancel();
     }
 
-    private void ShowMarker()
+    private void OnDestroy()
     {
-        AudioManager.inst.PlaySound(SoundNames.Alert);
-        _marker.SetActive(true);
-    }
-
-    private void HideMarker()
-    {
-        _marker.SetActive(false);
+        _cts?.Cancel();
+        _cts?.Dispose();
+        if (_currentHider != null) _currentHider.SetHiding(false);
     }
 }
