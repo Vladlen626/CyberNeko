@@ -50,6 +50,7 @@ MonoBehaviour:
   moveDistance: 3
   moveDuration: 0.25
   boxModel: {fileID: 8703052998167290742}
+  boxModel2: {fileID: 9182549793191396141}
 --- !u!135 &5834036425679934750
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ Transform:
   m_Children:
   - {fileID: 9182549793191396141}
   m_Father: {fileID: 2222140221204416497}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 48.672, z: 0}
 --- !u!1 &8369140348323289495
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +132,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 55, y: 55, z: 55}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8703052998167290742}

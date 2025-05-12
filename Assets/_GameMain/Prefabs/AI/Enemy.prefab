@@ -1928,7 +1928,6 @@ GameObject:
   - component: {fileID: 7182396080438041754}
   - component: {fileID: 7582571341795821933}
   - component: {fileID: 8472085277708058469}
-  - component: {fileID: 6718863129007593803}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2042,7 +2041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf74ec5f5dcf5043989d17910bdf010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _patrolAndChaseAI: {fileID: 0}
+  _patrolAndChaseAI: {fileID: 662143402874356624}
 --- !u!135 &8472085277708058469
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2064,24 +2063,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6718863129007593803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9069607021251921991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &9193191291833008214
 GameObject:
   m_ObjectHideFlags: 0
