@@ -17,34 +17,34 @@ public class AlertSystem : MonoBehaviour
     [SerializeField] private Settings _settings;
     [SerializeField] private LayerMask _enemyLayer;
 
-    private WorldState _worldState;
+    private AIKnowledge _aiKnowledge;
 
-    public void Initialize(WorldState worldState)
+    public void Initialize(AIKnowledge aiKnowledge)
     {
-        _worldState = worldState;
+        _aiKnowledge = aiKnowledge;
     }
     
     public void ResetAlert()
     {
-        _worldState.AlertProgress = 0f;
+        _aiKnowledge.AlertProgress.Value = 0f;
     }
 
     // _____________ Private _____________
     
-    public void RemoveAlert(float amount)
+    public void RemoveAlert()
     {
-        _worldState.AlertProgress = Mathf.Clamp01(_worldState.AlertProgress - amount * _settings.DecaySpeed * Time.deltaTime);
-        if (_worldState.AlertProgress <= _settings.AlertDisableThreshold)
+        _aiKnowledge.AlertProgress.Value = Mathf.Clamp01(_aiKnowledge.AlertProgress.Value - 1 * _settings.DecaySpeed * Time.deltaTime);
+        if (_aiKnowledge.AlertProgress.Value <= _settings.AlertDisableThreshold)
         {
             DisableFullAlert();
         }
     }
 
-    public void AddAlert(float amount)
+    public void AddAlert()
     {
-        _worldState.AlertProgress += amount * _settings.DetectSpeed * Time.deltaTime;
+        _aiKnowledge.AlertProgress.Value += 1 * _settings.DetectSpeed * Time.deltaTime;
 
-        if (_worldState.AlertProgress >= _settings.AlertEnableThreshold)
+        if (_aiKnowledge.AlertProgress.Value >= _settings.AlertEnableThreshold)
         {
             ActivateFullAlert();
             SpreadAlert();
@@ -53,13 +53,13 @@ public class AlertSystem : MonoBehaviour
 
     private void ActivateFullAlert()
     {
-        _worldState.AlertProgress = 1f;
-        _worldState.IsAlerted = true;
+        _aiKnowledge.AlertProgress.Value = 1f;
+        _aiKnowledge.IsAlerted = true;
     }
 
     private void DisableFullAlert()
     {
-        _worldState.IsAlerted = false;
+        _aiKnowledge.IsAlerted = false;
     }
 
     private void SpreadAlert()
@@ -74,7 +74,7 @@ public class AlertSystem : MonoBehaviour
         {
             if (!enemy.TryGetComponent<AlertSystem>(out var system)) continue;
             system.ActivateFullAlert();
-            system._worldState.Target = _worldState.Target;
+            system._aiKnowledge.Target = _aiKnowledge.Target;
         }
     }
 }

@@ -33,7 +33,7 @@ public class PatrolAction : AIAction
     
     public override bool IsApplicable()
     {
-        return !GetComponent<WorldState>().IsAlerted && 
+        return !GetComponent<AIKnowledge>().IsAlerted && 
                _patrolPoints.Length > 0;
     }
     

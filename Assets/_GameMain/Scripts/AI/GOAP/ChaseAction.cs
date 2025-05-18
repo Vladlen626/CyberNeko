@@ -9,12 +9,12 @@ public class ChaseAction : AIAction
     public float StopDistance = 0.1f;
     
     private AIMovementController _movement;
-    private WorldState _worldState;
+    private AIKnowledge _aiKnowledge;
 
     private void Awake()
     {
         _movement = GetComponent<AIMovementController>();
-        _worldState = GetComponent<WorldState>();
+        _aiKnowledge = GetComponent<AIKnowledge>();
     }
 
     public override async UniTask PerformAction()
@@ -25,7 +25,7 @@ public class ChaseAction : AIAction
         {
             while (!_actionCTS.Token.IsCancellationRequested)
             {
-                _movement.UpdateDestination(_worldState.Target.transform.position);
+                _movement.UpdateDestination(_aiKnowledge.Target.transform.position);
                 await UniTask.Delay((int)(UpdateInterval * 1000), 
                     cancellationToken: _actionCTS.Token);
             }
@@ -38,7 +38,7 @@ public class ChaseAction : AIAction
 
     public override bool IsApplicable()
     {
-        return _worldState.IsAlerted &&
-               Vector3.Distance(transform.position, _worldState.Target.transform.position) > StopDistance;
+        return _aiKnowledge.IsAlerted &&
+               Vector3.Distance(transform.position, _aiKnowledge.Target.transform.position) > StopDistance;
     }
 }

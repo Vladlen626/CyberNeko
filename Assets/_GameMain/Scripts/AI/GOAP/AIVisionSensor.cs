@@ -15,13 +15,13 @@ public class AIVisionSensor : MonoBehaviour
     [SerializeField] private LayerMask _obstacleMask;
 
     private AlertSystem _alertSystem;
-    private WorldState _worldState;
+    private AIKnowledge _aiKnowledge;
 
     public void Initialize()
     {
-        _worldState = GetComponent<WorldState>();
+        _aiKnowledge = GetComponent<AIKnowledge>();
         _alertSystem = GetComponent<AlertSystem>();
-        _alertSystem.Initialize(_worldState);
+        _alertSystem.Initialize(_aiKnowledge);
     }
 
     public void Reset()
@@ -55,14 +55,14 @@ public class AIVisionSensor : MonoBehaviour
             targetTransform = target.transform;
         }
         
-        _worldState.IsTargetOnVision = IsTargetVisible(targetTransform);
-        if (_worldState.IsTargetOnVision)
+        _aiKnowledge.IsTargetOnVision = IsTargetVisible(targetTransform);
+        if (_aiKnowledge.IsTargetOnVision)
         {
-            _alertSystem.AddAlert(1f);
+            _alertSystem.AddAlert();
         }
         else
         {
-            _alertSystem.RemoveAlert(1f);
+            _alertSystem.RemoveAlert();
         }
     }
 
@@ -71,7 +71,7 @@ public class AIVisionSensor : MonoBehaviour
         if (!targetTransform)
             return false;
 
-        _worldState.Target = targetTransform;
+        _aiKnowledge.Target = targetTransform;
         
         Vector3 dir = (targetTransform.position - transform.position).normalized;
         if (Vector3.Angle(transform.forward, dir) > _fovAngle / 2) return false;

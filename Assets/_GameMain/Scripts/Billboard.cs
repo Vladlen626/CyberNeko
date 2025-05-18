@@ -11,10 +11,7 @@ public class Billboard : MonoBehaviour
 
     void Update()
     {
-        // Turn the object towards the camera
         transform.LookAt(_mainCamera.transform);
-
-        // So the picture doesn't turn upside down
         transform.rotation = _mainCamera.transform.rotation;
     }
 }
