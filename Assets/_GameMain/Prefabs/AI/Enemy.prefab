@@ -1924,16 +1924,17 @@ GameObject:
   - component: {fileID: 7248152224086547051}
   - component: {fileID: 8472085277708058469}
   - component: {fileID: 7739365540925993526}
+  - component: {fileID: 2175160911328421446}
   - component: {fileID: 4926680880756217671}
   - component: {fileID: 5822516942725080460}
   - component: {fileID: 3507296396320909794}
   - component: {fileID: 4921772339825278692}
   - component: {fileID: 6075306500036767756}
   - component: {fileID: 7182396080438041754}
-  - component: {fileID: 202987421487931981}
-  - component: {fileID: 6071019278652033564}
   - component: {fileID: 7363380768689811392}
-  - component: {fileID: 2175160911328421446}
+  - component: {fileID: 6071019278652033564}
+  - component: {fileID: 202987421487931981}
+  - component: {fileID: 8697228180731688499}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -2001,6 +2002,27 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2175160911328421446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be6d3eee0cfa4748b83097abe4eec2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showPath: 1
+  showVelocity: 1
+  realtimeUpdate: 1
+  pathColor: {r: 0, g: 1, b: 0, a: 0.5}
+  cornersColor: {r: 1, g: 0, b: 0, a: 1}
+  velocityColor: {r: 0, g: 1, b: 1, a: 1}
+  cornerSphereRadius: 0.3
+  pathHeightOffset: 0.1
+  velocityArrowLength: 2
 --- !u!114 &4926680880756217671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2102,36 +2124,6 @@ MonoBehaviour:
   visors:
   - {fileID: 2439720821821212865}
   - {fileID: 3227495346351210134}
---- !u!114 &202987421487931981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9069607021251921991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3eeed076107bc4b878a416808a686d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Priority: 1
-  WaypointPause: 2
-  ReachDistance: 0.5
---- !u!114 &6071019278652033564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9069607021251921991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe78aa085a0b6d48b03deeceebac358, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Priority: 1
-  UpdateInterval: 0.1
-  StopDistance: 0.1
 --- !u!114 &7363380768689811392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2149,7 +2141,7 @@ MonoBehaviour:
   maxAnimationSpeed: 1
   _agent: {fileID: 7739365540925993526}
   _animator: {fileID: 8853971427817639009}
---- !u!114 &2175160911328421446
+--- !u!114 &6071019278652033564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2158,18 +2150,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 9069607021251921991}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5be6d3eee0cfa4748b83097abe4eec2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fe78aa085a0b6d48b03deeceebac358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showPath: 1
-  showVelocity: 1
-  realtimeUpdate: 1
-  pathColor: {r: 0, g: 1, b: 0, a: 0.5}
-  cornersColor: {r: 1, g: 0, b: 0, a: 1}
-  velocityColor: {r: 0, g: 1, b: 1, a: 1}
-  cornerSphereRadius: 0.3
-  pathHeightOffset: 0.1
-  velocityArrowLength: 2
+  Priority: 1
+  UpdateInterval: 0.1
+  StopDistance: 0.1
+--- !u!114 &202987421487931981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3eeed076107bc4b878a416808a686d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  WaypointPause: 2
+  ReachDistance: 0.5
+--- !u!114 &8697228180731688499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069607021251921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacd03546a79cb64ea369a470e4f61ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 1
 --- !u!1 &9193191291833008214
 GameObject:
   m_ObjectHideFlags: 0

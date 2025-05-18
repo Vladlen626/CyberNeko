@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -51,6 +52,11 @@ public class AIMovementController : MonoBehaviour
     {
         CancelCurrentMovement();
         _agent.ResetPath();
+    }
+
+    public void LookAt(Transform target)
+    {
+        transform.DOLookAt(target.position, 0.25f);
     }
     
     public void SetSpeedMode(bool isChasing)

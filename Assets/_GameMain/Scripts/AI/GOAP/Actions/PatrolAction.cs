@@ -13,7 +13,8 @@ public class PatrolAction : AIAction
     private Transform[] _patrolPoints;
     private int _currentIndex;
     private AIMovementController _movement;
-
+    private AIKnowledge _aiKnowledge;
+    
     public void SetPatrolPoints(Transform[] patrolPoints)
     {
         _patrolPoints = patrolPoints;
@@ -33,8 +34,7 @@ public class PatrolAction : AIAction
     
     public override bool IsApplicable()
     {
-        return !GetComponent<AIKnowledge>().IsAlerted && 
-               _patrolPoints.Length > 0;
+        return !_aiKnowledge.IsAlerted && _patrolPoints.Length > 0;
     }
     
     // _____________ Private _____________
@@ -42,6 +42,7 @@ public class PatrolAction : AIAction
     private void Awake()
     {
         _movement = GetComponent<AIMovementController>();
+        _aiKnowledge = GetComponent<AIKnowledge>();
     }
 
     private async UniTask MoveToNextPoint()
