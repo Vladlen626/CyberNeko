@@ -1,71 +1,136 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(AlertSystem))]
 public class AIVisionSensor : MonoBehaviour
 {
-    [Header("Vision Settings")]
-    [SerializeField] private float detectionRange = 15f;
-    [SerializeField] private float fovAngle = 120f;
-    [SerializeField] private float checkInterval = 0.2f;
-    [SerializeField] private LayerMask detectionMask;
+    [Header("Settings")]
+    [SerializeField] private float _scanRange = 15f;
+    [SerializeField] private float _fovAngle = 120f;
+    [SerializeField] private float _scanInterval = 0.2f;
     
+    [Header("Layers")]
+    [SerializeField] private LayerMask _targetMask;
+    [SerializeField] private LayerMask _obstacleMask;
+
     private AlertSystem _alertSystem;
-    private AIWorldState _worldState;
+    private WorldState _worldState;
 
-    private void Awake()
+    public void Initialize()
     {
+        _worldState = GetComponent<WorldState>();
         _alertSystem = GetComponent<AlertSystem>();
-        _worldState = GetComponent<AIWorldState>();
+        _alertSystem.Initialize(_worldState);
     }
 
-    private void Start()
+    public void Reset()
     {
-       VisionCheckLoop().Forget();
-    }
-
-    private async UniTask VisionCheckLoop()
-    {
-        while (true)
-        {
-            if (!_worldState.IsInFullAlert) 
-                CheckForPlayer();
-            
-            await UniTask.Delay((int)(checkInterval * 1000));
-        }
-    }
-
-    private void CheckForPlayer()
-    {
-        Collider[] hits = Physics.OverlapSphere(
-            transform.position, 
-            detectionRange, 
-            detectionMask
-        );
-
-        foreach (var hit in hits)
-        {
-            if (!hit.CompareTag("Player")) continue;
-            
-            Vector3 dirToPlayer = (hit.transform.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToPlayer) < fovAngle * 0.5f)
-            {
-                if (HasLineOfSight(hit.transform))
-                {
-                    _alertSystem.TriggerAlert(hit.transform.position);
-                    return;
-                }
-            }
-        }
-        
         _alertSystem.ResetAlert();
     }
 
-    private bool HasLineOfSight(Transform target)
+    private void Start() => RunDetection().Forget();
+
+    private async UniTaskVoid RunDetection()
     {
-        Vector3 origin = transform.position + Vector3.up;
-        Vector3 direction = (target.position - origin).normalized;
-        return Physics.Raycast(origin, direction, out RaycastHit hit, detectionRange)
-               && hit.transform == target;
+        while (true)
+        {
+            ScanForTarget();
+            
+            await UniTask.WaitForSeconds(_scanInterval);
+        }
     }
+
+    private void ScanForTarget()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, _scanRange,_targetMask);
+
+        Transform targetTransform = null;
+        
+        foreach (var target in targets)
+        {
+            if (!target.CompareTag("Player"))
+                continue;
+
+            targetTransform = target.transform;
+        }
+        
+        _worldState.IsTargetOnVision = IsTargetVisible(targetTransform);
+        if (_worldState.IsTargetOnVision)
+        {
+            _alertSystem.AddAlert(1f);
+        }
+        else
+        {
+            _alertSystem.RemoveAlert(1f);
+        }
+    }
+
+    private bool IsTargetVisible(Transform targetTransform)
+    {
+        if (!targetTransform)
+            return false;
+
+        _worldState.Target = targetTransform;
+        
+        Vector3 dir = (targetTransform.position - transform.position).normalized;
+        if (Vector3.Angle(transform.forward, dir) > _fovAngle / 2) return false;
+
+        return !Physics.Raycast(
+            transform.position + Vector3.up, 
+            dir, 
+            _scanRange, 
+            _obstacleMask
+        );
+    }
+    
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _scanRange);
+        
+        DrawFieldOfView();
+    }
+    private void DrawFieldOfView()
+    {
+        Gizmos.color = Color.yellow;
+        
+        Vector3 forward = transform.forward * _scanRange;
+        Quaternion leftRot = Quaternion.Euler(0, -_fovAngle/2, 0);
+        Quaternion rightRot = Quaternion.Euler(0, _fovAngle/2, 0);
+        
+        Vector3 leftBound = leftRot * forward + transform.position;
+        Vector3 rightBound = rightRot * forward + transform.position;
+
+        Gizmos.DrawLine(transform.position, leftBound);
+        Gizmos.DrawLine(transform.position, rightBound);
+        
+        DrawViewArc();
+    }
+
+    private void DrawViewArc()
+    {
+        Gizmos.color = new Color(1, 1, 0, 0.2f);
+        Vector3 pos = transform.position;
+        Vector3 forward = transform.forward;
+        
+        int segments = 20;
+        float angleStep = _fovAngle / segments;
+        Vector3 prevPoint = pos + forward * _scanRange;
+        
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = -_fovAngle/2 + angleStep*i;
+            Quaternion rot = Quaternion.Euler(0, angle, 0);
+            Vector3 dir = rot * forward * _scanRange;
+            Vector3 newPoint = pos + dir;
+            
+            Gizmos.DrawLine(pos, newPoint);
+            Gizmos.DrawLine(prevPoint, newPoint);
+            
+            prevPoint = newPoint;
+        }
+    }
+#endif
 }

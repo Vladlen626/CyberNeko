@@ -1,83 +1,80 @@
+
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-[System.Serializable]
-public class AlertSettings
-{
-    public float maxAlert = 100f;
-    public float fillSpeed = 30f;
-    public float decreaseSpeed = 15f;
-    public float chaseThreshold = 0.9f;
-    public float alertSpreadRadius = 10f;
-}
-
 public class AlertSystem : MonoBehaviour
 {
-    [SerializeField] private AlertSettings settings;
-    [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private AIWorldState worldState;
-    
-    private float _currentAlert;
-    private bool _alertTriggered;
-    
-    public void TriggerAlert(Vector3 playerPosition)
+    [System.Serializable]
+    public class Settings
     {
-        _alertTriggered = true;
-        worldState.LastKnownPlayerPosition = playerPosition;
-        SpreadAlert();
+        [Range(0, 1)] public float AlertEnableThreshold = 1f;
+        [Range(0, 1)] public float AlertDisableThreshold = 0.01f;
+        public float DetectSpeed = 3f;
+        public float DecaySpeed = 0.01f;
+        public float SpreadRadius = 0f;
     }
 
+    [SerializeField] private Settings _settings;
+    [SerializeField] private LayerMask _enemyLayer;
+
+    private WorldState _worldState;
+
+    public void Initialize(WorldState worldState)
+    {
+        _worldState = worldState;
+    }
+    
     public void ResetAlert()
-    { 
-        _alertTriggered = false;
-    } 
+    {
+        _worldState.AlertProgress = 0f;
+    }
 
     // _____________ Private _____________
     
-    private void Start() => AlertUpdate().Forget();
-
-    private async UniTaskVoid AlertUpdate()
+    public void RemoveAlert(float amount)
     {
-        while (true)
+        _worldState.AlertProgress = Mathf.Clamp01(_worldState.AlertProgress - amount * _settings.DecaySpeed * Time.deltaTime);
+        if (_worldState.AlertProgress <= _settings.AlertDisableThreshold)
         {
-            UpdateAlertState();
-            await UniTask.Yield();
+            DisableFullAlert();
         }
     }
 
-    private void UpdateAlertState()
+    public void AddAlert(float amount)
     {
-        worldState.AlertLevel = Mathf.Clamp01(_currentAlert / settings.maxAlert);
-        worldState.IsInFullAlert = worldState.AlertLevel >= settings.chaseThreshold;
+        _worldState.AlertProgress += amount * _settings.DetectSpeed * Time.deltaTime;
 
-        if (_alertTriggered)
+        if (_worldState.AlertProgress >= _settings.AlertEnableThreshold)
         {
-            _currentAlert += settings.fillSpeed * Time.deltaTime;
-            if (_currentAlert >= settings.maxAlert) 
-                _currentAlert = settings.maxAlert;
+            ActivateFullAlert();
+            SpreadAlert();
         }
-        else
-        {
-            _currentAlert -= settings.decreaseSpeed * Time.deltaTime;
-            if (_currentAlert < 0) 
-                _currentAlert = 0;
-        }
+    }
+
+    private void ActivateFullAlert()
+    {
+        _worldState.AlertProgress = 1f;
+        _worldState.IsAlerted = true;
+    }
+
+    private void DisableFullAlert()
+    {
+        _worldState.IsAlerted = false;
     }
 
     private void SpreadAlert()
     {
         Collider[] enemies = Physics.OverlapSphere(
-            transform.position, 
-            settings.alertSpreadRadius, 
-            enemyMask
+            transform.position,
+            _settings.SpreadRadius,
+            _enemyLayer
         );
 
         foreach (var enemy in enemies)
         {
-            if (enemy.TryGetComponent<AlertSystem>(out var system) && enemy != gameObject)
-            {
-                system.TriggerAlert(worldState.LastKnownPlayerPosition);
-            }
+            if (!enemy.TryGetComponent<AlertSystem>(out var system)) continue;
+            system.ActivateFullAlert();
+            system._worldState.Target = _worldState.Target;
         }
     }
 }

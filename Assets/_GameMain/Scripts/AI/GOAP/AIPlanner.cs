@@ -1,62 +1,69 @@
-// GOAPPlanner.cs
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class AIPlanner : MonoBehaviour
 {
-    private List<AIAction> _actions = new();
-    private List<AIGoal> _goals = new();
-    private AIWorldState _worldState;
+    private AIAction[] _availableActions;
+    private AIAction _currentAction;
+    private CancellationTokenSource _plannerCTS;
 
     private void Awake()
     {
-        GetComponents(_actions);
-        GetComponents(_goals);
-        _worldState = GetComponent<AIWorldState>();
+        _availableActions = GetComponents<AIAction>();
+        _plannerCTS = new CancellationTokenSource();
     }
 
-    private async void Start()
+    private void Start()
     {
-        await PlanningLoop();
+        RunPlanner(_plannerCTS.Token).Forget();
     }
-    
-    private async UniTask PlanningLoop()
+
+    private async UniTask RunPlanner(CancellationToken token)
     {
-        while (true)
+        while (!token.IsCancellationRequested)
         {
-            var goal = SelectGoal();
-            var action = SelectAction(goal);
-            
-            if (action != null)
+            var bestAction = _availableActions
+                .Where(a => a.IsApplicable())
+                .OrderByDescending(a => a.Priority)
+                .FirstOrDefault();
+
+            if (bestAction != null && bestAction != _currentAction)
             {
-                await ExecuteAction(action);
+                if (_currentAction != null)
+                {
+                    _currentAction.CancelAction();
+                    await UniTask.Yield();
+                }
+                
+                _currentAction = bestAction;
+                RunAction(bestAction).Forget();
             }
-            
-            await UniTask.Yield();
+
+            await UniTask.Delay(100, DelayType.DeltaTime, cancellationToken: token);
         }
     }
-    
-    private AIGoal SelectGoal()
+
+    private async UniTaskVoid RunAction(AIAction action)
     {
-        return _goals
-            .Where(g => !g.IsGoalAchieved())
-            .OrderByDescending(g => g.GetPriority())
-            .FirstOrDefault();
+        try
+        {
+            await action.PerformAction();
+        }
+        finally
+        {
+            if (_currentAction == action)
+                _currentAction = null;
+        }
     }
-    
-    private AIAction SelectAction(AIGoal goal)
+
+    private void OnDestroy()
     {
-        return _actions
-            .Where(a => a.PreCondition())
-            .OrderBy(a => a.GetCost())
-            .FirstOrDefault();
-    }
-    
-    private async UniTask ExecuteAction(AIAction action)
-    {
-        await action.PerformAction();
-        action.PostEffect();
+        _plannerCTS?.Cancel();
+        _plannerCTS?.Dispose();
+        foreach (var action in _availableActions)
+            action.CancelAction();
     }
 }
