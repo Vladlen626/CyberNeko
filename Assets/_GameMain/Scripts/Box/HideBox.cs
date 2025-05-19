@@ -20,7 +20,7 @@ public class HideBox : MonoBehaviour
     
     private void Start() => _hideCenter = transform.position;
 
-    private async void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         if (_currentHider != null) return;

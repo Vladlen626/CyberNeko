@@ -72,6 +72,7 @@ public class AIVisionSensor : MonoBehaviour
             return false;
 
         _aiKnowledge.Target = targetTransform;
+        CalculateDistanceToTarget();
         
         Vector3 dir = (targetTransform.position - transform.position).normalized;
         if (Vector3.Angle(transform.forward, dir) > _fovAngle / 2) return false;
@@ -82,6 +83,11 @@ public class AIVisionSensor : MonoBehaviour
             _scanRange, 
             _obstacleMask
         );
+    }
+    
+    private void CalculateDistanceToTarget()
+    {
+        _aiKnowledge.DistanceToTarget = Vector3.Distance(transform.position, _aiKnowledge.Target.position);
     }
     
 #if UNITY_EDITOR

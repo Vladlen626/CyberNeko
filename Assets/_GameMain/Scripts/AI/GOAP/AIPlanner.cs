@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -34,12 +33,18 @@ public class AIPlanner : MonoBehaviour
             {
                 if (_currentAction != null)
                 {
-                    _currentAction.CancelAction();
-                    await UniTask.Yield();
+                    if (_currentAction.IsCancellable)
+                    {
+                        _currentAction.CancelAction();
+                        await UniTask.Yield();
+                        
+                        RunAction(bestAction).Forget();
+                    }
                 }
-                
-                _currentAction = bestAction;
-                RunAction(bestAction).Forget();
+                else
+                {
+                    RunAction(bestAction).Forget();
+                }
             }
 
             await UniTask.Delay(100, DelayType.DeltaTime, cancellationToken: token);
@@ -50,6 +55,7 @@ public class AIPlanner : MonoBehaviour
     {
         try
         {
+            _currentAction = action;
             await action.PerformAction();
         }
         finally

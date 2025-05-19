@@ -9857,6 +9857,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3608594850719313513, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3795209251071655395, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -10028,6 +10032,10 @@ PrefabInstance:
     - target: {fileID: 8027947774256841551, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492055515778296587, guid: d96c4d87911fce543b79a9aa52ac2f0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10941,7 +10949,6 @@ GameObject:
   - component: {fileID: 7973318914765820608}
   - component: {fileID: 3060569028109145860}
   - component: {fileID: 8229980594881455406}
-  - component: {fileID: 8229980594881455407}
   m_Layer: 0
   m_Name: plane
   m_TagString: Untagged
@@ -11236,38 +11243,6 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: ecfbc45a720b1c041afd7920004973b6, type: 2}
-  m_BuildHeightMesh: 0
---- !u!114 &8229980594881455407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6398715291557747694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedVersion: 0
-  m_AgentTypeID: -1372625422
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 1
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: f42fdbcf47fbb1f42a74ae2d1fff39c4, type: 2}
   m_BuildHeightMesh: 0
 --- !u!64 &8344752095421378047
 MeshCollider:

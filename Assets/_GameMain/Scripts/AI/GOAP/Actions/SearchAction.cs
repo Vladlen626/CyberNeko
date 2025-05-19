@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class SearchAction : AIAction
 {
-    private AIMovementController _movement;
-    private AIKnowledge _aiKnowledge;
-
-    private void Awake()
-    {
-        _movement = GetComponent<AIMovementController>();
-        _aiKnowledge = GetComponent<AIKnowledge>();
-    }
-    
-    
     public override async UniTask PerformAction()
     {
         _actionCTS = new CancellationTokenSource();
@@ -25,6 +15,6 @@ public class SearchAction : AIAction
 
     public override bool IsApplicable()
     {
-        return _aiKnowledge.IsTargetOnVision;
+        return _aiKnowledge.IsTargetOnVision && !_aiKnowledge.IsAlerted;
     }
 }
