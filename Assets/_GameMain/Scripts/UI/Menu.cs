@@ -50,6 +50,7 @@ public class Menu : MonoBehaviour
     
     public void CloseMenu()
     {
+        Time.timeScale = 1;
         gameOverMenuPanel.SetActive(false);
         pauseMenuPanel.SetActive(false);
         mainPanel.SetActive(false);
@@ -80,13 +81,13 @@ public class Menu : MonoBehaviour
 
     private void OpenMenu()
     {
+        Time.timeScale = 0;
         background.SetActive(true);
         mainPanel.SetActive(true);
     }
     
     private void PauseGame()
     {
-        Time.timeScale = 0;
         isPaused = true;
         pauseMenuPanel.SetActive(true);
         OpenMenu();
@@ -94,14 +95,12 @@ public class Menu : MonoBehaviour
 
     private void ResumeGame()
     {
-        Time.timeScale = 1;
         isPaused = false;
         CloseMenu();
     }
 
     private void PlayAgain()
     {
-        Time.timeScale = 1;
         isPaused = false;
         CloseMenu();
         OnRestart.Invoke();

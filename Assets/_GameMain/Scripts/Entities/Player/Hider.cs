@@ -7,14 +7,14 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayerMovementController))]
 public class Hider : MonoBehaviour
 {
-    public bool IsHiding { get; private set; }
+    private bool _isHiding;
 
     private PlayerMovementController _movement;
 
     public void SetHiding(bool state)
     {
-        if (IsHiding == state) return;
-        IsHiding = state;
+        if (_isHiding == state) return;
+        _isHiding = state;
         _movement.SetMovementBlocked(state);
     }
 

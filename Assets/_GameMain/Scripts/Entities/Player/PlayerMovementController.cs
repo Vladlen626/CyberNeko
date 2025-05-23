@@ -11,12 +11,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 12f;
     [SerializeField] private float _acceleration = 24f;
     [SerializeField] private float _inputSmooth = 10f;
-
+    
     private Rigidbody _rb;
     private Transform _cameraTransform;
     private Vector3 _input;
     private Vector3 _smoothedInput;
-    private bool _grabbed;
+    private bool _isGrabbed;
     private bool _isMovementBlocked;
     private IInputService _inputService;
 
@@ -29,7 +29,7 @@ public class PlayerMovementController : MonoBehaviour
     public void Initialize(Transform cameraTransform, Vector3 spawnPos)
     {
         _cameraTransform = cameraTransform;
-        _grabbed = false;
+        _isGrabbed = false;
         _isMovementBlocked = false;
         _rb.position = spawnPos;
         _rb.linearVelocity = Vector3.zero;
@@ -38,13 +38,23 @@ public class PlayerMovementController : MonoBehaviour
 
     public void Grabbed()
     {
-        _grabbed = true;
+        _isGrabbed = true;
         _rb.linearVelocity = Vector3.zero;
     }
-    
+
+    public bool IsGrabbed()
+    {
+        return _isGrabbed;
+    }
+
     public void SetMovementBlocked(bool blocked)
     {
         _isMovementBlocked = blocked;
+        if (blocked)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
     }
 
     // _____________ Private _____________
@@ -56,7 +66,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (_grabbed || _isMovementBlocked) return;
+        if (_isGrabbed || _isMovementBlocked) return;
 
         float h = _inputService?.GetHorizontal() ?? Input.GetAxisRaw("Horizontal");
         float v = _inputService?.GetVertical() ?? Input.GetAxisRaw("Vertical");
@@ -76,7 +86,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_grabbed) return;
+        if (_isGrabbed || _isMovementBlocked) return;
 
         var targetVel = _smoothedInput * _moveSpeed;
         _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, targetVel, _acceleration * Time.fixedDeltaTime);
