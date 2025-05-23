@@ -60,7 +60,6 @@ public class Main : IInitializable, IDisposable
         _foodManager.Initialize();
 
         _playerSpawner.Initialize();
-        _playerSpawner.GetPlayerController().OnGrabbed += HandlerOnGameOver;
 
         await UniTask.Yield();
     }
@@ -68,7 +67,7 @@ public class Main : IInitializable, IDisposable
     private async UniTask GameStart()
     {
         _foodManager.RespawnFood();
-        _playerSpawner.SpawnPlayer();
+        _playerSpawner.RespawnPlayer();
         await _enemyController.SpawnEnemies();
         await UniTask.WaitForSeconds(1f, true);
         _uiManager.HideBlackScreen();
@@ -97,7 +96,6 @@ public class Main : IInitializable, IDisposable
         _uiManager.ShowBlackScreen();
         _pointsManager.ResetAllPoints();
         await UniTask.WaitForSeconds(0.5f, true);
-        _playerSpawner.SetupCamera();
         await GameStart();
     }
 

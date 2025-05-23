@@ -16,7 +16,7 @@ public class AttackAction : AIAction
     private readonly CooldownSystem _cooldownSystem = new CooldownSystem();
     private CancellationTokenSource _cooldownCTS;
     private Rigidbody _rigidbody;
-    private Vector3 attackDirection;
+    private Vector3 _attackDirection;
 
     public override async UniTask PerformAction()
     {
@@ -45,14 +45,14 @@ public class AttackAction : AIAction
         _movement.DisableMovement();
         _movement.LookAt(_aiKnowledge.Target);
         
-        attackDirection = (_aiKnowledge.Target.position - transform.position).normalized;
+        _attackDirection = (_aiKnowledge.Target.position - transform.position).normalized;
         
         await UniTask.WaitForSeconds(_attackDelaySec);
     }
 
     private async UniTask  Attack()
     {
-        _rigidbody.AddForce(attackDirection * _dashForce, ForceMode.VelocityChange);
+        _rigidbody.AddForce(_attackDirection * _dashForce, ForceMode.VelocityChange);
         
         await UniTask.WaitForSeconds(_attackTime);
     }

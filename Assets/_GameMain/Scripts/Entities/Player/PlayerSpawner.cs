@@ -1,60 +1,50 @@
 using System;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using UniRx;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private CinemachineCamera playerCamera;
+
     private PlayerCheckpoint[] _playerCheckpoints;
     private PlayerController _playerController;
 
+    [Inject] private PlayerController.Factory _playerFactory;
+
     public void Initialize()
     {
-        InitializePlayer();
         InitializeCheckpoints();
-        SetupCamera();
+        RespawnPlayer();
     }
-    
-    public void SetupCamera()
-    {
-        playerCamera.Target = new CameraTarget
-        {
-            TrackingTarget = _playerController.transform
-        };
 
-        _playerController.SetupCamera(playerCamera.transform);
-    }
-    
-    public void SpawnPlayer()
+    public void RespawnPlayer()
     {
-        foreach (var playerCheckpoint in _playerCheckpoints)    
+        if (_playerController != null)
         {
-            if (playerCheckpoint.IsActive())
+            Destroy(_playerController.gameObject);
+            _playerController = null;
+        }
+        
+        var spawnPos = Vector3.zero;
+        foreach (var checkpoint in _playerCheckpoints)
+        {
+            if (checkpoint.IsActive())
             {
-                _playerController.Respawn();
-                _playerController.transform.position = playerCheckpoint.GetSpawnPosition();
+                spawnPos = checkpoint.GetSpawnPosition();
+                break;
             }
         }
-    }
 
-    public PlayerController GetPlayerController()
-    {
-        return _playerController;
+        _playerController = _playerFactory.Create();
+        _playerController.transform.position = spawnPos;
+        _playerController.transform.rotation = Quaternion.identity;
+        _playerController.Initialize(playerCamera.transform);
+
+        SetupCamera();
     }
 
     // _____________ Private _____________
-
-    private void InitializePlayer()
-    {
-        var player = Instantiate(playerPrefab);
-        _playerController = player.GetComponent<PlayerController>();
-        _playerController.Initialize();
-    }
 
     private void InitializeCheckpoints()
     {
@@ -64,6 +54,14 @@ public class PlayerSpawner : MonoBehaviour
             checkpoint.OnActivate += HandleOnCheckpointActivate;
             checkpoint.Initialize();
         }
+    }
+
+    private void SetupCamera()
+    {
+        playerCamera.Target = new CameraTarget
+        {
+            TrackingTarget = _playerController.transform
+        };
     }
 
     private void HandleOnCheckpointActivate(PlayerCheckpoint activatedCheckpoint)
@@ -77,10 +75,10 @@ public class PlayerSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_playerCheckpoints == null) return;
         foreach (var checkpoint in _playerCheckpoints)
         {
             checkpoint.OnActivate -= HandleOnCheckpointActivate;
         }
     }
-
 }
