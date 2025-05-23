@@ -4633,6 +4633,7 @@ MonoBehaviour:
   _pointsManager: {fileID: 581811866}
   _uiManager: {fileID: 2826234123562880876}
   _doorConnectionManager: {fileID: 4424177649734789673}
+  _playerPrefab: {fileID: 5298094115657050807, guid: d96659777b0b5294aa286e1dea731a4f, type: 3}
 --- !u!1001 &941737928
 PrefabInstance:
   m_ObjectHideFlags: 0

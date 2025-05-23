@@ -1,10 +1,4 @@
-using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 [RequireComponent(typeof(PlayerMovementController), typeof(PlayerAnimationController))]
@@ -18,18 +12,12 @@ public class PlayerController : MonoBehaviour
     {
         Movement = GetComponent<PlayerMovementController>();
         Animation = GetComponent<PlayerAnimationController>();
-        Animation.Initialize(Movement);
     }
 
     public void Initialize(Transform cameraTransform)
     {
         Movement.Initialize(cameraTransform);
         Animation.Initialize(Movement);
-    }
-
-    public void Respawn()
-    {
-        Movement.Respawn();
     }
 
     public void Grabbed()
@@ -40,5 +28,7 @@ public class PlayerController : MonoBehaviour
 
     // _____________ Private _____________
 
-    public class Factory : PlaceholderFactory<PlayerController> { }
+    public class Factory : PlaceholderFactory<PlayerController>
+    {
+    }
 }

@@ -4,38 +4,26 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerMovementController))]
 public class Hider : MonoBehaviour
 {
-    [SerializeField] private GameObject _alertMarker;
     public bool IsHiding { get; private set; }
 
-    private NavMeshAgent _navMeshAgent;
+    private PlayerMovementController _movement;
 
     public void SetHiding(bool state)
     {
         if (IsHiding == state) return;
-        
         IsHiding = state;
-        _navMeshAgent.enabled = !state;
+        _movement.SetMovementBlocked(state);
     }
 
     // _____________ Private _____________
     
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _movement = GetComponent<PlayerMovementController>();
     }
     
-    private void ShowMarker()
-    {
-        AudioManager.inst.PlaySound(SoundNames.Alert);
-        _alertMarker.SetActive(true);
-    }
-
-    private void HideMarker()
-    {
-        _alertMarker.SetActive(false);
-    }
 
 }

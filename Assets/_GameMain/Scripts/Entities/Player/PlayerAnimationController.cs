@@ -1,21 +1,18 @@
 using UnityEngine;
 using DG.Tweening;
-using Zenject;
 
-[RequireComponent(typeof(Animator))]
 public class PlayerAnimationController : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
     [SerializeField] private string _speedParam = "Speed";
     [SerializeField] private string _grabbedParam = "IsGrabbed";
     [SerializeField] private float _animSmooth = 0.1f;
-
-    private Animator _animator;
+    
     private float _curSpeed;
     private Tween _speedTween;
 
     public void Initialize(PlayerMovementController movement)
     {
-        _animator = GetComponent<Animator>();
         movement.OnSpeedChanged += SetSpeed;
         movement.OnGrabbedChanged += SetGrabbed;
     }

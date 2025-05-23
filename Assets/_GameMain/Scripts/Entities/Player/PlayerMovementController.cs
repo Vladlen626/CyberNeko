@@ -18,6 +18,7 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _input;
     private Vector3 _smoothedInput;
     private bool _grabbed;
+    private bool _isMovementBlocked;
     private IInputService _inputService;
 
     [Inject]
@@ -29,11 +30,8 @@ public class PlayerMovementController : MonoBehaviour
     public void Initialize(Transform cameraTransform)
     {
         _cameraTransform = cameraTransform;
-    }
-
-    public void Respawn()
-    {
         _grabbed = false;
+        _isMovementBlocked = false;
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
         OnGrabbedChanged?.Invoke(false);
@@ -45,19 +43,22 @@ public class PlayerMovementController : MonoBehaviour
         _rb.linearVelocity = Vector3.zero;
         OnGrabbedChanged?.Invoke(true);
     }
+    
+    public void SetMovementBlocked(bool blocked)
+    {
+        _isMovementBlocked = blocked;
+    }
 
     // _____________ Private _____________
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.freezeRotation = true;
-        _rb.useGravity = false;
     }
 
     private void Update()
     {
-        if (_grabbed) return;
+        if (_grabbed || _isMovementBlocked) return;
 
         float h = _inputService?.GetHorizontal() ?? Input.GetAxisRaw("Horizontal");
         float v = _inputService?.GetVertical() ?? Input.GetAxisRaw("Vertical");
