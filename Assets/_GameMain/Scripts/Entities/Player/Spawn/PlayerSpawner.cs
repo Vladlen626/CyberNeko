@@ -15,7 +15,6 @@ public class PlayerSpawner : MonoBehaviour
     public void Initialize()
     {
         InitializeCheckpoints();
-        RespawnPlayer();
     }
 
     public void RespawnPlayer()
@@ -37,11 +36,14 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         _playerController = _playerFactory.Create();
-        _playerController.transform.position = spawnPos;
-        _playerController.transform.rotation = Quaternion.identity;
-        _playerController.Initialize(playerCamera.transform);
+        _playerController.Initialize(playerCamera.transform, spawnPos);
 
         SetupCamera();
+    }
+
+    public PlayerController GetPlayerController()
+    {
+        return _playerController;
     }
 
     // _____________ Private _____________

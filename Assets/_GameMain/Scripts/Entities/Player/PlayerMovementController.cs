@@ -6,7 +6,6 @@ using Zenject;
 public class PlayerMovementController : MonoBehaviour
 {
     public event Action<float> OnSpeedChanged;
-    public event Action<bool> OnGrabbedChanged;
 
     [SerializeField] private float _moveSpeed = 8f;
     [SerializeField] private float _rotationSpeed = 12f;
@@ -27,21 +26,20 @@ public class PlayerMovementController : MonoBehaviour
         _inputService = inputService;
     }
 
-    public void Initialize(Transform cameraTransform)
+    public void Initialize(Transform cameraTransform, Vector3 spawnPos)
     {
         _cameraTransform = cameraTransform;
         _grabbed = false;
         _isMovementBlocked = false;
+        _rb.position = spawnPos;
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        OnGrabbedChanged?.Invoke(false);
     }
 
     public void Grabbed()
     {
         _grabbed = true;
         _rb.linearVelocity = Vector3.zero;
-        OnGrabbedChanged?.Invoke(true);
     }
     
     public void SetMovementBlocked(bool blocked)

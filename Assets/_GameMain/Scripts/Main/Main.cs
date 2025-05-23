@@ -41,13 +41,15 @@ public class Main : IInitializable, IDisposable
     // ReSharper disable Unity.PerformanceAnalysis
     public void Dispose()
     {
-        _disposables.Dispose();
+        _disposables?.Dispose();
+        UnsubscribePlayerGrabbed(_playerSpawner.GetPlayerController());
+        _uiManager.GetMenu().OnRestart -= HandlerOnRestart;
     }
 
     private async UniTaskVoid StartGame()
     {
         await InitializeAll();
-        await GameStart();
+        await StartRoundAsync();
     }
 
     private async UniTask InitializeAll()
@@ -64,14 +66,30 @@ public class Main : IInitializable, IDisposable
         await UniTask.Yield();
     }
 
-    private async UniTask GameStart()
+    private async UniTask StartRoundAsync()
     {
         _foodManager.RespawnFood();
         _playerSpawner.RespawnPlayer();
+        SubscribePlayerGrabbed(_playerSpawner.GetPlayerController());
+
         await _enemyController.SpawnEnemies();
+
         await UniTask.WaitForSeconds(1f, true);
         _uiManager.HideBlackScreen();
         await UniTask.WaitForSeconds(0.15f, true);
+    }
+
+    private void SubscribePlayerGrabbed(PlayerController _player)
+    {
+        UnsubscribePlayerGrabbed(_player);
+        if (_player != null)
+            _player.OnGrabbed += HandlerOnGameOver;
+    }
+
+    private void UnsubscribePlayerGrabbed(PlayerController _player)
+    {
+        if (_player != null)
+            _player.OnGrabbed -= HandlerOnGameOver;
     }
 
     private void HandlerOnGameOver()
@@ -81,7 +99,7 @@ public class Main : IInitializable, IDisposable
 
     private void HandlerOnRestart()
     {
-        Respawn().Forget();
+        Restart().Forget();
     }
 
     private async UniTask GameOverAsync()
@@ -91,12 +109,12 @@ public class Main : IInitializable, IDisposable
         _uiManager.GetMenu().GameOver(_pointsManager.CurrentPoints.Value);
     }
 
-    private async UniTask Respawn()
+    private async UniTask Restart()
     {
         _uiManager.ShowBlackScreen();
         _pointsManager.ResetAllPoints();
         await UniTask.WaitForSeconds(0.5f, true);
-        await GameStart();
+        await StartRoundAsync();
     }
 
     private async UniTask Final()

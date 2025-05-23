@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(PlayerMovementController), typeof(PlayerAnimationController))]
 public class PlayerController : MonoBehaviour
 {
+    public event Action OnGrabbed;
+    
     public PlayerMovementController Movement { get; private set; }
     public PlayerAnimationController Animation { get; private set; }
 
@@ -14,9 +17,11 @@ public class PlayerController : MonoBehaviour
         Animation = GetComponent<PlayerAnimationController>();
     }
 
-    public void Initialize(Transform cameraTransform)
+    public void Initialize(Transform cameraTransform, Vector3 spawnPos)
     {
-        Movement.Initialize(cameraTransform);
+        transform.position = spawnPos;
+        transform.rotation = Quaternion.identity;
+        Movement.Initialize(cameraTransform, spawnPos);
         Animation.Initialize(Movement);
     }
 
@@ -24,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         AudioManager.inst.PlaySound(SoundNames.ScaredMeow_1);
         Movement.Grabbed();
+        OnGrabbed?.Invoke();
     }
 
     // _____________ Private _____________

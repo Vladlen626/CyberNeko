@@ -126,8 +126,15 @@ public class AIMovementController : MonoBehaviour
 
     private void CancelCurrentMovement()
     {
-        _movementCTS?.Cancel();
-        _movementCTS?.Dispose();
+        if (_movementCTS != null)
+        {
+            if (!_movementCTS.IsCancellationRequested)
+                _movementCTS.Cancel();
+
+            _movementCTS.Dispose();
+            _movementCTS = null;
+        }
+
         _movementCTS = new CancellationTokenSource();
     }
 
@@ -148,7 +155,13 @@ public class AIMovementController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _movementCTS?.Cancel();
-        _movementCTS?.Dispose();
+        if (_movementCTS != null)
+        {
+            if (!_movementCTS.IsCancellationRequested)
+                _movementCTS.Cancel();
+
+            _movementCTS.Dispose();
+            _movementCTS = null;
+        }
     }
 }

@@ -5,7 +5,6 @@ public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private string _speedParam = "Speed";
-    [SerializeField] private string _grabbedParam = "IsGrabbed";
     [SerializeField] private float _animSmooth = 0.1f;
     
     private float _curSpeed;
@@ -14,7 +13,6 @@ public class PlayerAnimationController : MonoBehaviour
     public void Initialize(PlayerMovementController movement)
     {
         movement.OnSpeedChanged += SetSpeed;
-        movement.OnGrabbedChanged += SetGrabbed;
     }
 
     // _____________ Private _____________
@@ -26,11 +24,6 @@ public class PlayerAnimationController : MonoBehaviour
             _curSpeed = x;
             _animator.SetFloat(_speedParam, _curSpeed);
         }, speed, _animSmooth);
-    }
-
-    private void SetGrabbed(bool grabbed)
-    {
-        _animator.SetBool(_grabbedParam, grabbed);
     }
 
     private void OnDestroy()
