@@ -1,13 +1,13 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.AI;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Food : MonoBehaviour
 {
-    [SerializeField] private int _points = 1;
     public event Action<int> OnDevoured;
+
+    [SerializeField] private int _points = 1;
+
     private bool _isActive;
     private Vector3 _originalPosition;
 
@@ -16,47 +16,42 @@ public class Food : MonoBehaviour
         _originalPosition = transform.position;
     }
 
-    public int GetPoints()
-    {
-        return _points;
-    }
-    
     public void Spawn()
     {
-        transform.localScale = Vector3.zero;
         transform.position = _originalPosition;
-        transform.DOScale(1, 0.15f)
-            .OnComplete(() =>
-            {
-                _isActive = true;
-            });
+        transform.localScale = Vector3.one;
+        _isActive = true;
     }
 
     public void Hide()
     {
         _isActive = false;
-        transform.DOScale(0, 0.15f);
-    }
-    
-    public void Devoured()
-    {
-        OnDevoured?.Invoke(_points);
-        Hide();
+        transform.DOScale(0, 0.25f);
     }
 
-    public bool IsActive()
+    public void Devoured()
     {
-        return _isActive;
+        Hide();
+        OnDevoured?.Invoke(_points);
     }
+
+    public void SetInactive()
+    {
+        _isActive = false;
+    }
+
+    public void SetActive()
+    {
+        _isActive = true;
+    }
+
+    // _____________ Private _____________
 
     private void OnTriggerEnter(Collider other)
     {
         if (!_isActive) return;
         var devourer = other.GetComponent<Devourer>();
         if (devourer)
-        {
             devourer.Eat(this);
-        }
     }
-    
 }

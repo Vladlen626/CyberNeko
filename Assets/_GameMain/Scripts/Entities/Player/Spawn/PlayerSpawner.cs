@@ -1,11 +1,12 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera playerCamera;
+    [SerializeField] private CinemachineCamera _playerCamera;
 
     private PlayerCheckpoint[] _playerCheckpoints;
     private PlayerController _playerController;
@@ -24,7 +25,7 @@ public class PlayerSpawner : MonoBehaviour
             Destroy(_playerController.gameObject);
             _playerController = null;
         }
-        
+
         var spawnPos = Vector3.zero;
         foreach (var checkpoint in _playerCheckpoints)
         {
@@ -36,7 +37,7 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         _playerController = _playerFactory.Create();
-        _playerController.Initialize(playerCamera.transform, spawnPos);
+        _playerController.Initialize(_playerCamera.transform, spawnPos);
 
         SetupCamera();
     }
@@ -60,7 +61,7 @@ public class PlayerSpawner : MonoBehaviour
 
     private void SetupCamera()
     {
-        playerCamera.Target = new CameraTarget
+        _playerCamera.Target = new CameraTarget
         {
             TrackingTarget = _playerController.transform
         };

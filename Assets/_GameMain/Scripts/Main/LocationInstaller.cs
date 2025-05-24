@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class LocationInstaller : MonoInstaller
 {
     [SerializeField] private PlayerSpawner _playerSpawner;
     [SerializeField] private EnemyController _enemyController;
-    [SerializeField] private FoodManager _foodManager;
+    [SerializeField] private NpcController _npcController;
+    [SerializeField] private FoodSpawner _foodSpawner;
     [SerializeField] private PointsManager _pointsManager;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private DoorConnectionManager _doorConnectionManager;
@@ -17,6 +19,7 @@ public class LocationInstaller : MonoInstaller
         BindMain();
         BindPlayerSpawner();
         BindEnemyController();
+        BindNpcController();
         BindFoodManager();
         BindPointsManager();
         BindUIManager();
@@ -41,10 +44,16 @@ public class LocationInstaller : MonoInstaller
     {
         Container.BindInstance(_enemyController).AsSingle();
     }
+    
+    private void BindNpcController()
+    {
+        Container.BindInstance(_npcController).AsSingle();
+    }
+
 
     private void BindFoodManager()
     {
-        Container.BindInstance(_foodManager).AsSingle();
+        Container.BindInstance(_foodSpawner).AsSingle();
     }
 
     private void BindPointsManager()

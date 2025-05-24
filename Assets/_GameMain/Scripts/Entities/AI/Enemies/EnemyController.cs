@@ -9,9 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform[] _enemyPositions;
     [SerializeField] private GameObject _enemyPrefab;
     
-    private readonly Dictionary<GameObject, PatrolAction> _enemyPatrolPoints = new Dictionary<GameObject, PatrolAction>();
-    private readonly Dictionary<GameObject, AIVisionSensor> _enemyVision = new Dictionary<GameObject, AIVisionSensor>();
-    private readonly Dictionary<GameObject, Transform> _enemyPosDict = new Dictionary<GameObject, Transform>();
+    private readonly Dictionary<AIVisionSensor, Transform> _enemyVision = new Dictionary<AIVisionSensor, Transform>();
 
     public void Initialize()
     {
@@ -22,9 +20,8 @@ public class EnemyController : MonoBehaviour
             var visionSensor = enemy.GetComponent<AIVisionSensor>();
             visionSensor.Initialize();
             
-            _enemyPatrolPoints.Add(enemy, patrolAction);
-            _enemyVision.Add(enemy, visionSensor);
-            _enemyPosDict.Add(enemy, enemyPosition);
+            patrolAction.SetPatrolPoints(enemyPosition.GetComponentsInChildren<Transform>());
+            _enemyVision.Add(visionSensor, enemyPosition);
             enemy.SetActive(false);
         }
     }
@@ -32,7 +29,7 @@ public class EnemyController : MonoBehaviour
     public async UniTask SpawnEnemies()
     {
         if (!_isSpawnEnemies) return;
-        foreach (var (enemy, posTransform) in _enemyPosDict)
+        foreach (var (enemy, posTransform) in _enemyVision)
         {
             SpawnEnemy(enemy, posTransform);
         }
@@ -40,13 +37,14 @@ public class EnemyController : MonoBehaviour
         await UniTask.Yield();
     }
 
-    private void SpawnEnemy(GameObject enemy, Transform spawnPos)
+    // _____________ Private _____________
+
+    private void SpawnEnemy(AIVisionSensor enemy, Transform spawnPos)
     {
         enemy.transform.position = spawnPos.position + Vector3.up;
         enemy.transform.rotation = spawnPos.rotation;
-        enemy.SetActive(true);
-        _enemyPatrolPoints[enemy].SetPatrolPoints(spawnPos.GetComponentsInChildren<Transform>());
-        _enemyVision[enemy].Reset();
+        enemy.gameObject.SetActive(true);
+        enemy.Reset();
     }
 
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4843645771194130322
+--- !u!1 &1214577810567614701
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7816704974488421771}
-  - component: {fileID: 8494778638989091019}
+  - component: {fileID: 9171581915783274875}
+  - component: {fileID: 1070631991900957713}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: NpcController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7816704974488421771
+--- !u!4 &9171581915783274875
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4843645771194130322}
+  m_GameObject: {fileID: 1214577810567614701}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.30575, y: 4.19666, z: -31.81155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8494778638989091019
+--- !u!114 &1070631991900957713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4843645771194130322}
+  m_GameObject: {fileID: 1214577810567614701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583c75d6dd4e84a4e8d6c4419f530314, type: 3}
+  m_Script: {fileID: 11500000, guid: 533224de899d0654bbbb1cbaee1d7382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyController: {fileID: 0}
-  playerManager: {fileID: 0}
-  foodManager: {fileID: 0}
-  pointsManager: {fileID: 0}
-  uiManager: {fileID: 0}
-  doorConnectionManager: {fileID: 0}
+  _npcSpawnPos:
+  - {fileID: 0}
+  - {fileID: 0}
+  _npcPrefabs:
+  - {fileID: 4006283791265663388, guid: 6814906eb3e43e6468e90f5d71e5fa5b, type: 3}
+  - {fileID: 2700445591116414170, guid: 3405807eb1810064e99120085112f583, type: 3}

@@ -7,8 +7,9 @@ using Zenject;
 public class Main : IInitializable, IDisposable
 {
     private readonly EnemyController _enemyController;
+    private readonly NpcController _npcController;
     private readonly PlayerSpawner _playerSpawner;
-    private readonly FoodManager _foodManager;
+    private readonly FoodSpawner _foodSpawner;
     private readonly PointsManager _pointsManager;
     private readonly UIManager _uiManager;
     private readonly DoorConnectionManager _doorConnectionManager;
@@ -18,15 +19,17 @@ public class Main : IInitializable, IDisposable
     [Inject]
     public Main(
         EnemyController enemyController,
+        NpcController npcController,
         PlayerSpawner playerSpawner,
-        FoodManager foodManager,
+        FoodSpawner foodSpawner,
         PointsManager pointsManager,
         UIManager uiManager,
         DoorConnectionManager doorConnectionManager)
     {
         _enemyController = enemyController;
+        _npcController = npcController;
         _playerSpawner = playerSpawner;
-        _foodManager = foodManager;
+        _foodSpawner = foodSpawner;
         _pointsManager = pointsManager;
         _uiManager = uiManager;
         _doorConnectionManager = doorConnectionManager;
@@ -46,6 +49,8 @@ public class Main : IInitializable, IDisposable
         _uiManager.GetMenu().OnRestart -= HandlerOnRestart;
     }
 
+    // _____________ Flow _____________
+
     private async UniTaskVoid StartGame()
     {
         await InitializeAll();
@@ -59,8 +64,9 @@ public class Main : IInitializable, IDisposable
 
         _pointsManager.Initialize();
         _enemyController.Initialize();
-        _foodManager.Initialize();
-
+        _foodSpawner.Initialize();
+        _npcController.Initialize();
+        
         _playerSpawner.Initialize();
 
         await UniTask.Yield();
@@ -68,38 +74,16 @@ public class Main : IInitializable, IDisposable
 
     private async UniTask StartRoundAsync()
     {
-        _foodManager.RespawnFood();
+        _npcController.SpawnNpc();
+        _foodSpawner.ResetAllFood();
+        await _enemyController.SpawnEnemies();
+        
         _playerSpawner.RespawnPlayer();
         SubscribePlayerGrabbed(_playerSpawner.GetPlayerController());
 
-        await _enemyController.SpawnEnemies();
-
-        await UniTask.WaitForSeconds(1f, true);
+        await UniTask.WaitForSeconds(2f, true);
         _uiManager.HideBlackScreen();
         await UniTask.WaitForSeconds(0.15f, true);
-    }
-
-    private void SubscribePlayerGrabbed(PlayerController _player)
-    {
-        UnsubscribePlayerGrabbed(_player);
-        if (_player != null)
-            _player.OnGrabbed += HandlerOnGameOver;
-    }
-
-    private void UnsubscribePlayerGrabbed(PlayerController _player)
-    {
-        if (_player != null)
-            _player.OnGrabbed -= HandlerOnGameOver;
-    }
-
-    private void HandlerOnGameOver()
-    {
-        GameOverAsync().Forget();
-    }
-
-    private void HandlerOnRestart()
-    {
-        Restart().Forget();
     }
 
     private async UniTask GameOverAsync()
@@ -122,6 +106,31 @@ public class Main : IInitializable, IDisposable
         await UniTask.WaitForSeconds(2f, true);
         AudioManager.inst.PlaySound(SoundNames.Win);
         _uiManager.Win();
+    }
+    
+    // _____________ Flow-end _____________
+    
+    private void SubscribePlayerGrabbed(PlayerController _player)
+    {
+        UnsubscribePlayerGrabbed(_player);
+        if (_player != null)
+            _player.OnGrabbed += HandlerOnGameOver;
+    }
+
+    private void UnsubscribePlayerGrabbed(PlayerController _player)
+    {
+        if (_player != null)
+            _player.OnGrabbed -= HandlerOnGameOver;
+    }
+
+    private void HandlerOnGameOver()
+    {
+        GameOverAsync().Forget();
+    }
+
+    private void HandlerOnRestart()
+    {
+        Restart().Forget();
     }
 
     private void QuitGame()
