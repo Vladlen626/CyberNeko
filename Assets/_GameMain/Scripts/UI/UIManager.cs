@@ -36,5 +36,6 @@ public class UIManager : MonoBehaviour
     public void HideBlackScreen()
     {
         BlackScreen.DOScale(0f, 0.12f);
+        _menu.Restart();
     }
 }

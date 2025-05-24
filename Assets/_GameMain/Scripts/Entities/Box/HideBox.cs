@@ -28,6 +28,14 @@ public class HideBox : MonoBehaviour
 
         StartHidingProcess(hider);
     }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+        if (!other.TryGetComponent(out Hider hider)) return;
+        _currentHider = null;
+        hider.SetHiding(false);
+    }
 
     private void StartHidingProcess(Hider hider)
     {
@@ -36,7 +44,7 @@ public class HideBox : MonoBehaviour
         
         AudioManager.inst.PlaySound(SoundNames.InBox);
         _currentHider = hider;
-        hider.SetHiding(true);
+       
 
         DOTween.Sequence()
             .Append(boxModel.DOJump(_hideCenter, 1.5f, 1, 0.15f))

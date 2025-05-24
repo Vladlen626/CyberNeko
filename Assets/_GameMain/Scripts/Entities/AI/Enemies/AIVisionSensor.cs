@@ -16,6 +16,7 @@ public class AIVisionSensor : MonoBehaviour
 
     private AlertSystem _alertSystem;
     private AIKnowledge _aiKnowledge;
+    private PlayerStealthStatus _currentTargetStatus;
 
     public void Initialize()
     {
@@ -64,6 +65,8 @@ public class AIVisionSensor : MonoBehaviour
         {
             _alertSystem.RemoveAlert();
         }
+
+        UpdateChaseVision();
     }
 
     private bool IsTargetVisible(Transform targetTransform)
@@ -88,6 +91,25 @@ public class AIVisionSensor : MonoBehaviour
     private void CalculateDistanceToTarget()
     {
         _aiKnowledge.DistanceToTarget = Vector3.Distance(transform.position, _aiKnowledge.Target.position);
+    }
+    
+    private void UpdateChaseVision()
+    {
+        var target = _aiKnowledge.Target;
+        var status = target ? target.GetComponent<PlayerStealthStatus>() : null;
+        var chasing = _aiKnowledge.IsAlerted && status != null;
+
+        if (chasing && _currentTargetStatus != status)
+        {
+            _currentTargetStatus?.UnregisterChaser(this);
+            status.RegisterChaser(this);                 
+            _currentTargetStatus = status;
+        }
+        else if (!chasing && _currentTargetStatus != null)
+        {
+            _currentTargetStatus.UnregisterChaser(this);
+            _currentTargetStatus = null;
+        }
     }
     
 #if UNITY_EDITOR

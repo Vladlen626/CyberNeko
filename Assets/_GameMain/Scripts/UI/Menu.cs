@@ -25,6 +25,8 @@ public class Menu : MonoBehaviour
     [Header("Text")] [SerializeField] private TextMeshProUGUI _pointsTextMeshProUGUI;
     
     private bool isPaused;
+    private bool isGameOver;
+    private bool isMenuOpened;
     
     public void Initialize()
     {
@@ -32,13 +34,19 @@ public class Menu : MonoBehaviour
         resumeButton.onClick.AddListener(ResumeGame);
         playAgainButton.onClick.AddListener(PlayAgain);
         quitButton.onClick.AddListener(QuitGame);
+        CloseMenu();
     }
     
     public void GameOver(int points)
     {
-        gameOverMenuPanel.SetActive(true);
+        isGameOver = true;
         UpdateUiScoreText(_pointsTextMeshProUGUI, 0, points);
-        OpenMenu();
+        OpenMenu(gameOverMenuPanel);
+    }
+
+    public void Restart()
+    {
+        isGameOver = false;
     }
     
     private void UpdateUiScoreText(TextMeshProUGUI scoreTmp, int oldScore, int newScore)
@@ -47,20 +55,12 @@ public class Menu : MonoBehaviour
             .OnUpdate(() =>  scoreTmp.text = oldScore.ToString())
             .SetEase(Ease.Linear);
     }
-    
-    public void CloseMenu()
-    {
-        Time.timeScale = 1;
-        gameOverMenuPanel.SetActive(false);
-        pauseMenuPanel.SetActive(false);
-        mainPanel.SetActive(false);
-        background.SetActive(false);
-    }
 
     // _____________ Private _____________
 
     private void Update()
     {
+        if (isGameOver) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -79,21 +79,34 @@ public class Menu : MonoBehaviour
         }
     }
 
-    private void OpenMenu()
+    private void OpenMenu(GameObject menuType)
     {
+        if (isMenuOpened) return;
+        isMenuOpened = true;
         Time.timeScale = 0;
         background.SetActive(true);
         mainPanel.SetActive(true);
+        menuType.SetActive(true);
+    }
+    
+    private void CloseMenu()
+    {
+        if (!isMenuOpened) return;
+        isMenuOpened = false;
+        Time.timeScale = 1;
+        gameOverMenuPanel.SetActive(false);
+        pauseMenuPanel.SetActive(false);
+        mainPanel.SetActive(false);
+        background.SetActive(false);
     }
     
     private void PauseGame()
     {
         isPaused = true;
-        pauseMenuPanel.SetActive(true);
-        OpenMenu();
+        OpenMenu(pauseMenuPanel);
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         isPaused = false;
         CloseMenu();

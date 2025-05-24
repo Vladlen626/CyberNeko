@@ -135,7 +135,7 @@ Material:
     - _GlossyReflections: 0
     - _Max: 1
     - _Metallic: 0
-    - _Min: 0.75
+    - _Min: 0.65
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlineThickness: 0
