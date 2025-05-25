@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -8,18 +9,25 @@ public class PlayerMovementController : MonoBehaviour
 {
     public event Action<float> OnSpeedChanged;
 
-    [SerializeField] private float _moveSpeed = 8f;
-    [SerializeField] private float _rotationSpeed = 12f;
-    [SerializeField] private float _acceleration = 24f;
-    [SerializeField] private float _inputSmooth = 10f;
+    [SerializeField] private float _moveSpeed = 8f;              
+    [SerializeField] private float _rotationSpeed = 12f;          
+    [SerializeField] private float _acceleration = 18f;           
+    [SerializeField] private float _deceleration = 22f;           
+    [SerializeField] private float _slideFactor = 0.12f;          
+    [SerializeField] private float _squashAmount = 0.9f;          
+    [SerializeField] private float _squashDuration = 0.08f;       
     [SerializeField] private List<PlayerState> _blockMovementStates;
-    
+
     private Rigidbody _rb;
     private Transform _cameraTransform;
-    private Vector3 _input;
-    private Vector3 _smoothedInput;
     private IInputService _inputService;
-    private PlayerStateContainer _stateContainer; 
+    private PlayerStateContainer _stateContainer;
+
+    private Vector3 _input;  
+    private Vector3 _velocity;
+    private Vector3 _desiredVelocity;
+    private Vector3 _initialScale;
+    private bool _wasMoving;
 
     [Inject]
     public void Construct(IInputService inputService)
@@ -33,8 +41,8 @@ public class PlayerMovementController : MonoBehaviour
         _stateContainer = stateContainer;
         
         _rb.position = spawnPos;
-        _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
+        _initialScale = transform.localScale;
+        ForceStop();
     }
 
     public void ForceStop()
@@ -52,10 +60,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (!CanMove()) return;
+        if (!CanMove())
+        {
+            _input = Vector3.zero;
+            return;
+        }
 
-        var h = _inputService?.GetHorizontal() ?? Input.GetAxisRaw("Horizontal");
-        var v = _inputService?.GetVertical() ?? Input.GetAxisRaw("Vertical");
+        var h = _inputService.GetHorizontal();
+        var v = _inputService.GetVertical();
 
         if (_cameraTransform != null)
         {
@@ -67,22 +79,64 @@ public class PlayerMovementController : MonoBehaviour
         {
             _input = new Vector3(h, 0, v).normalized;
         }
-        _smoothedInput = Vector3.Lerp(_smoothedInput, _input, _inputSmooth * Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
-        if (!CanMove()) return;
-        
-        _rb.linearVelocity = _smoothedInput * _moveSpeed;
-
-        if (_smoothedInput.sqrMagnitude > 0.01f)
+        if (!CanMove())
         {
-            var rot = Quaternion.LookRotation(_smoothedInput);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, _rotationSpeed * Time.fixedDeltaTime);
+            _desiredVelocity = Vector3.zero;
+            ApplyVelocity();
+            AnimateMotion();
+            return;
         }
 
-        OnSpeedChanged?.Invoke(_rb.linearVelocity.magnitude / _moveSpeed);
+        _desiredVelocity = _input * _moveSpeed;
+        float accel = (_desiredVelocity.magnitude > _velocity.magnitude) ? _acceleration : _deceleration;
+
+        _velocity = Vector3.MoveTowards(_velocity, _desiredVelocity, accel * Time.fixedDeltaTime);
+        
+        if (_input.sqrMagnitude < 0.01f && _velocity.magnitude > 0.01f)
+        {
+            _velocity *= (1f - _slideFactor);
+            if (_velocity.magnitude < 0.05f) _velocity = Vector3.zero;
+        }
+
+        ApplyVelocity();
+        AnimateMotion();
+        
+        if (_velocity.sqrMagnitude > 0.01f)
+        {
+            var rot = Quaternion.LookRotation(_velocity);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, _rotationSpeed * Time.fixedDeltaTime);
+        }
+    }
+    
+    private void ApplyVelocity()
+    {
+        _rb.linearVelocity = _velocity;
+        OnSpeedChanged?.Invoke(_velocity.magnitude / _moveSpeed);
+    }
+
+    private void AnimateMotion()
+    {
+        bool isMoving = _velocity.sqrMagnitude > 0.05f;
+        if (isMoving && !_wasMoving)
+        {
+            PlaySquash(_squashAmount, _squashDuration);
+        }
+        if (!isMoving && _wasMoving)
+        {
+            PlaySquash(1.1f, _squashDuration * 1.2f);
+        }
+        _wasMoving = isMoving;
+    }
+    
+    private void PlaySquash(float squash, float duration)
+    {
+        transform.DOComplete();
+        transform.DOScale(new Vector3(_initialScale.x * squash, _initialScale.y / squash, _initialScale.z * squash), duration)
+            .OnComplete(() => transform.DOScale(_initialScale, duration));
     }
     
     private bool CanMove()
