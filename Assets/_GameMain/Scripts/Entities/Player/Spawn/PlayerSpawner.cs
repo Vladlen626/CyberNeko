@@ -7,6 +7,7 @@ using Zenject;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera _playerCamera;
+    [SerializeField] private PickupMarker _pickupMarker;
 
     private PlayerCheckpoint[] _playerCheckpoints;
     private PlayerController _playerController;
@@ -37,7 +38,7 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         _playerController = _playerFactory.Create();
-        _playerController.Initialize(_playerCamera.transform, spawnPos);
+        _playerController.Initialize(_playerCamera.transform, spawnPos, _pickupMarker);
 
         SetupCamera();
     }

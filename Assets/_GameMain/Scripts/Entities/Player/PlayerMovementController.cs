@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -11,14 +12,14 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 12f;
     [SerializeField] private float _acceleration = 24f;
     [SerializeField] private float _inputSmooth = 10f;
+    [SerializeField] private List<PlayerState> _blockMovementStates;
     
     private Rigidbody _rb;
     private Transform _cameraTransform;
     private Vector3 _input;
     private Vector3 _smoothedInput;
-    private bool _isGrabbed;
-    private bool _isMovementBlocked;
     private IInputService _inputService;
+    private PlayerStateContainer _stateContainer; 
 
     [Inject]
     public void Construct(IInputService inputService)
@@ -26,35 +27,20 @@ public class PlayerMovementController : MonoBehaviour
         _inputService = inputService;
     }
 
-    public void Initialize(Transform cameraTransform, Vector3 spawnPos)
+    public void Initialize(Transform cameraTransform, Vector3 spawnPos,PlayerStateContainer stateContainer)
     {
         _cameraTransform = cameraTransform;
-        _isGrabbed = false;
-        _isMovementBlocked = false;
+        _stateContainer = stateContainer;
+        
         _rb.position = spawnPos;
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
     }
 
-    public void Grabbed()
+    public void ForceStop()
     {
-        _isGrabbed = true;
         _rb.linearVelocity = Vector3.zero;
-    }
-
-    public bool IsGrabbed()
-    {
-        return _isGrabbed;
-    }
-
-    public void SetMovementBlocked(bool blocked)
-    {
-        _isMovementBlocked = blocked;
-        if (blocked)
-        {
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
-        }
+        _rb.angularVelocity = Vector3.zero;
     }
 
     // _____________ Private _____________
@@ -66,10 +52,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (_isGrabbed || _isMovementBlocked) return;
+        if (!CanMove()) return;
 
-        float h = _inputService?.GetHorizontal() ?? Input.GetAxisRaw("Horizontal");
-        float v = _inputService?.GetVertical() ?? Input.GetAxisRaw("Vertical");
+        var h = _inputService?.GetHorizontal() ?? Input.GetAxisRaw("Horizontal");
+        var v = _inputService?.GetVertical() ?? Input.GetAxisRaw("Vertical");
 
         if (_cameraTransform != null)
         {
@@ -86,10 +72,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isGrabbed || _isMovementBlocked) return;
-
-        var targetVel = _smoothedInput * _moveSpeed;
-        _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, targetVel, _acceleration * Time.fixedDeltaTime);
+        if (!CanMove()) return;
+        
+        _rb.linearVelocity = _smoothedInput * _moveSpeed;
 
         if (_smoothedInput.sqrMagnitude > 0.01f)
         {
@@ -98,5 +83,18 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         OnSpeedChanged?.Invoke(_rb.linearVelocity.magnitude / _moveSpeed);
+    }
+    
+    private bool CanMove()
+    {
+        foreach (var state in _blockMovementStates)
+        {
+            if (_stateContainer.HasState(state))
+            {
+                return false;
+            }
+        }
+            
+        return true;
     }
 }

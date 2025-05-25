@@ -1,41 +1,36 @@
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Transform BlackScreen;
-    [SerializeField] private Transform WinScreen;
+    [SerializeField] private Transform _blackScreen;
+    [SerializeField] private Transform _winScreen;
     [SerializeField] private Menu _menu;
     [SerializeField] private FmodSoundSettings _fmodSoundSettings;
+    public Menu Menu => _menu;
     
     public void Initialize()
     {
-        BlackScreen.localScale = Vector3.one;
+        _blackScreen.localScale = Vector3.one;
         _fmodSoundSettings.Initialize();
         _menu.Initialize();
     }
-
-    public Menu GetMenu()
-    {
-        return _menu;
-    }
-
+    
     public void Win()
     {
-        WinScreen.gameObject.SetActive(true);
-        WinScreen.localScale = Vector3.zero;
-        WinScreen.DOScale(1f, 0.15f);
+        _winScreen.gameObject.SetActive(true);
+        _winScreen.localScale = Vector3.zero;
+        _winScreen.DOScale(1f, 0.15f);
     }
-    
+
     public void ShowBlackScreen()
     {
-        BlackScreen.localScale = Vector3.one;
+        _blackScreen.localScale = Vector3.one;
     }
 
     public void HideBlackScreen()
     {
-        BlackScreen.DOScale(0f, 0.12f);
+        _blackScreen.DOScale(0f, 0.12f);
         _menu.Restart();
     }
 }

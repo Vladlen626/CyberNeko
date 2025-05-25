@@ -44,6 +44,7 @@ public class HideBox : MonoBehaviour
         
         AudioManager.inst.PlaySound(SoundNames.InBox);
         _currentHider = hider;
+        hider.SetHiding(true);
        
 
         DOTween.Sequence()

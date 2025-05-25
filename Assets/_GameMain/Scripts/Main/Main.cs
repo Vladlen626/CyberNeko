@@ -46,7 +46,7 @@ public class Main : IInitializable, IDisposable
     {
         _disposables?.Dispose();
         UnsubscribePlayerGrabbed(_playerSpawner.GetPlayerController());
-        _uiManager.GetMenu().OnRestart -= HandlerOnRestart;
+        _uiManager.Menu.OnRestart -= HandlerOnRestart;
     }
 
     // _____________ Flow _____________
@@ -60,7 +60,7 @@ public class Main : IInitializable, IDisposable
     private async UniTask InitializeAll()
     {
         _uiManager.Initialize();
-        _uiManager.GetMenu().OnRestart += HandlerOnRestart;
+        _uiManager.Menu.OnRestart += HandlerOnRestart;
 
         _pointsManager.Initialize();
         _enemyController.Initialize();
@@ -90,7 +90,7 @@ public class Main : IInitializable, IDisposable
     {
         await UniTask.WaitForSeconds(1f, true);
         AudioManager.inst.PlaySound(SoundNames.GameOver);
-        _uiManager.GetMenu().GameOver(_pointsManager.CurrentPoints.Value);
+        _uiManager.Menu.GameOver(_pointsManager.CurrentPoints.Value);
     }
 
     private async UniTask Restart()
