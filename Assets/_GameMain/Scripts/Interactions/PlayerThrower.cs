@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
+// ReSharper disable Unity.PerformanceCriticalCodeInvocation
 
 public class PlayerThrower : MonoBehaviour
 {
@@ -30,14 +31,17 @@ public class PlayerThrower : MonoBehaviour
         SearchBestLoop().Forget();
     }
 
-    public void Update()
+    private void Update()
     {
+        if (_playerController.StateContainer.HasState(PlayerState.InInteract))
+            return;
+
         if (_input.IsInteractPressed())
         {
             if (_held == null)
-                TryPickup(_best);
+                TryPickup(_best).Forget();
             else
-                TryThrow(transform.forward);
+                TryThrow(transform.forward).Forget();
         }
     }
 
@@ -88,28 +92,45 @@ public class PlayerThrower : MonoBehaviour
         return best;
     }
 
-    private void TryPickup(IThrowable best)
+    private async UniTask TryPickup(IThrowable best)
     {
         if (best == null) return;
-        
+
         _playerController.StateContainer.AddState(PlayerState.InInteract);
-        _playerController.Movement.ForceStop();
+        await UniTask.Delay(180);
         
-        best.GetTransform().DOJump(transform.position + Vector3.up * 3,1,1, 0.2f)
-            .OnComplete((() =>
-            {
-                best.OnPickup(transform);
-                _playerController.StateContainer.RemoveState(PlayerState.InInteract);
-                _held = best;
-                PickupCandidateChanged?.Invoke(null);
-            })); 
+        var target = transform.position + Vector3.up * 2.25f;
+        await best.GetTransform().DOJump(target, 1, 1, 0.16f)
+            .SetEase(Ease.OutCubic)
+            .AsyncWaitForCompletion();
+
+        best.OnPickup(transform);
+        
+        await UniTask.Delay(180);
+
+        _playerController.StateContainer.RemoveState(PlayerState.InInteract);
+        _held = best;
+        PickupCandidateChanged?.Invoke(null);
     }
 
-    private void TryThrow(Vector3 direction)
+    private async UniTask TryThrow(Vector3 direction)
     {
         if (_held == null) return;
-        _held.OnThrow(direction.normalized * _throwForce);
+
+        _playerController.StateContainer.AddState(PlayerState.InInteract);
+        
+        await UniTask.Delay(160);
+        
+        Vector3 throwDir = direction.normalized;
+        throwDir.y = 0.45f;
+        throwDir.Normalize();
+
+        _held.OnThrow(throwDir * _throwForce);
         _held = null;
+
+        await UniTask.Delay(90);
+
+        _playerController.StateContainer.RemoveState(PlayerState.InInteract);
     }
 
     private void OnTriggerEnter(Collider other)

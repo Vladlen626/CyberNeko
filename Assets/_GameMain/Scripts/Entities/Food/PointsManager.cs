@@ -1,7 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
 
-public class PointsManager : MonoBehaviour
+public class PointsManager
 {
     private int _targetPoints = 100;
     public IReadOnlyReactiveProperty<int> CurrentPoints => _currentPoints;

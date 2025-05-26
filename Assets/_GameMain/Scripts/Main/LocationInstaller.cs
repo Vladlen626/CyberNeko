@@ -8,7 +8,6 @@ public class LocationInstaller : MonoInstaller
     [SerializeField] private EnemyController _enemyController;
     [SerializeField] private NpcController _npcController;
     [SerializeField] private FoodSpawner _foodSpawner;
-    [SerializeField] private PointsManager _pointsManager;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private DoorConnectionManager _doorConnectionManager;
     [SerializeField] private PlayerController _playerPrefab;
@@ -26,6 +25,7 @@ public class LocationInstaller : MonoInstaller
         BindDoorConnectionManager();
         BindPlayerControllerFactory();
         BindInputService();
+        BindBreakablesManager();
     }
 
     // _____________ Private _____________
@@ -58,7 +58,7 @@ public class LocationInstaller : MonoInstaller
 
     private void BindPointsManager()
     {
-        Container.BindInstance(_pointsManager).AsSingle();
+        Container.Bind<PointsManager>().AsSingle();
     }
 
     private void BindUIManager()
@@ -75,6 +75,11 @@ public class LocationInstaller : MonoInstaller
     {
         Container.BindFactory<PlayerController, PlayerController.Factory>()
             .FromComponentInNewPrefab(_playerPrefab);
+    }
+    
+    private void BindBreakablesManager()
+    {
+        Container.BindInterfacesAndSelfTo<BreakablesManager>().AsSingle();
     }
 
     private void BindInputService()

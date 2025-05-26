@@ -10,6 +10,7 @@ public class Main : IInitializable, IDisposable
     private readonly NpcController _npcController;
     private readonly PlayerSpawner _playerSpawner;
     private readonly FoodSpawner _foodSpawner;
+    private readonly BreakablesManager  _breakablesManager;
     private readonly PointsManager _pointsManager;
     private readonly UIManager _uiManager;
     private readonly DoorConnectionManager _doorConnectionManager;
@@ -22,6 +23,7 @@ public class Main : IInitializable, IDisposable
         NpcController npcController,
         PlayerSpawner playerSpawner,
         FoodSpawner foodSpawner,
+        BreakablesManager breakablesManager,
         PointsManager pointsManager,
         UIManager uiManager,
         DoorConnectionManager doorConnectionManager)
@@ -30,6 +32,7 @@ public class Main : IInitializable, IDisposable
         _npcController = npcController;
         _playerSpawner = playerSpawner;
         _foodSpawner = foodSpawner;
+        _breakablesManager = breakablesManager;
         _pointsManager = pointsManager;
         _uiManager = uiManager;
         _doorConnectionManager = doorConnectionManager;
@@ -76,6 +79,7 @@ public class Main : IInitializable, IDisposable
     {
         _npcController.SpawnNpc();
         _foodSpawner.ResetAllFood();
+        _breakablesManager.ResetAllBreakables();
         await _enemyController.SpawnEnemies();
         
         _playerSpawner.RespawnPlayer();

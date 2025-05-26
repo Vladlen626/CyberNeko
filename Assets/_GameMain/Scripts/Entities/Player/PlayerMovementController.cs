@@ -47,8 +47,10 @@ public class PlayerMovementController : MonoBehaviour
 
     public void ForceStop()
     {
-        _rb.linearVelocity = Vector3.zero;
+        _velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
+        _desiredVelocity = Vector3.zero; 
+        ApplyVelocity();  
     }
 
     // _____________ Private _____________
@@ -69,7 +71,7 @@ public class PlayerMovementController : MonoBehaviour
         var h = _inputService.GetHorizontal();
         var v = _inputService.GetVertical();
 
-        if (_cameraTransform != null)
+        if (_cameraTransform)
         {
             var forward = _cameraTransform.forward; forward.y = 0;
             var right = _cameraTransform.right; right.y = 0;
@@ -85,8 +87,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!CanMove())
         {
-            _desiredVelocity = Vector3.zero;
-            ApplyVelocity();
+            ForceStop();
             AnimateMotion();
             return;
         }
