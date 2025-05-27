@@ -15,8 +15,10 @@ public class PlayerAnimationController : MonoBehaviour
         movement.OnSpeedChanged += SetSpeed;
     }
 
-    // _____________ Private _____________
+    public Animator Animator => _animator;
 
+    // _____________ Private _____________
+    
     private void SetSpeed(float speed)
     {
         _speedTween?.Kill();

@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 // ReSharper disable Unity.PerformanceCriticalCodeInvocation
 
 public class PlayerThrower : MonoBehaviour
 {
+    private static readonly int PickUp = Animator.StringToHash("PickUp");
+    private static readonly int Throw = Animator.StringToHash("Throw");
+    private static readonly int Hold = Animator.StringToHash("Hold");
+    
+    [SerializeField] private Transform hands;
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private float _throwForce = 8f;
     [SerializeField] private float _pickupAngle = 60f;
@@ -95,19 +101,21 @@ public class PlayerThrower : MonoBehaviour
     private async UniTask TryPickup(IThrowable best)
     {
         if (best == null) return;
-
+        //_playerController.Animation.Animator.SetTrigger(PickUp);
         _playerController.StateContainer.AddState(PlayerState.InInteract);
+        best.OnPickupStart();
         await UniTask.Delay(180);
         
-        var target = transform.position + Vector3.up * 2.25f;
+        var target = hands.position;
         await best.GetTransform().DOJump(target, 1, 1, 0.16f)
             .SetEase(Ease.OutCubic)
+            .Join(best.GetTransform().DORotateQuaternion(Quaternion.identity, 0.1f))
             .AsyncWaitForCompletion();
-
-        best.OnPickup(transform);
+        
+        best.OnPickup(hands);
         
         await UniTask.Delay(180);
-
+        //_playerController.Animation.Animator.SetBool(Hold, true);
         _playerController.StateContainer.RemoveState(PlayerState.InInteract);
         _held = best;
         PickupCandidateChanged?.Invoke(null);
@@ -116,7 +124,8 @@ public class PlayerThrower : MonoBehaviour
     private async UniTask TryThrow(Vector3 direction)
     {
         if (_held == null) return;
-
+        //_playerController.Animation.Animator.SetTrigger(Throw);
+        //_playerController.Animation.Animator.SetBool(Hold, false);
         _playerController.StateContainer.AddState(PlayerState.InInteract);
         
         await UniTask.Delay(160);
@@ -129,7 +138,6 @@ public class PlayerThrower : MonoBehaviour
         _held = null;
 
         await UniTask.Delay(90);
-
         _playerController.StateContainer.RemoveState(PlayerState.InInteract);
     }
 

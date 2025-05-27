@@ -12,13 +12,17 @@ public class Throwable : MonoBehaviour, IThrowable
     private bool _isHeld;
     private Vector3 _initialScale;
 
+    public void OnPickupStart()
+    {
+        _rb.isKinematic = true;
+        _collider.enabled = false;
+    }
+    
     public void OnPickup(Transform holder)
     {
         if (_isHeld) return;
         _isHeld = true;
-        _rb.isKinematic = true;
         transform.SetParent(holder, true);
-        _collider.enabled = false;
         AnimateSquash(0.8f, 0.1f);
     }
 

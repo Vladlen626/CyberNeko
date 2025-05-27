@@ -9,13 +9,13 @@ public class PlayerMovementController : MonoBehaviour
 {
     public event Action<float> OnSpeedChanged;
 
-    [SerializeField] private float _moveSpeed = 8f;              
-    [SerializeField] private float _rotationSpeed = 12f;          
-    [SerializeField] private float _acceleration = 18f;           
-    [SerializeField] private float _deceleration = 22f;           
-    [SerializeField] private float _slideFactor = 0.12f;          
-    [SerializeField] private float _squashAmount = 0.9f;          
-    [SerializeField] private float _squashDuration = 0.08f;       
+    [SerializeField] private float _moveSpeed = 8f;
+    [SerializeField] private float _rotationSpeed = 12f;
+    [SerializeField] private float _acceleration = 100f;    
+    [SerializeField] private float _deceleration = 200f;      
+    [SerializeField] private float _slideFactor = 0.05f;      
+    [SerializeField] private float _squashAmount = 0.9f;
+    [SerializeField] private float _squashDuration = 0.08f;
     [SerializeField] private List<PlayerState> _blockMovementStates;
 
     private Rigidbody _rb;
@@ -23,7 +23,7 @@ public class PlayerMovementController : MonoBehaviour
     private IInputService _inputService;
     private PlayerStateContainer _stateContainer;
 
-    private Vector3 _input;  
+    private Vector3 _input;
     private Vector3 _velocity;
     private Vector3 _desiredVelocity;
     private Vector3 _initialScale;
@@ -35,11 +35,11 @@ public class PlayerMovementController : MonoBehaviour
         _inputService = inputService;
     }
 
-    public void Initialize(Transform cameraTransform, Vector3 spawnPos,PlayerStateContainer stateContainer)
+    public void Initialize(Transform cameraTransform, Vector3 spawnPos, PlayerStateContainer stateContainer)
     {
         _cameraTransform = cameraTransform;
         _stateContainer = stateContainer;
-        
+
         _rb.position = spawnPos;
         _initialScale = transform.localScale;
         ForceStop();
@@ -49,8 +49,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         _velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        _desiredVelocity = Vector3.zero; 
-        ApplyVelocity();  
+        _desiredVelocity = Vector3.zero;
+        ApplyVelocity();
     }
 
     // _____________ Private _____________
@@ -91,28 +91,24 @@ public class PlayerMovementController : MonoBehaviour
             AnimateMotion();
             return;
         }
-
-        _desiredVelocity = _input * _moveSpeed;
-        float accel = (_desiredVelocity.magnitude > _velocity.magnitude) ? _acceleration : _deceleration;
-
-        _velocity = Vector3.MoveTowards(_velocity, _desiredVelocity, accel * Time.fixedDeltaTime);
         
-        if (_input.sqrMagnitude < 0.01f && _velocity.magnitude > 0.01f)
+        _velocity = _input * _moveSpeed;
+        
+        if (_input.sqrMagnitude < 0.01f)
         {
-            _velocity *= (1f - _slideFactor);
-            if (_velocity.magnitude < 0.05f) _velocity = Vector3.zero;
+            _velocity = Vector3.zero;
         }
 
         ApplyVelocity();
         AnimateMotion();
-        
+
         if (_velocity.sqrMagnitude > 0.01f)
         {
             var rot = Quaternion.LookRotation(_velocity);
             transform.rotation = Quaternion.Lerp(transform.rotation, rot, _rotationSpeed * Time.fixedDeltaTime);
         }
     }
-    
+
     private void ApplyVelocity()
     {
         _rb.linearVelocity = _velocity;
@@ -132,14 +128,14 @@ public class PlayerMovementController : MonoBehaviour
         }
         _wasMoving = isMoving;
     }
-    
+
     private void PlaySquash(float squash, float duration)
     {
         transform.DOComplete();
         transform.DOScale(new Vector3(_initialScale.x * squash, _initialScale.y / squash, _initialScale.z * squash), duration)
             .OnComplete(() => transform.DOScale(_initialScale, duration));
     }
-    
+
     private bool CanMove()
     {
         foreach (var state in _blockMovementStates)
@@ -149,7 +145,7 @@ public class PlayerMovementController : MonoBehaviour
                 return false;
             }
         }
-            
+
         return true;
     }
 }

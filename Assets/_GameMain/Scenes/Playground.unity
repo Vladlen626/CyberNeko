@@ -5710,7 +5710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8a3ba08bac4b07b397fa945c662674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minBreakVelocity: 8
+  _minBreakVelocity: 6
   _foodCount: 6
   _lootScatter: 1.8
 --- !u!1001 &1027693182
