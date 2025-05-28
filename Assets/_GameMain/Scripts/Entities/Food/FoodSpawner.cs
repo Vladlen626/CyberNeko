@@ -38,11 +38,31 @@ public class FoodSpawner : MonoBehaviour
     {
         var prefab = _foodDropPrefab[Random.Range(0, _foodDropPrefab.Count)];
         var food = Instantiate(prefab, pos, Quaternion.identity);
-        AnimateFoodDrop(food, pos);
-        food.OnDevoured += HandleOnDevoured;
-        _npcDroppedFood.Add(food);
-    }
+        
+        food.transform.localScale = Vector3.zero;
+        food.SetInactive();
 
+        _npcDroppedFood.Add(food);
+        food.OnDevoured += HandleOnDevoured;
+        
+        var rb = food.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            
+            float force = Random.Range(2.0f, 3.2f);
+            Vector3 dir = (Vector3.up * 0.7f) + 
+                          (Vector3.forward * Random.Range(-0.85f, 0.85f)) + 
+                          (Vector3.right * Random.Range(-0.85f, 0.85f));
+            rb.AddForce(dir.normalized * force, ForceMode.Impulse);
+            rb.AddTorque(Random.onUnitSphere * Random.Range(2, 8), ForceMode.Impulse);
+        }
+        
+        DOTween.Sequence()
+            .Append(food.transform.DOScale(1, 0.18f).SetEase(Ease.OutBack))
+            .AppendCallback(() => food.SetActive());
+    }
     // _____________ Private _____________
 
     [Inject]
@@ -55,19 +75,5 @@ public class FoodSpawner : MonoBehaviour
     {
         _pointsManager?.AddPoints(points);
     }
-
-    private void AnimateFoodDrop(Food food, Vector3 dropOrigin)
-    {
-        float jumpForce = Random.Range(1.2f, 1.7f);
-        float spread = 1f;
-        Vector3 randomOffset = new Vector3(Random.Range(-spread, spread), 0f, Random.Range(-spread, spread));
-        food.transform.position = dropOrigin + randomOffset * 0.3f;
-        food.transform.localScale = Vector3.zero;
-        food.SetInactive();
-
-        DOTween.Sequence()
-            .Append(food.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack))
-            .Join(food.transform.DOJump(dropOrigin + randomOffset, jumpForce, 1, 0.4f).SetEase(Ease.OutCubic))
-            .OnComplete(food.SetActive);
-    }
+    
 }

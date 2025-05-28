@@ -162,8 +162,8 @@ Rigidbody:
   m_GameObject: {fileID: 8971287367466532548}
   serializedVersion: 5
   m_Mass: 3
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0.3
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8da5f66828e214aa1753af0e260390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotationPower: 0
 --- !u!65 &2071132231358514488
 BoxCollider:
   m_ObjectHideFlags: 0

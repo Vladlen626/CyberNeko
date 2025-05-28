@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hands: {fileID: 6645095613126164612}
   _playerController: {fileID: 5298094115657050807}
-  _throwForce: 25
+  _throwForce: 35
   _pickupAngle: 60
   _throwables:
     serializedVersion: 2
