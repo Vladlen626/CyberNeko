@@ -10,6 +10,7 @@ public class VisorController : MonoBehaviour
         if (visors.Count == 0) return;
         foreach (var visor in visors)
         {
+            
             visor.SetActive(false);
         }
         
