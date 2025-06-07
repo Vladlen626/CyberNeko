@@ -6,7 +6,10 @@ public class Food : MonoBehaviour
 {
     public event Action<int> OnDevoured;
 
-    [SerializeField] private int _points = 1;
+    [SerializeField] private int points = 1;
+
+    [SerializeField] private Collider col;
+    [SerializeField] private Rigidbody rb;
 
     private bool _isActive;
     private Vector3 _originalPosition;
@@ -20,7 +23,10 @@ public class Food : MonoBehaviour
     {
         transform.position = _originalPosition;
         transform.localScale = Vector3.one;
-        _isActive = true;
+        SetActive();
+        
+        rb.isKinematic = false;
+        col.enabled = true;
     }
 
     public void Hide()
@@ -32,7 +38,15 @@ public class Food : MonoBehaviour
     public void Devoured()
     {
         Hide();
-        OnDevoured?.Invoke(_points);
+        OnDevoured?.Invoke(points);
+    }
+    
+    public void DisablePhysics()
+    {
+        rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+        col.enabled = false;
     }
 
     public void SetInactive()
@@ -52,6 +66,9 @@ public class Food : MonoBehaviour
         if (!_isActive) return;
         var devourer = other.GetComponent<Devourer>();
         if (devourer)
+        {
+            SetInactive();
             devourer.Eat(this);
+        }
     }
 }

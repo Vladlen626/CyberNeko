@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerThrower))]
 public class PlayerUIController : MonoBehaviour
 {
-    private PlayerThrower _playerThrower;
+    private ThrowCandidateSelector _candidateSelector;
     private PickupMarker _pickupMarker;
 
     public void Initialize(PickupMarker pickupMarker)
@@ -16,17 +16,17 @@ public class PlayerUIController : MonoBehaviour
 
     private void Awake()
     {
-        _playerThrower = transform.GetComponent<PlayerThrower>();
+        _candidateSelector = transform.GetComponent<ThrowCandidateSelector>();
     }
 
     private void OnEnable()
     {
-        _playerThrower.PickupCandidateChanged += OnPickupCandidateChanged;
+        _candidateSelector.PickupCandidateChanged += OnPickupCandidateChanged;
     }
 
     private void OnDisable()
     {
-        _playerThrower.PickupCandidateChanged -= OnPickupCandidateChanged;
+        _candidateSelector.PickupCandidateChanged -= OnPickupCandidateChanged;
     }
 
     private void OnPickupCandidateChanged(Transform candidate)

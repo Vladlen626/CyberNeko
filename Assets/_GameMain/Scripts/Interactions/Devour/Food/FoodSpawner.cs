@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class FoodSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Food> _foodDropPrefab;
+    [SerializeField] private List<Food> foodDropPrefab;
     private PointsManager _pointsManager;
     private Food[] _sceneFood;
     private readonly List<Food> _npcDroppedFood = new();
@@ -36,7 +36,7 @@ public class FoodSpawner : MonoBehaviour
 
     public void DropFood(Vector3 pos)
     {
-        var prefab = _foodDropPrefab[Random.Range(0, _foodDropPrefab.Count)];
+        var prefab = foodDropPrefab[Random.Range(0, foodDropPrefab.Count)];
         var food = Instantiate(prefab, pos, Quaternion.identity);
         
         food.transform.localScale = Vector3.zero;

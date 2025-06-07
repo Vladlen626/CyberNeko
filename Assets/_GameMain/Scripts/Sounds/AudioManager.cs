@@ -44,6 +44,8 @@ public class AudioManager : MonoBehaviour
    
    public void PlaySound(string soundName)
    {  
+      //remove comment after fix fmod project
+      /*
       if (soundDictionary.TryGetValue(soundName, out var eventRef))
       {
          RuntimeManager.PlayOneShot(eventRef);
@@ -52,6 +54,7 @@ public class AudioManager : MonoBehaviour
       {
          Debug.LogWarning($"Sound with name {soundName} not found!");
       }
+      */
    }
 
    public void PlayMusic(EventReference musicEvent)

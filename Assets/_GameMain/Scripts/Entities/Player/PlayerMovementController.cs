@@ -9,14 +9,11 @@ public class PlayerMovementController : MonoBehaviour
 {
     public event Action<float> OnSpeedChanged;
 
-    [SerializeField] private float _moveSpeed = 8f;
-    [SerializeField] private float _rotationSpeed = 12f;
-    [SerializeField] private float _acceleration = 100f;    
-    [SerializeField] private float _deceleration = 200f;      
-    [SerializeField] private float _slideFactor = 0.05f;      
-    [SerializeField] private float _squashAmount = 0.9f;
-    [SerializeField] private float _squashDuration = 0.08f;
-    [SerializeField] private List<PlayerState> _blockMovementStates;
+    [SerializeField] private float moveSpeed = 8f;
+    [SerializeField] private float rotationSpeed = 12f;
+    [SerializeField] private float squashAmount = 0.9f;
+    [SerializeField] private float squashDuration = 0.08f;
+    [SerializeField] private List<PlayerState> blockMovementStates;
 
     private Rigidbody _rb;
     private Transform _cameraTransform;
@@ -25,7 +22,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private Vector3 _input;
     private Vector3 _velocity;
-    private Vector3 _desiredVelocity;
     private Vector3 _initialScale;
     private bool _wasMoving;
 
@@ -49,7 +45,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         _velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        _desiredVelocity = Vector3.zero;
         ApplyVelocity();
     }
 
@@ -92,7 +87,7 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
         
-        _velocity = _input * _moveSpeed;
+        _velocity = _input * moveSpeed;
         
         if (_input.sqrMagnitude < 0.01f)
         {
@@ -105,14 +100,14 @@ public class PlayerMovementController : MonoBehaviour
         if (_velocity.sqrMagnitude > 0.01f)
         {
             var rot = Quaternion.LookRotation(_velocity);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, _rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, rotationSpeed * Time.fixedDeltaTime);
         }
     }
 
     private void ApplyVelocity()
     {
         _rb.linearVelocity = _velocity;
-        OnSpeedChanged?.Invoke(_velocity.magnitude / _moveSpeed);
+        OnSpeedChanged?.Invoke(_velocity.magnitude / moveSpeed);
     }
 
     private void AnimateMotion()
@@ -120,11 +115,11 @@ public class PlayerMovementController : MonoBehaviour
         bool isMoving = _velocity.sqrMagnitude > 0.05f;
         if (isMoving && !_wasMoving)
         {
-            PlaySquash(_squashAmount, _squashDuration);
+            PlaySquash(squashAmount, squashDuration);
         }
         if (!isMoving && _wasMoving)
         {
-            PlaySquash(1.1f, _squashDuration * 1.2f);
+            PlaySquash(1.1f, squashDuration * 1.2f);
         }
         _wasMoving = isMoving;
     }
@@ -138,7 +133,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool CanMove()
     {
-        foreach (var state in _blockMovementStates)
+        foreach (var state in blockMovementStates)
         {
             if (_stateContainer.HasState(state))
             {
