@@ -1410,6 +1410,7 @@ GameObject:
   - component: {fileID: 8223271370439866564}
   - component: {fileID: 1880903966791798350}
   - component: {fileID: 2626546176114430123}
+  - component: {fileID: 1877366886109791746}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1512,11 +1513,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d28936863e1c59543a3bce2329034f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerModel: {fileID: 1966794266212481475}
   moveSpeed: 8
   rotationSpeed: 12
   squashAmount: 0.9
   squashDuration: 0.08
-  blockMovementStates: 
+  blockMovementStates: 00000000010000000200000003000000
 --- !u!114 &7905484782112541688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,7 +1655,7 @@ MonoBehaviour:
   _pickupAngle: 60
   _throwables:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &2626546176114430123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,7 +1668,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e233222dc5cf3b46841ae02cb953ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hands: {fileID: 6645095613126164612}
+--- !u!114 &1877366886109791746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4257091310611451365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac051dd673764724a8e56ddc2ea0dd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwForce: 8
 --- !u!1 &4753920724636038830
 GameObject:
   m_ObjectHideFlags: 0

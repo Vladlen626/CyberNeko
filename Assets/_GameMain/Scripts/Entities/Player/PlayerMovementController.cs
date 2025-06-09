@@ -8,7 +8,7 @@ using Zenject;
 public class PlayerMovementController : MonoBehaviour
 {
     public event Action<float> OnSpeedChanged;
-
+    [SerializeField] private Transform playerModel;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private float squashAmount = 0.9f;
@@ -126,9 +126,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlaySquash(float squash, float duration)
     {
-        transform.DOComplete();
-        transform.DOScale(new Vector3(_initialScale.x * squash, _initialScale.y / squash, _initialScale.z * squash), duration)
-            .OnComplete(() => transform.DOScale(_initialScale, duration));
+        playerModel.DOComplete();
+        playerModel.DOScale(new Vector3(_initialScale.x * squash, _initialScale.y / squash, _initialScale.z * squash), duration)
+            .OnComplete(() => playerModel.DOScale(_initialScale, duration));
     }
 
     private bool CanMove()

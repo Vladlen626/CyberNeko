@@ -16,13 +16,14 @@ public class Throwable : MonoBehaviour, IThrowable
     {
         _rb.isKinematic = true;
         _collider.enabled = false;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
     }
     
     public void OnPickup(Transform holder)
     {
         if (_isHeld) return;
         _isHeld = true;
-        transform.SetParent(holder, true);
         AnimateSquash(0.8f, 0.1f);
     }
 

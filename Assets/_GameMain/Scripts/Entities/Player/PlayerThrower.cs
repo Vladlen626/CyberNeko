@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 // ReSharper disable Unity.PerformanceCriticalCodeInvocation
 
-[RequireComponent(typeof(Throwable),typeof(ThrowCandidateSelector), typeof(PickupHandler))]
+[RequireComponent(typeof(Thrower),typeof(ThrowCandidateSelector), typeof(PickupHandler))]
 public class PlayerThrower : MonoBehaviour
 {
     private static readonly int PickUp = Animator.StringToHash("PickUp");
@@ -51,13 +51,23 @@ public class PlayerThrower : MonoBehaviour
 
     // _____________ Private _____________
 
+    
+    private void LateUpdate()
+    {
+        if (_held != null)
+        {
+            var tr = _held.GetTransform();
+            tr.position = hands.position;
+            tr.rotation = hands.rotation;
+        }
+    }
 
     private async UniTask TryPickup(IThrowable best)
     {
         if (best == null) return;
         _playerController.StateContainer.AddState(PlayerState.InInteract);
 
-        _held = await _pickupHandler.PickupAsync(best);
+        _held = await _pickupHandler.PickupAsync(best, hands);
 
         _playerController.StateContainer.RemoveState(PlayerState.InInteract);
         _selector.SetHeld(_held);
