@@ -16,14 +16,17 @@ public class BreakableObject : MonoBehaviour, IBreakable
     private Collider _collider;
     private bool _isBroken;
     private FoodSpawner _foodSpawner;
+    private BreakablesManager _breakablesManager;
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
 
     [Inject]
-    private void Construct(FoodSpawner foodSpawner)
+    private void Construct(FoodSpawner foodSpawner, BreakablesManager breakablesManager)
     {
         _foodSpawner = foodSpawner;
+        _breakablesManager = breakablesManager;
+        Register();
     }
 
     private void Awake()
@@ -32,6 +35,11 @@ public class BreakableObject : MonoBehaviour, IBreakable
         _collider = GetComponent<Collider>();
         _startPosition = transform.position;
         _startRotation = transform.rotation;
+    }
+
+    public void Register()
+    {
+        _breakablesManager.Register(this);
     }
 
     public void Break()

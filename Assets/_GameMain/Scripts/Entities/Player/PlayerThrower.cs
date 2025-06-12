@@ -12,7 +12,8 @@ public class PlayerThrower : MonoBehaviour
     private static readonly int Hold = Animator.StringToHash("Hold");
 
     [SerializeField] private Transform hands;
-    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private Transform throwTarget;
+    [SerializeField] private PlayerController playerController;
 
     private ThrowCandidateSelector _selector;
     private Thrower _thrower;
@@ -37,7 +38,7 @@ public class PlayerThrower : MonoBehaviour
 
     private void Update()
     {
-        if (_playerController.StateContainer.HasState(PlayerState.InInteract))
+        if (playerController.StateContainer.HasState(PlayerState.InInteract))
             return;
 
         if (_input.IsInteractPressed())
@@ -45,7 +46,7 @@ public class PlayerThrower : MonoBehaviour
             if (_held == null)
                 TryPickup(_selector.GetBestCandidate()).Forget();
             else
-                TryThrow(transform.forward).Forget();
+                TryThrow(throwTarget.position).Forget();
         }
     }
 
@@ -65,11 +66,11 @@ public class PlayerThrower : MonoBehaviour
     private async UniTask TryPickup(IThrowable best)
     {
         if (best == null) return;
-        _playerController.StateContainer.AddState(PlayerState.InInteract);
+        playerController.StateContainer.AddState(PlayerState.InInteract);
 
         _held = await _pickupHandler.PickupAsync(best, hands);
 
-        _playerController.StateContainer.RemoveState(PlayerState.InInteract);
+        playerController.StateContainer.RemoveState(PlayerState.InInteract);
         _selector.SetHeld(_held);
     }
 
@@ -77,15 +78,15 @@ public class PlayerThrower : MonoBehaviour
     private async UniTask TryThrow(Vector3 direction)
     {
         if (_held == null) return;
-        _playerController.StateContainer.AddState(PlayerState.InInteract);
+        playerController.StateContainer.AddState(PlayerState.InInteract);
         await UniTask.Delay(160);
 
         await _thrower.Throw(_held, direction);
         _held = null;
         _selector.SetHeld(null);
 
-        await UniTask.Delay(90);
-        _playerController.StateContainer.RemoveState(PlayerState.InInteract);
+        await UniTask.Delay(200);
+        playerController.StateContainer.RemoveState(PlayerState.InInteract);
     }
     
     private void OnTriggerEnter(Collider other)
