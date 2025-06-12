@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _winScreen;
     [SerializeField] private Menu _menu;
     [SerializeField] private FmodSoundSettings _fmodSoundSettings;
+    [SerializeField] private Transform _worldCanvasTransform;
+    [SerializeField] private PickupMarker _pickupMarkerPrefab;
+    
     public Menu Menu => _menu;
     
     public void Initialize()
@@ -32,5 +36,11 @@ public class UIManager : MonoBehaviour
     {
         _blackScreen.DOScale(0f, 0.12f);
         _menu.Restart();
+    }
+    
+    public PickupMarker CreatePickupMarker()
+    {
+        var marker = Instantiate(_pickupMarkerPrefab, _worldCanvasTransform);
+        return marker;
     }
 }

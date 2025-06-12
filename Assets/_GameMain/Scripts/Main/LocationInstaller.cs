@@ -4,27 +4,24 @@ using Zenject;
 
 public class LocationInstaller : MonoInstaller
 {
-    [SerializeField] private PlayerSpawner _playerSpawner;
-    [SerializeField] private EnemyController _enemyController;
-    [SerializeField] private NpcController _npcController;
-    [SerializeField] private FoodSpawner _foodSpawner;
-    [SerializeField] private UIManager _uiManager;
-    [SerializeField] private DoorConnectionManager _doorConnectionManager;
-    [SerializeField] private PlayerController _playerPrefab;
+    [SerializeField] private EnemyController enemyControllerPrefab;
+    [SerializeField] private NpcController npcControllerPrefab;
+    [SerializeField] private FoodSpawner foodSpawnerPrefab;
+    [SerializeField] private UIManager uiManager;
+    [SerializeField] private DoorConnectionManager doorConnectionManager;
 
     // ReSharper disable Unity.PerformanceAnalysis
     public override void InstallBindings()
     {
         BindMain();
-        BindPlayerSpawner();
-        BindEnemyController();
-        BindNpcController();
-        BindFoodManager();
-        BindPointsManager();
         BindUIManager();
+        BindPointsManager();
+        
+        BindEnemyController();
+        BindFoodSpawner();
+        BindNpcController();
+        
         BindDoorConnectionManager();
-        BindPlayerControllerFactory();
-        BindInputService();
         BindBreakablesManager();
     }
 
@@ -35,25 +32,28 @@ public class LocationInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<Main>().AsSingle().NonLazy();
     }
 
-    private void BindPlayerSpawner()
-    {
-        Container.BindInstance(_playerSpawner).AsSingle();
-    }
-
     private void BindEnemyController()
     {
-        Container.BindInstance(_enemyController).AsSingle();
+        Container.Bind<EnemyController>()
+            .FromComponentInNewPrefab(enemyControllerPrefab)
+            .AsSingle()
+            .NonLazy();
     }
-    
+
     private void BindNpcController()
     {
-        Container.BindInstance(_npcController).AsSingle();
+        Container.Bind<NpcController>()
+            .FromComponentInNewPrefab(npcControllerPrefab)
+            .AsSingle()
+            .NonLazy();
     }
 
-
-    private void BindFoodManager()
+    private void BindFoodSpawner()
     {
-        Container.BindInstance(_foodSpawner).AsSingle();
+        Container.Bind<FoodSpawner>()
+            .FromComponentInNewPrefab(foodSpawnerPrefab)
+            .AsSingle()
+            .NonLazy();
     }
 
     private void BindPointsManager()
@@ -63,28 +63,16 @@ public class LocationInstaller : MonoInstaller
 
     private void BindUIManager()
     {
-        Container.BindInstance(_uiManager).AsSingle();
+        Container.BindInstance(uiManager).AsSingle();
     }
 
     private void BindDoorConnectionManager()
     {
-        Container.BindInstance(_doorConnectionManager).AsSingle();
+        Container.BindInstance(doorConnectionManager).AsSingle();
     }
 
-    private void BindPlayerControllerFactory()
-    {
-        Container.BindFactory<PlayerController, PlayerController.Factory>()
-            .FromComponentInNewPrefab(_playerPrefab);
-    }
-    
     private void BindBreakablesManager()
     {
         Container.BindInterfacesAndSelfTo<BreakablesManager>().AsSingle();
     }
-
-    private void BindInputService()
-    {
-        Container.Bind<IInputService>().To<StandaloneInputService>().AsSingle();
-    }
 }
-

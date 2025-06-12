@@ -45,6 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isSpawnEnemies: 1
-  _enemyPositions:
-  - {fileID: 0}
   _enemyPrefab: {fileID: 9069607021251921991, guid: 52cd3e528d7b4f048897715195ea8d8c, type: 3}

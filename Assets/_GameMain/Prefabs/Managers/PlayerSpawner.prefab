@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4894766410845321589}
   - component: {fileID: 707639829141294782}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: PlayerSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,5 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a39c8506400b348b8bed1625c86115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerPrefab: {fileID: 4257091310611451365, guid: d96659777b0b5294aa286e1dea731a4f, type: 3}

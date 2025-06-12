@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerThrower))]
-public class PlayerUIController : MonoBehaviour
+public class PlayerPickupUIController : MonoBehaviour
 {
     private ThrowCandidateSelector _candidateSelector;
     private PickupMarker _pickupMarker;

@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533224de899d0654bbbb1cbaee1d7382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcSpawnPos:
-  - {fileID: 0}
-  - {fileID: 0}
-  _npcPrefabs:
+  npcPrefabs:
   - {fileID: 4006283791265663388, guid: 6814906eb3e43e6468e90f5d71e5fa5b, type: 3}
   - {fileID: 2700445591116414170, guid: 3405807eb1810064e99120085112f583, type: 3}

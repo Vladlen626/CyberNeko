@@ -1,27 +1,47 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Unity.Mathematics;using UnityEngine;
+using UnityEngine;
 
 
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private bool _isSpawnEnemies;
-    [SerializeField] private Transform[] _enemyPositions;
     [SerializeField] private GameObject _enemyPrefab;
-    
-    private readonly Dictionary<AIVisionSensor, Transform> _enemyVision = new Dictionary<AIVisionSensor, Transform>();
+
+    private readonly List<EnemySpawnPoint> _spawnPoints = new List<EnemySpawnPoint>();
+    private readonly Dictionary<AIVisionSensor, EnemySpawnPoint> _enemyVision = new();
+
+    public void RegisterSpawnPoint(EnemySpawnPoint point)
+    {
+        if (!_spawnPoints.Contains(point))
+            _spawnPoints.Add(point);
+    }
+
+    public void UnregisterSpawnPoint(EnemySpawnPoint point)
+    {
+        _spawnPoints.Remove(point);
+    }
 
     public void Initialize()
     {
-        foreach (var enemyPosition in _enemyPositions)
+        // Перед новым стартом очищаем старое
+        foreach (var enemy in _enemyVision.Keys)
         {
-            var enemy = Instantiate(_enemyPrefab, enemyPosition.position, quaternion.identity);
+            if (enemy != null)
+                Destroy(enemy.gameObject);
+        }
+        _enemyVision.Clear();
+
+        foreach (var spawnPoint in _spawnPoints)
+        {
+            var enemy = Instantiate(_enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
             var patrolAction = enemy.GetComponent<PatrolAction>();
             var visionSensor = enemy.GetComponent<AIVisionSensor>();
             visionSensor.Initialize();
-            
-            patrolAction.SetPatrolPoints(enemyPosition.GetComponentsInChildren<Transform>());
-            _enemyVision.Add(visionSensor, enemyPosition);
+
+            // Если нужно, ищи patrol-пойнты среди детей spawnPoint
+            patrolAction.SetPatrolPoints(spawnPoint.GetComponentsInChildren<Transform>());
+            _enemyVision.Add(visionSensor, spawnPoint);
             enemy.SetActive(false);
         }
     }
@@ -29,11 +49,10 @@ public class EnemyController : MonoBehaviour
     public async UniTask SpawnEnemies()
     {
         if (!_isSpawnEnemies) return;
-        foreach (var (enemy, posTransform) in _enemyVision)
+        foreach (var (sensor, point) in _enemyVision)
         {
-            SpawnEnemy(enemy, posTransform);
+            SpawnEnemy(sensor, point.transform);
         }
-        
         await UniTask.Yield();
     }
 
@@ -46,5 +65,4 @@ public class EnemyController : MonoBehaviour
         enemy.gameObject.SetActive(true);
         enemy.Reset();
     }
-
 }

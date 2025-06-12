@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationPower: 6
+  _collideImpulse: 4
 --- !u!114 &457715978801451747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 7236078270706267519}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.65, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

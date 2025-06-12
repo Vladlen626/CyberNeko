@@ -6,14 +6,16 @@ using Zenject;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera _playerCamera;
-    [SerializeField] private PickupMarker _pickupMarker;
-
     private PlayerCheckpoint[] _playerCheckpoints;
-    private PlayerController _playerController;
+    private PlayerBundle _playerBundle;
+    private PlayerBundle.Factory _bundleFactory;
 
-    [Inject] private PlayerController.Factory _playerFactory;
-
+    [Inject]
+    private void Construct(PlayerBundle.Factory bundleFactory)
+    {
+        _bundleFactory = bundleFactory;
+    }
+    
     public void Initialize()
     {
         InitializeCheckpoints();
@@ -21,10 +23,14 @@ public class PlayerSpawner : MonoBehaviour
 
     public void RespawnPlayer()
     {
-        if (_playerController != null)
+        if (_playerBundle != null)
         {
-            Destroy(_playerController.gameObject);
-            _playerController = null;
+            if (_playerBundle.Player != null)
+                Destroy(_playerBundle.Player.gameObject);
+            if (_playerBundle.Camera != null)
+                Destroy(_playerBundle.Camera.gameObject);
+            if (_playerBundle.PickupMarker != null)
+                Destroy(_playerBundle.PickupMarker.gameObject);
         }
 
         var spawnPos = Vector3.zero;
@@ -37,15 +43,15 @@ public class PlayerSpawner : MonoBehaviour
             }
         }
 
-        _playerController = _playerFactory.Create();
-        _playerController.Initialize(_playerCamera.transform, spawnPos, _pickupMarker);
+        _playerBundle = _bundleFactory.Create();
+        _playerBundle.Player.Initialize(_playerBundle.Camera.transform, spawnPos, _playerBundle.PickupMarker);
 
-        SetupCamera();
+        SetupCamera(_playerBundle.Camera, _playerBundle.Player.transform);
     }
 
     public PlayerController GetPlayerController()
     {
-        return _playerController;
+        return _playerBundle?.Player;
     }
 
     // _____________ Private _____________
@@ -60,12 +66,9 @@ public class PlayerSpawner : MonoBehaviour
         }
     }
 
-    private void SetupCamera()
+    private void SetupCamera(CinemachineCamera playerCamera, Transform target)
     {
-        _playerCamera.Target = new CameraTarget
-        {
-            TrackingTarget = _playerController.transform
-        };
+        playerCamera.Target = new CameraTarget { TrackingTarget = target };
     }
 
     private void HandleOnCheckpointActivate(PlayerCheckpoint activatedCheckpoint)

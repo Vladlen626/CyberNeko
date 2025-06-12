@@ -106,7 +106,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void ApplyVelocity()
     {
-        _rb.linearVelocity = _velocity;
+        var vel = _rb.linearVelocity;
+        vel.x = _velocity.x;
+        vel.z = _velocity.z;
+        _rb.linearVelocity = vel;
         OnSpeedChanged?.Invoke(_velocity.magnitude / moveSpeed);
     }
 

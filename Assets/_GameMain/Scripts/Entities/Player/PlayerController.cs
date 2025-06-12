@@ -2,13 +2,12 @@ using System;
 using UnityEngine;
 using Zenject;
 
-
 [RequireComponent(typeof(PlayerMovementController), typeof(PlayerAnimationController))]
 public class PlayerController : MonoBehaviour
 {
     public event Action OnGrabbed;
     
-    public PlayerUIController UIController { get; private set; }
+    public PlayerPickupUIController PickupUIController { get; private set; }
     
     public PlayerMovementController Movement { get; private set; }
     public PlayerAnimationController Animation { get; private set; }
@@ -17,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Inject]
     public void Construct()
     {
-        UIController = GetComponent<PlayerUIController>();
+        PickupUIController = GetComponent<PlayerPickupUIController>();
         Movement = GetComponent<PlayerMovementController>();
         Animation = GetComponent<PlayerAnimationController>();
     }
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.identity;
         Movement.Initialize(cameraTransform, spawnPos, StateContainer);
         Animation.Initialize(Movement);
-        UIController.Initialize(pickupMarker);
+        PickupUIController.Initialize(pickupMarker);
     }
 
     public void Grabbed()

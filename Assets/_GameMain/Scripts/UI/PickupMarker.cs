@@ -9,6 +9,8 @@ public class PickupMarker : MonoBehaviour
     private Transform _targetTransform;
     private Camera _mainCamera;
 
+    public class Factory : Zenject.PlaceholderFactory<PickupMarker> { }
+    
     public void Show(Transform target)
     {
         _targetTransform = target;

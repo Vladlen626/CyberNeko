@@ -4,20 +4,31 @@ using Zenject;
 
 public class NpcController : MonoBehaviour
 {
-    [SerializeField] private Transform[] _npcSpawnPos;
-    [SerializeField] private List<GameObject> _npcPrefabs;
+    [SerializeField] private List<GameObject> npcPrefabs;
 
-    private Dictionary<ScaredNPC, Transform> _npcDictionary = new Dictionary<ScaredNPC, Transform>();
+    private readonly Dictionary<ScaredNPC, Transform> _npcDictionary = new Dictionary<ScaredNPC, Transform>();
+    private readonly List<NPCSpawnPoint> _spawnPoints = new ();
     private FoodSpawner _foodSpawner;
+    
+    public void RegisterSpawnPoint(NPCSpawnPoint point)
+    {
+        if (!_spawnPoints.Contains(point))
+            _spawnPoints.Add(point);
+    }
+
+    public void UnregisterSpawnPoint(NPCSpawnPoint point)
+    {
+        _spawnPoints.Remove(point);
+    }
     
     public void Initialize()
     {
-        foreach (var npcSpawnPos in _npcSpawnPos)
+        foreach (var npcSpawnPos in _spawnPoints)
         {
-            var prefab = _npcPrefabs[Random.Range(0, _npcPrefabs.Count)];
-            var npc = Instantiate(prefab, npcSpawnPos.position, Quaternion.identity);
+            var prefab = npcPrefabs[Random.Range(0, npcPrefabs.Count)];
+            var npc = Instantiate(prefab, npcSpawnPos.transform.position, Quaternion.identity);
             var npcScript = npc.GetComponent<ScaredNPC>();
-            _npcDictionary.Add(npcScript, npcSpawnPos);
+            _npcDictionary.Add(npcScript, npcSpawnPos.transform);
             npc.SetActive(false);
         }
     }
