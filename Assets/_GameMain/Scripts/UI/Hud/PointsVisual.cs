@@ -20,21 +20,28 @@ public class PointsVisual : MonoBehaviour
             .Subscribe(UpdateUiScoreText)
             .AddTo(this);
 
-        pointsManager.GoalPoints
-            .Subscribe(UpdateGoalSlider)
+        pointsManager.CurrentGoalPoints
+            .Subscribe(UpdateGoalSliderValue)
             .AddTo(this);
 
         pointsManager.IsKeyActive
             .Subscribe(UpdateKeyActiveSprite)
             .AddTo(this);
         
-        _foodGoalSlider.maxValue = pointsManager.GetTargetPoints();
+        pointsManager.GoalPoints
+            .Subscribe(UpdateGoalSliderMaxValue)
+            .AddTo(this);
     }
 
-    private void UpdateGoalSlider(int currentValue)
+    private void UpdateGoalSliderValue(int currentValue)
     {
         _foodGoalSlider.DOValue(currentValue, 0.15f);
         previousScore = currentValue;
+    }
+
+    private void UpdateGoalSliderMaxValue(int currentValue)
+    {
+        _foodGoalSlider.maxValue = currentValue;
     }
 
     private void UpdateKeyActiveSprite(bool isActive)

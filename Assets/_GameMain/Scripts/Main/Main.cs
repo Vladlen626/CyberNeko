@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -13,7 +14,7 @@ public class Main : IInitializable, IDisposable
     private readonly BreakablesManager  _breakablesManager;
     private readonly PointsManager _pointsManager;
     private readonly UIManager _uiManager;
-    private readonly DoorConnectionManager _doorConnectionManager;
+    private readonly ZoneController _zoneController;
 
     private CompositeDisposable _disposables = new CompositeDisposable();
 
@@ -26,7 +27,7 @@ public class Main : IInitializable, IDisposable
         BreakablesManager breakablesManager,
         PointsManager pointsManager,
         UIManager uiManager,
-        DoorConnectionManager doorConnectionManager)
+        ZoneController zoneController)
     {
         _enemyController = enemyController;
         _npcController = npcController;
@@ -35,7 +36,7 @@ public class Main : IInitializable, IDisposable
         _breakablesManager = breakablesManager;
         _pointsManager = pointsManager;
         _uiManager = uiManager;
-        _doorConnectionManager = doorConnectionManager;
+        _zoneController = zoneController;
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -65,6 +66,7 @@ public class Main : IInitializable, IDisposable
         _uiManager.Initialize();
         _uiManager.Menu.OnRestart += HandlerOnRestart;
 
+        _zoneController.Initialize();
         _pointsManager.Initialize();
         _enemyController.Initialize();
         _foodSpawner.Initialize();
@@ -80,6 +82,7 @@ public class Main : IInitializable, IDisposable
         _npcController.SpawnNpc();
         _foodSpawner.ResetAllFood();
         _breakablesManager.ResetAllBreakables();
+        _pointsManager.UpdateCurrentGoalPoints();
         await _enemyController.SpawnEnemies();
         
         _playerSpawner.RespawnPlayer();
@@ -123,7 +126,7 @@ public class Main : IInitializable, IDisposable
 
     private void UnsubscribePlayerGrabbed(PlayerController _player)
     {
-        if (_player != null)
+        if (_player)
             _player.OnGrabbed -= HandlerOnGameOver;
     }
 

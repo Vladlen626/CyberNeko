@@ -7,8 +7,8 @@ public class LocationInstaller : MonoInstaller
     [SerializeField] private EnemyController enemyControllerPrefab;
     [SerializeField] private NpcController npcControllerPrefab;
     [SerializeField] private FoodSpawner foodSpawnerPrefab;
+    [SerializeField] private ZoneController zoneControllerPrefab;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private DoorConnectionManager doorConnectionManager;
 
     // ReSharper disable Unity.PerformanceAnalysis
     public override void InstallBindings()
@@ -21,7 +21,7 @@ public class LocationInstaller : MonoInstaller
         BindFoodSpawner();
         BindNpcController();
         
-        BindDoorConnectionManager();
+        BindZoneController();
         BindBreakablesManager();
     }
 
@@ -56,6 +56,14 @@ public class LocationInstaller : MonoInstaller
             .NonLazy();
     }
 
+    private void BindZoneController()
+    {
+        Container.Bind<ZoneController>()
+            .FromComponentInNewPrefab(zoneControllerPrefab)
+            .AsSingle()
+            .NonLazy();
+    }
+    
     private void BindPointsManager()
     {
         Container.Bind<PointsManager>().AsSingle();
@@ -65,12 +73,7 @@ public class LocationInstaller : MonoInstaller
     {
         Container.BindInstance(uiManager).AsSingle();
     }
-
-    private void BindDoorConnectionManager()
-    {
-        Container.BindInstance(doorConnectionManager).AsSingle();
-    }
-
+    
     private void BindBreakablesManager()
     {
         Container.BindInterfacesAndSelfTo<BreakablesManager>().AsSingle();

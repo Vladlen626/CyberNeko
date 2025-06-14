@@ -2,20 +2,26 @@ using System;
 using DG.Tweening;
 using FMODUnity;
 using UnityEngine;
+using Zenject;
 
 public class Door : MonoBehaviour
 {
-    public Action OnOpened;
+    public event Action OnOpened;
     
     [SerializeField] private Transform[] borders;
 
     private Vector3 originalPos;
     private PointsManager _pointsManager;
+
+    [Inject]
+    private void Construct(PointsManager pointsManager)
+    {
+        _pointsManager = pointsManager;
+    }
     
-    public void Initialize(PointsManager pointsManager)
+    public void Initialize()
     {
         originalPos = transform.position;
-        _pointsManager = pointsManager;
     }
     
     public void Open()

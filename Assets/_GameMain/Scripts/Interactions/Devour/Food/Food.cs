@@ -7,6 +7,7 @@ public class Food : MonoBehaviour
     public event Action<int> OnDevoured;
 
     [SerializeField] private int points = 1;
+    public int Points => points;
 
     [SerializeField] private Collider col;
     [SerializeField] private Rigidbody rb;
@@ -29,16 +30,15 @@ public class Food : MonoBehaviour
         col.enabled = true;
     }
 
-    public void Hide()
+    public void MultiplyPoints(int multiplier)
     {
-        _isActive = false;
-        transform.DOScale(0, 0.25f);
+        points *= multiplier;
     }
 
     public void Devoured()
     {
         Hide();
-        OnDevoured?.Invoke(points);
+        OnDevoured?.Invoke(Points);
     }
     
     public void DisablePhysics()
@@ -70,5 +70,11 @@ public class Food : MonoBehaviour
             SetInactive();
             devourer.Eat(this);
         }
+    }
+    
+    private void Hide()
+    {
+        _isActive = false;
+        transform.DOScale(0, 0.25f);
     }
 }
