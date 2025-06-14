@@ -14,6 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float squashAmount = 0.9f;
     [SerializeField] private float squashDuration = 0.08f;
     [SerializeField] private List<PlayerState> blockMovementStates;
+    [SerializeField] private float overEatenSpeedMultiplier = 0.5f;
 
     private Rigidbody _rb;
     private Transform _cameraTransform;
@@ -87,7 +88,7 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
         
-        _velocity = _input * moveSpeed;
+        _velocity = _input * GetCurrentSpeed();
         
         if (_input.sqrMagnitude < 0.01f)
         {
@@ -103,6 +104,16 @@ public class PlayerMovementController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, rot, rotationSpeed * Time.fixedDeltaTime);
         }
     }
+    
+    private float GetCurrentSpeed()
+    {
+        float speed = moveSpeed;
+        
+        if (_stateContainer != null && _stateContainer.HasState(PlayerState.OverEaten))
+            speed *= overEatenSpeedMultiplier;
+
+        return speed;
+    }
 
     private void ApplyVelocity()
     {
@@ -110,7 +121,7 @@ public class PlayerMovementController : MonoBehaviour
         vel.x = _velocity.x;
         vel.z = _velocity.z;
         _rb.linearVelocity = vel;
-        OnSpeedChanged?.Invoke(_velocity.magnitude / moveSpeed);
+        OnSpeedChanged?.Invoke(_velocity.magnitude / GetCurrentSpeed());
     }
 
     private void AnimateMotion()

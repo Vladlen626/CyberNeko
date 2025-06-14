@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5627321382202176324}
   - component: {fileID: 4893860034047507061}
   - component: {fileID: 2441648810530060547}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fish orange (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,12 +95,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 585446642854883756}
-  - component: {fileID: 5983035922885896067}
   - component: {fileID: 5110023914710417175}
   - component: {fileID: 4877008562922943035}
   - component: {fileID: 7718731466205989919}
   - component: {fileID: 8460983514320140552}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: _FoodMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,27 +122,6 @@ Transform:
   - {fileID: 430129500174984250}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5983035922885896067
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710707511697216554}
-  m_Material: {fileID: 13400000, guid: 28992508c450e8d41945c45fc89614ef, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5110023914710417175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 430129500174984250}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

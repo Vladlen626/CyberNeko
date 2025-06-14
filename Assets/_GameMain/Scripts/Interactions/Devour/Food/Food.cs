@@ -59,22 +59,16 @@ public class Food : MonoBehaviour
         _isActive = true;
     }
 
-    // _____________ Private _____________
-
-    private void OnTriggerEnter(Collider other)
+    public bool IsActive()
     {
-        if (!_isActive) return;
-        var devourer = other.GetComponent<Devourer>();
-        if (devourer)
-        {
-            SetInactive();
-            devourer.Eat(this);
-        }
+        return _isActive;
     }
+
+    // _____________ Private _____________
     
     private void Hide()
     {
-        _isActive = false;
+        SetInactive();
         transform.DOScale(0, 0.25f);
     }
 }

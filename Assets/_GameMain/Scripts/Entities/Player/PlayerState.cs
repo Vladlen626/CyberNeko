@@ -3,5 +3,6 @@
     Grabbed,
     InHider,
     Stunned,
-    InInteract
+    InInteract,
+    OverEaten
 }

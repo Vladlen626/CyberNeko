@@ -6,11 +6,9 @@ using Zenject;
 public class PlayerController : MonoBehaviour
 {
     public event Action OnGrabbed;
-    
-    public PlayerPickupUIController PickupUIController { get; private set; }
-    
-    public PlayerMovementController Movement { get; private set; }
-    public PlayerAnimationController Animation { get; private set; }
+    private PlayerPickupUIController PickupUIController { get; set; }
+    private PlayerMovementController Movement { get; set; }
+    private PlayerAnimationController Animation { get; set; }
     public PlayerStateContainer StateContainer { get; private set; }
 
     [Inject]
