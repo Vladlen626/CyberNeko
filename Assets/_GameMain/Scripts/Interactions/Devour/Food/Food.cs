@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 
 public class Food : MonoBehaviour
-{
+{ 
     public event Action<int> OnDevoured;
 
     [SerializeField] private int points = 1;

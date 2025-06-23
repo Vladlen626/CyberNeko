@@ -74,6 +74,7 @@ public class ThrowCandidateSelector : MonoBehaviour
         foreach (var candidate in _candidates)
         {
             if (candidate == null || candidate.IsHeld) continue;
+            if (!candidate.GetTransform().gameObject.activeInHierarchy) continue;
             Vector3 dir = (candidate.GetTransform().position - transform.position).normalized;
             float angle = Vector3.Angle(forward, dir);
             float dist = Vector3.Distance(transform.position, candidate.GetTransform().position);

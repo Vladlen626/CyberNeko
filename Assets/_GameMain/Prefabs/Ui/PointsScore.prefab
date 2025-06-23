@@ -703,9 +703,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294642a35f921324c8f9568407da7d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _foodGoalSlider: {fileID: 7881930805234726766}
-  _key: {fileID: 8105017608538455045}
-  _scoreTmp: {fileID: 1663450278946093743}
+  foodGoalSlider: {fileID: 7881930805234726766}
+  key: {fileID: 8105017608538455045}
+  scoreTmp: {fileID: 1663450278946093743}
 --- !u!1 &3256552881548148614
 GameObject:
   m_ObjectHideFlags: 0

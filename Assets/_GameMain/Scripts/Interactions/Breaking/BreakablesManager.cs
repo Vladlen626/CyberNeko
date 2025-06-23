@@ -4,17 +4,17 @@ using Zenject;
 
 public class BreakablesManager : IInitializable
 {
-    private readonly List<BreakableObject> _staticBreakables = new();
-    private readonly List<BreakableObject> _dynamicBreakables = new();
+    private readonly List<IBreakable> _staticBreakables = new();
+    private readonly List<IBreakable> _dynamicBreakables = new();
 
     public void Initialize()
     {
         _staticBreakables.Clear();
-        _staticBreakables.AddRange(Object.FindObjectsByType<BreakableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None));
+        _staticBreakables.AddRange(Object.FindObjectsByType<FoodContainer>(FindObjectsInactive.Include, FindObjectsSortMode.None));
         _dynamicBreakables.Clear();
     }
     
-    public void Register(BreakableObject breakable)
+    public void Register(IBreakable breakable)
     {
         if(!_dynamicBreakables.Contains(breakable))
             _dynamicBreakables.Add(breakable);
@@ -25,12 +25,12 @@ public class BreakablesManager : IInitializable
         foreach (var b in _staticBreakables)
         {
             if (b != null)
-                b.ResetState();
+                b.Reset();
         }
         foreach (var b in _dynamicBreakables)
         {
             if (b != null)
-                Object.Destroy(b.gameObject);
+                Object.Destroy(b.GetTransform().gameObject);
         }
         _dynamicBreakables.Clear();
     }

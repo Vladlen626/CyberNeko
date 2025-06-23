@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3757588907207634844}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4009907874207970488}
   - component: {fileID: 2943212028874045665}
   - component: {fileID: 4247116356570176617}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,9 +157,10 @@ GameObject:
   - component: {fileID: 4593134372720367121}
   - component: {fileID: 5250190310173136730}
   - component: {fileID: 8557469580525710239}
-  m_Layer: 0
+  - component: {fileID: 4706547156270717034}
+  m_Layer: 11
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +232,23 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 2
-  m_Center: {x: -0.6, y: 0, z: -0.00000023560298}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4706547156270717034
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417496745008017726}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2860652148407154164
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +260,7 @@ GameObject:
   - component: {fileID: 726543701680402811}
   - component: {fileID: 821582431409092563}
   - component: {fileID: 8249660307994032010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stolb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +346,7 @@ GameObject:
   - component: {fileID: 7042177631939350188}
   - component: {fileID: 5259681833511461474}
   - component: {fileID: 122319274191829263}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stolb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +433,7 @@ GameObject:
   - component: {fileID: 1684911989780167929}
   - component: {fileID: 5746779630831114401}
   - component: {fileID: 6204168763903527324}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Door (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7434910624260382158}
   - component: {fileID: 4990119423034491716}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,11 +7,11 @@ using Zenject;
 
 public class PointsVisual : MonoBehaviour
 {
-    [SerializeField] private Slider _foodGoalSlider;
-    [SerializeField] private GameObject _key;
-    [SerializeField] private TextMeshProUGUI _scoreTmp;
+    [SerializeField] private Slider foodGoalSlider;
+    [SerializeField] private GameObject key;
+    [SerializeField] private TextMeshProUGUI scoreTmp;
 
-    private int previousScore;
+    private int _previousScore;
     
     [Inject]
     public void Construct(PointsManager pointsManager)
@@ -35,24 +35,24 @@ public class PointsVisual : MonoBehaviour
 
     private void UpdateGoalSliderValue(int currentValue)
     {
-        _foodGoalSlider.DOValue(currentValue, 0.15f);
-        previousScore = currentValue;
+        foodGoalSlider.DOValue(currentValue, 0.15f);
+        _previousScore = currentValue;
     }
 
     private void UpdateGoalSliderMaxValue(int currentValue)
     {
-        _foodGoalSlider.maxValue = currentValue;
+        foodGoalSlider.maxValue = currentValue;
     }
 
     private void UpdateKeyActiveSprite(bool isActive)
     {
-        _key.SetActive(isActive);
+        key.SetActive(isActive);
     }
 
     private void UpdateUiScoreText(int newScore)
     {
-        DOTween.To(() => previousScore, x => previousScore = x, newScore, 0.25f)
-            .OnUpdate(() =>  _scoreTmp.text = previousScore.ToString())
+        DOTween.To(() => _previousScore, x => _previousScore = x, newScore, 0.25f)
+            .OnUpdate(() =>  scoreTmp.text = _previousScore.ToString())
             .SetEase(Ease.Linear);
     }
 }

@@ -6,7 +6,7 @@ using Zenject;
 public class PointsManager : IDisposable
 {
     public IReadOnlyReactiveProperty<int> GoalPoints => _goalPoints;
-    private readonly ReactiveProperty<int> _goalPoints = new ReactiveProperty<int>(0);
+    private readonly ReactiveProperty<int> _goalPoints = new ReactiveProperty<int>(999);
     public IReadOnlyReactiveProperty<int> CurrentPoints => _currentPoints;
     private readonly ReactiveProperty<int> _currentPoints = new ReactiveProperty<int>(0);
     public IReadOnlyReactiveProperty<int> CurrentGoalPoints => _currentGoalPoints;

@@ -8,5 +8,5 @@ public interface IThrowable
     void OnPickupStart();
     void OnPickup(Transform holder); 
 
-    void TweenThrow(Vector3 targetPos, float duration, float arc);
+    void Throw(Vector3 targetPos, float duration, float arc);
 }

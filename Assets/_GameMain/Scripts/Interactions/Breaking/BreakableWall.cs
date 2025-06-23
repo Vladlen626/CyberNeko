@@ -1,37 +1,26 @@
-﻿using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class BreakableObject : MonoBehaviour, IBreakable
+public class BreakableWall : MonoBehaviour, IBreakable
 {
     [Header("Breaking")]
-    [SerializeField] private float _minBreakVelocity = 6f;
+    [SerializeField] private float minBreakVelocity = 6f;
     
-    [Header("Loot")]
-    [SerializeField] private int _foodCount = 0;
-    [SerializeField] private float _lootScatter = 1.8f;
-
-    private Rigidbody _rb;
     private Collider _collider;
     private bool _isBroken;
-    private FoodSpawner _foodSpawner;
     private BreakablesManager _breakablesManager;
-
     private Vector3 _startPosition;
     private Quaternion _startRotation;
 
     [Inject]
-    private void Construct(FoodSpawner foodSpawner, BreakablesManager breakablesManager)
+    private void Construct(BreakablesManager breakablesManager)
     {
-        _foodSpawner = foodSpawner;
         _breakablesManager = breakablesManager;
         Register();
     }
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _startPosition = transform.position;
         _startRotation = transform.rotation;
@@ -46,26 +35,16 @@ public class BreakableObject : MonoBehaviour, IBreakable
     {
         if (_isBroken) return;
         _isBroken = true;
-        
-        for (int i = 0; i < _foodCount; i++)
-        {
-            Vector3 scatter = Random.onUnitSphere; scatter.y = Mathf.Abs(scatter.y);
-            Vector3 spawnPos = transform.position + scatter * Random.Range(0.3f, _lootScatter);
-            _foodSpawner.DropFood(spawnPos);
-        }
-
         _collider.enabled = false;
-        _rb.isKinematic = true;
         gameObject.SetActive(false);
     }
 
-    public void ResetState()
+    public void Reset()
     {
         _isBroken = false;
         transform.position = _startPosition;
         transform.rotation = _startRotation;
         _collider.enabled = true;
-        _rb.isKinematic = false;
         gameObject.SetActive(true);
     }
 
@@ -76,7 +55,7 @@ public class BreakableObject : MonoBehaviour, IBreakable
         if (_isBroken) return;
         if (collision.gameObject.CompareTag("Player"))
             return;
-        if (collision.relativeVelocity.magnitude >= _minBreakVelocity)
+        if (collision.relativeVelocity.magnitude >= minBreakVelocity)
             Break();
     }
 }

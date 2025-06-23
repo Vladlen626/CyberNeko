@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 1861887143270053443}
   - component: {fileID: 776456547129045096}
   - component: {fileID: 2071132231358514488}
+  - component: {fileID: 7369883729111781658}
   m_Layer: 8
   m_Name: Rock
   m_TagString: Untagged
@@ -192,7 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8da5f66828e214aa1753af0e260390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationPower: 0
+  collideImpulse: 4
+  obstacleTag: Obstacle
 --- !u!65 &2071132231358514488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,3 +216,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &7369883729111781658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8971287367466532548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b7ef2415ec71146b7cdf90336e9dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weightCategory: 2

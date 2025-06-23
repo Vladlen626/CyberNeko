@@ -1507,6 +1507,7 @@ GameObject:
   - component: {fileID: 8620833597103110397}
   - component: {fileID: 7905484782112541688}
   - component: {fileID: 2733101098886866340}
+  - component: {fileID: 2444521914699389743}
   - component: {fileID: 2333102845596993768}
   - component: {fileID: 345377875286349515}
   - component: {fileID: -5021233970415162688}
@@ -1517,7 +1518,6 @@ GameObject:
   - component: {fileID: 1880903966791798350}
   - component: {fileID: 2626546176114430123}
   - component: {fileID: 1877366886109791746}
-  - component: {fileID: 2444521914699389743}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1664,6 +1664,21 @@ MonoBehaviour:
   mouthTransform: {fileID: 5986940937352685311}
   eatDuration: 1
   fastEatDuration: 0.1
+--- !u!114 &2444521914699389743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4257091310611451365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988a87d1807242989aabd44e7a3e2f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 7127404473496412297}
+  _minScale: 1
+  _maxScale: 1.8
 --- !u!114 &2333102845596993768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,8 +1771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8da5f66828e214aa1753af0e260390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationPower: 4
-  _collideImpulse: 4
+  collideImpulse: 4
+  obstacleTag: Obstacle
 --- !u!114 &1880903966791798350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,23 +1813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac051dd673764724a8e56ddc2ea0dd5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwDuration: 0.5
-  _arcHeight: 1.5
---- !u!114 &2444521914699389743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4257091310611451365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 988a87d1807242989aabd44e7a3e2f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 7127404473496412297}
-  _minScale: 1
-  _maxScale: 1.8
+  throwDuration: 0.35
+  arcHeight: 1.5
 --- !u!1 &4753920724636038830
 GameObject:
   m_ObjectHideFlags: 0
