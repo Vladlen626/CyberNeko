@@ -6,7 +6,7 @@ using Zenject;
 public class FoodContainer : MonoBehaviour, IBreakable
 {
     [Header("Breaking")]
-    [SerializeField] private float _minBreakVelocity = 6f;
+    [SerializeField] private float minBreakVelocity = 6f;
     
     [Header("Loot")]
     [SerializeField] private int minFoodCount = 1;
@@ -79,7 +79,8 @@ public class FoodContainer : MonoBehaviour, IBreakable
         if (_isBroken) return;
         if (collision.gameObject.CompareTag("Player"))
             return;
-        if (collision.relativeVelocity.magnitude >= _minBreakVelocity)
+        Debug.Log(collision.relativeVelocity.magnitude);
+        if (collision.relativeVelocity.magnitude >= minBreakVelocity)
             Break();
     }
 }
